@@ -1,8 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
 
-//change variabl
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
-const supabaseKey = import.meta.env.VITE_SUPABASE_SERVICE_ROLE_KEY!;
+const getEnvVar = (key: string) => {
+  return import.meta.env.MODE === "production"
+    ? import.meta.env[key]
+    : import.meta.env[`VITE_${key}`];
+};
 
-console.log("supabaseUrl", import.meta.env);
+const supabaseUrl = getEnvVar("SUPABASE_URL");
+const supabaseKey = getEnvVar("SUPABASE_SERVICE_ROLE_KEY");
+
+console.log("Mode", import.meta.env.MODE);
 export const supabase = createClient(supabaseUrl, supabaseKey);
