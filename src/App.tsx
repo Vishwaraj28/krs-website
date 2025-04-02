@@ -1,10 +1,10 @@
 import "./App.css";
-import { EventCard } from "./components/blocks/cards/EventCard";
 import { ProfileCard } from "./components/blocks/cards/ProfileCard";
 import { SponserCard } from "./components/blocks/cards/SponserCard";
 
 import thumbnail from "@/assets/thumbnail.jpg";
 import SponserImage from "@/assets/Sample Sponser logo.svg";
+import { NewsSection } from "@/sections/NewsSection";
 
 function App() {
   return (
@@ -12,33 +12,7 @@ function App() {
       <main className="min-h-screen p-8">
         <div className="container mx-auto space-y-8">
           <h1>This is Home</h1>
-          <div className="flex gap-6 items-center">
-            <EventCard
-              imagePath={thumbnail}
-              date="8 જાન્યુઆરી, 2023"
-              location="વડોદરા"
-              title="સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી"
-              description="સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી, સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી, સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી"
-              href="/design-elements"
-              variant="simple"
-            />
-            <EventCard
-              imagePath={thumbnail}
-              date="8 જાન્યુઆરી, 2023"
-              location="વડોદરા"
-              title="સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી"
-              description="સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી, સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી, સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી"
-              href=""
-            />
-            <EventCard
-              imagePath={thumbnail}
-              date="8 જાન્યુઆરી, 2023"
-              location="વડોદરા"
-              title="સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી"
-              description="સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી, સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી, સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ વડોદરા એ 8મી જાન્યુઆરીએ વડોદરા ખાતે એજીએમની બેઠક યોજી હતી"
-              href=""
-            />
-          </div>
+          <NewsSection />
           <div className="flex gap-6 items-center">
             <ProfileCard
               imagePath={thumbnail}

@@ -14,7 +14,7 @@ import { ImageDisplay } from "../common/Image";
 
 export type EventCardVariant = "default" | "simple";
 export interface EventCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  imagePath: string;
+  imagePath?: string;
   date: string;
   location: string;
   title: string;
@@ -41,7 +41,7 @@ export function EventCard({
     "border-b border-b-primary border-x-0 border-6 rounded-xl";
   return (
     <Card className={cardVariant == "simple" ? borderClass : ""} {...props}>
-      {cardVariant == "default" && (
+      {imagePath && cardVariant == "default" && (
         <ImageDisplay src={imagePath} className="rounded-lg" />
       )}
       <CardContent>
