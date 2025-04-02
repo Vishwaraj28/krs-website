@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --radius: 0.625rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* Define theme variables using the new @theme directive in Tailwind CSS v4 */
+@theme {
+  /* Primary colors */
+  --color-primary: #f37e20;
+  --color-primary-alt: #f39624;
+  --color-primary-dark: #d5370b;
+  --color-primary-light: #ffe1ba;
+  --color-primary-foreground: #ffffff;
+
+  /* Secondary colors */
+  --color-secondary: #9a0e00;
+  --color-secondary-alt: #ad1e23;
+  --color-secondary-foreground: #ffffff;
+
+  /* Default/neutral colors */
+  --color-default: #3d3d3d;
+  --color-default-light: rgba(200, 200, 200, 0.5);
+  --color-white: #ffffff;
+
+  /* UI component colors mapped to shadcn variables */
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+
+  --color-card: #ffffff;
+  --color-card-foreground: #000000;
+
+  --color-popover: #ffffff;
+  --color-popover-foreground: #000000;
+
+  --color-muted: #f7f7f7;
+  --color-muted-foreground: #8f8f8f;
+
+  --color-accent: #ffe1ba;
+  --color-accent-foreground: #f37e20;
+
+  --color-destructive: #ad1e23;
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #ffffff;
+  --color-input: #ffe1ba;
+  --color-ring: #f37e20;
+
+  --radius: 16px;
+
+  --shadow-lg: 4px 4px 16px rgba(0, 0, 0, 0.25)
+}
+
+/* Base styles */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  /* Typography classes based on your design system */
+  h1 {
+    font-size: 56px; 
+    line-height: 68px; 
+    font-weight: 600;
+    font-family: "Noto Sans", sans-serif;
+  }
+
+  h2 {
+    font-size: 42px; 
+    line-height: 52px;
+    font-weight: 500;
+    font-family: "Noto Sans", sans-serif;
+  }
+
+  h3 {
+    font-size: 32px; 
+    line-height: 42px;
+    font-weight: 500;
+    font-family: "Noto Sans", sans-serif;
+  }
+
+  h4 {
+    font-size: 24px;
+    line-height: 1.278;
+    font-weight: 400;
+    font-family: "Noto Sans", sans-serif;
+  }
+
+  p {
+    font-size: 16px; 
+    line-height: 1.278; 
+    font-weight: 400;
+    font-family: "Noto Sans", sans-serif;
+  }
+
+  /* Gujarati typography */
+  .guj-h1 {
+    font-size: 48px;
+    line-height: 60px;
+    font-weight: 500;
+    font-family: "Noto Sans Gujarati", sans-serif;
+  }
+
+  .guj-h2 {
+    font-size: 38px;
+    line-height: 50px;
+    font-weight: 500;
+    font-family: "Noto Sans Gujarati", sans-serif;
+  }
+
+  .guj-h3 {
+    font-size: 34px;
+    line-height: 46px;
+    font-weight: 500;
+    font-family: "Noto Sans Gujarati", sans-serif;
+  }
+
+  .guj-h4 {
+    font-size: 24px;
+    line-height: 1.278;
+    font-weight: 500;
+    font-family: "Noto Sans Gujarati", sans-serif;
+  }
+
+  .guj-p {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 400;
+    font-family: "Noto Sans Gujarati", sans-serif;
+  }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .bg-primary-gradient {
+    background: linear-gradient(90deg, rgba(213, 55, 11, 0.85) 0%, #f37e20 51%, #f37e20 99.5%);
+  }
+
+  .text-primary-gradient {
+    background: linear-gradient(90deg, rgba(213, 55, 11, 0.85) 0%, #f37e20 51%, #f37e20 99.5%);
+    color: transparent;
+    background-clip: text;
+  }
+}
