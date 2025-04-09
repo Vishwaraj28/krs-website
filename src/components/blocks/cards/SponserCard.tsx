@@ -5,8 +5,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ImageDisplay } from "../common/Image";
-import { Flex } from "../common/Container";
 import { Globe, List, Mail, MapPin, Phone } from "lucide-react";
+import { FlexBox } from "../common/FlexBox";
 
 export interface SponserCardProps extends React.HTMLAttributes<HTMLDivElement> {
   imagePath?: string;
@@ -28,7 +28,6 @@ export function SponserCard({
   website,
   ...props
 }: SponserCardProps) {
-  // Define dynamic fields to reduce repetition
   const infoFields = [
     { icon: List, content: description },
     { icon: Mail, content: mail, href: `mailto:${mail}` },
@@ -44,8 +43,8 @@ export function SponserCard({
       <CardContent>
         {infoFields.map(
           (field, index) =>
-            field.content && ( // Render only if content exists
-              <Flex key={index}>
+            field.content && (
+              <FlexBox key={index}>
                 <field.icon />
                 <CardDescription>
                   {field.href ? (
@@ -60,7 +59,7 @@ export function SponserCard({
                     field.content
                   )}
                 </CardDescription>
-              </Flex>
+              </FlexBox>
             )
         )}
       </CardContent>

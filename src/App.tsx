@@ -4,16 +4,16 @@ import { SponserCard } from "./components/blocks/cards/SponserCard";
 
 import thumbnail from "@/assets/thumbnail.jpg";
 import SponserImage from "@/assets/Sample Sponser logo.svg";
-import { NewsSection } from "@/sections/NewsSection";
+import { NewsSection } from "@/sections/News";
 
 function App() {
   return (
     <>
       <main className="min-h-screen p-8">
-        <div className="container mx-auto space-y-8">
+        <div className="container mx-auto max-w-full space-y-8">
           <h1>This is Home</h1>
           <NewsSection />
-          <div className="flex gap-6 items-center">
+          {/* <div className="flex gap-6 items-center">
             <ProfileCard
               imagePath={thumbnail}
               category="શિક્ષણ"
@@ -43,8 +43,8 @@ function App() {
               title="શુભેચ્છા સહ…જય ભવાની પરમાર પરિવાર"
               variant="wide"
             />
-          </div>
-          <div className="flex gap-6 items-center">
+          </div> */}
+          {/* <div className="flex gap-6 items-center">
             <SponserCard
               imagePath={SponserImage}
               title="Company Lorem Ipsum"
@@ -76,7 +76,7 @@ function App() {
               address="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veritatis quisquam officia molestias velit minima labore commodi animi, tenetur itaque harum?"
               website="https://www.loremipsum.com"
             />
-          </div>
+          </div> */}
         </div>
       </main>
     </>

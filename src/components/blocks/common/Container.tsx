@@ -1,34 +1,34 @@
+import React, { JSX } from "react";
 import { cn } from "@/lib/utils";
-import React from "react";
 
 // Container wrapper for consistent spacing
+interface ContainerProps {
+  className?: string;
+  children: React.ReactNode;
+  as?: keyof JSX.IntrinsicElements; // Allows using 'section', 'article', etc.
+  padding?: boolean; // Optional padding control
+  maxWidth?: string; // Optional maxWidth control
+}
+
 export const Container = ({
   className,
   children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
+  as: Component = "div", // Default to 'div', but can be any HTML element
+  padding = false, // Default to true (to apply padding)
+  maxWidth = "7xl", // Default to max width '7xl'
+}: ContainerProps) => {
   return (
-    <div className={cn("max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", className)}>
+    <Component
+      className={cn(
+        `max-w-${maxWidth} w-full mx-auto ${
+          padding ? "px-4 sm:px-6 lg:px-8" : ""
+        }`,
+        className
+      )}
+    >
       {children}
-    </div>
+    </Component>
   );
 };
 
-interface FlexProps {
-  children: React.ReactNode;
-  firstColWidth?: string; // e.g., "20%"
-  secondColWidth?: string; // e.g., "80%"
-  className?: string;
-}
-
-export const Flex = ({ children, className }: FlexProps) => {
-  return (
-    <div className={cn("flex gap-4", className)}>
-      {React.Children.map(children, (child) => (
-        <div className="flex-[0_1_auto] [&>svg]:text-primary">{child}</div>
-      ))}
-    </div>
-  );
-};
+export default Container;
