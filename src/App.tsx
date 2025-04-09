@@ -1,9 +1,9 @@
 import "./App.css";
-import { ProfileCard } from "./components/blocks/cards/ProfileCard";
-import { SponserCard } from "./components/blocks/cards/SponserCard";
+// import { ProfileCard } from "./components/blocks/cards/ProfileCard";
+// import { SponserCard } from "./components/blocks/cards/SponserCard";
 
-import thumbnail from "@/assets/thumbnail.jpg";
-import SponserImage from "@/assets/Sample Sponser logo.svg";
+// import thumbnail from "@/assets/thumbnail.jpg";
+// import SponserImage from "@/assets/Sample Sponser logo.svg";
 import { NewsSection } from "@/sections/News";
 
 function App() {
