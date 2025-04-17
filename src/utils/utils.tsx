@@ -5,7 +5,7 @@
  * @returns {string} - The formatted date.
  * @throws {Error} - Throws an error if the date is invalid.
  */
-export default function formatDate(dateStr: string): string {
+export function formatDate(dateStr: string): string {
   const date = new Date(dateStr);
 
   // Ensure the date is valid
@@ -19,3 +19,21 @@ export default function formatDate(dateStr: string): string {
     day: "numeric",
   });
 }
+
+export const sortByDate = (
+  news: any[] | undefined,
+  direction?: "latestFirst" | "oldestFirst"
+): any[] => {
+  if (!news) {
+    return []; // If news is undefined, return an empty array
+  }
+
+  if (!Array.isArray(news)) return [];
+
+  return [...news].sort((a, b) => {
+    const dateA = new Date(a?.date ?? 0).getTime();
+    const dateB = new Date(b?.date ?? 0).getTime();
+
+    return direction === "latestFirst" ? dateB - dateA : dateA - dateB;
+  });
+};

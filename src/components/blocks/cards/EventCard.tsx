@@ -9,12 +9,15 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ImageDisplay } from "../common/Image";
-import useNavigateTo from "@/hooks/UseNavigateTo";
-import formatDate from "@/utils/utils";
+import useNavigateTo from "@/hooks/useNavigateTo";
+import { formatDate } from "@/utils/utils";
+import { useImageFromBucket } from "@/hooks/useImageFromBucket";
+import thumbnail from "@/assets/thumbnail.jpg";
 
 export type EventCardVariant = "default" | "simple";
+
 export interface EventCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  imagePath?: string;
+  image_path?: string;
   date: string;
   location: string;
   title: string;
@@ -24,7 +27,7 @@ export interface EventCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function EventCard({
-  imagePath,
+  image_path,
   date,
   location,
   title,
@@ -35,21 +38,38 @@ export function EventCard({
   ...props
 }: EventCardProps) {
   const handleCLick = useNavigateTo("/news");
+
+  const {
+    data: imageURL,
+    isLoading: imageLoading,
+    error: imageError,
+  } = useImageFromBucket("krs-homepage-assets", `${image_path}`, {
+    enabled: !!image_path && cardVariant === "default",
+  });
+
   const formattedDate = formatDate(date);
 
   const borderClass =
     "border-b border-b-primary border-x-0 border-5 rounded-xl";
-
-  // Merge the className prop with any internal styles
   const cardClassNames = `${
     cardVariant === "simple" ? borderClass : ""
   } ${className}`;
 
+  const ImageComponent = () => {
+    if (image_path && cardVariant === "default") {
+      if (imageLoading) return <p>Image is Loading..</p>;
+      if (imageError) return <p>{imageError.message}</p>;
+
+      return (
+        <ImageDisplay src={imageURL ?? thumbnail} className="rounded-lg" />
+      );
+    }
+    return null;
+  };
+
   return (
     <Card className={cardClassNames} {...props}>
-      {imagePath && cardVariant === "default" && (
-        <ImageDisplay src={imagePath} className="rounded-lg" />
-      )}
+      <ImageComponent />
       <CardContent className="h-full">
         {cardVariant === "simple" && <Separator />}
         <div className="flex gap-3 flex-wrap">
@@ -70,6 +90,7 @@ export function EventCard({
           onClick={handleCLick}
           variant={cardVariant === "simple" ? "outline" : "default"}
           className="mt-auto"
+          size="sm"
         >
           <span>વધુ વાંચો</span>
           <SquareArrowOutUpRight />

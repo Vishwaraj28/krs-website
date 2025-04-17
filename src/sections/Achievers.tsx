@@ -11,8 +11,8 @@ import "swiper/swiper-bundle.css";
 export function NewsSection() {
   const {
     data: news,
-    isLoading: tableDataLoading,
-    error: tableDataError,
+    isLoading,
+    error,
   } = useFetchTableData("krs_news_data", [
     "date",
     "location",
@@ -20,11 +20,10 @@ export function NewsSection() {
     "description",
     "href",
   ]);
-
   const handleCLick = useNavigateTo("/news");
   const RightContainer = () => {
-    if (tableDataLoading) return <p>Loading...</p>;
-    if (tableDataError) return <p>Error: {tableDataError.message}</p>;
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
 
     const sortedNews = news?.sort((a: any, b: any) => {
       const dateA = new Date(a.date);
@@ -59,7 +58,7 @@ export function NewsSection() {
   };
 
   return (
-    <Container as="section" padding className="news_section_container">
+    <Container as="section" padding className="achievers_container">
       <div className="flex gap-4 items-center">
         <div className="flex flex-col gap-3.5 items-start left_container flex-[0_1_30%]">
           <h1 className="text-primary">Latest News</h1>

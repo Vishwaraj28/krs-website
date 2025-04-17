@@ -16,6 +16,7 @@ export const ImageDisplay = ({ src, alt, className }: ImageDisplayProps) => {
       src={src}
       alt={generatedAlt}
       className={cn("object-cover", className)}
+      loading="lazy"
     />
   );
 };

@@ -7,50 +7,51 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { SquareArrowOutUpRight } from "lucide-react";
 import "swiper/swiper-bundle.css";
+import { sortByDate } from "@/utils/utils";
 
-export function NewsSection() {
+export function EventSections() {
   const {
     data: news,
     isLoading: tableDataLoading,
     error: tableDataError,
-  } = useFetchTableData("krs_news_data", [
+  } = useFetchTableData("krs_event_data", [
     "date",
     "location",
     "title",
     "description",
     "href",
+    "image_path",
   ]);
-
-  const handleCLick = useNavigateTo("/news");
+  const handleCLick = useNavigateTo("/events");
   const RightContainer = () => {
     if (tableDataLoading) return <p>Loading...</p>;
-    if (tableDataError) return <p>Error: {tableDataError.message}</p>;
-
-    const sortedNews = news?.sort((a: any, b: any) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      return dateB.getTime() - dateA.getTime();
-    });
+    if (tableDataError)
+      return <p>Ooops..!! We are Facing Some issue Please Try Again later.</p>;
+    const sortedNews = sortByDate(news, "latestFirst");
 
     return (
-      <div className="right_container min-w-0 flex-[0_1_70%]">
+      <div className="right_container min-w-0">
         <Swiper
           modules={[Autoplay]}
           loop={true}
           speed={1500}
           autoplay={{
-            delay: 2500,
+            delay: 4000,
             disableOnInteraction: false,
           }}
           pagination={false}
           navigation={false}
-          slidesPerView={2}
-          slidesPerGroup={1}
+          slidesPerView={3}
+          slidesPerGroup={3}
         >
           {sortedNews?.map((event: any) => (
             <SwiperSlide key={event.id} className="p-4 !h-auto">
               {/*Added !h-auto to override Swipper CSS*/}
-              <EventCard {...event} variant="simple" className="h-full" />
+              <EventCard
+                {...event}
+                image_path={`events/${event.image_path}`}
+                className="h-full"
+              />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -59,20 +60,21 @@ export function NewsSection() {
   };
 
   return (
-    <Container as="section" padding className="news_section_container">
-      <div className="flex gap-4 items-center">
-        <div className="flex flex-col gap-3.5 items-start left_container flex-[0_1_30%]">
-          <h1 className="text-primary">Latest News</h1>
-          <h4 className="font-semibold">
-            આગામી ઇવેન્ટ અથવા મીટિંગ <br /> વિશે વિગતો
+    <Container as="section" padding className="events_container">
+      <div className="header_container flex gap-3.5 justify-between items-center mb-6 p-4">
+        <h1 className="text-primary flex-[0_1_30%]">Events and Updates</h1>
+        <div className="right_header_section flex-[0_1_50%]">
+          <h4 className="font-semibold mb-4">
+            આપણા સમાજમાં વર્ષોથી યોજાતી ઘટનાઓ, જે તમામ આનંદ અને એકતા સાથે
+            ઉજવવામાં આવે છે
           </h4>
           <Button onClick={handleCLick}>
-            <span>See all news</span>
+            <span>See all events</span>
             <SquareArrowOutUpRight />
           </Button>
         </div>
-        <RightContainer />
       </div>
+      <RightContainer />
     </Container>
   );
 }
