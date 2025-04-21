@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/utils/supabaseClient";
 
-const useFetchTableData = (tableName: string, columns: string[] = []) => {
+const useTableData = (tableName: string, columns: string[] = []) => {
   return useQuery({
     queryKey: [tableName, columns], // Add columns to the queryKey for caching uniqueness
     queryFn: async () => {
@@ -19,4 +19,4 @@ const useFetchTableData = (tableName: string, columns: string[] = []) => {
   });
 };
 
-export default useFetchTableData;
+export default useTableData;

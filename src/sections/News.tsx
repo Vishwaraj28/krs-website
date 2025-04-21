@@ -1,4 +1,4 @@
-import useFetchTableData from "@/hooks/UseFetchTableData";
+import useTableData from "@/hooks/useTableData";
 import useNavigateTo from "@/hooks/UseNavigateTo";
 import { EventCard } from "@/components/blocks/cards/EventCard";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ export function NewsSection() {
     data: news,
     isLoading: tableDataLoading,
     error: tableDataError,
-  } = useFetchTableData("krs_news_data", [
+  } = useTableData("krs_news_data", [
     "date",
     "location",
     "title",

@@ -1,4 +1,5 @@
-import useFetchTableData from "@/hooks/UseFetchTableData";
+import useTableData from "@/hooks/useTableData";
+import useNavigateTo from "@/hooks/UseNavigateTo";
 import { EventCard } from "@/components/blocks/cards/EventCard";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/blocks/common/Container";
@@ -6,14 +7,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { SquareArrowOutUpRight } from "lucide-react";
 import "swiper/swiper-bundle.css";
-import useNavigateTo from "@/hooks/UseNavigateTo";
 
 export function NewsSection() {
   const {
     data: news,
     isLoading,
     error,
-  } = useFetchTableData("krs_news_data", [
+  } = useTableData("krs_news_data", [
     "date",
     "location",
     "title",
