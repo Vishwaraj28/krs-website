@@ -1,4 +1,3 @@
-import useNavigateTo from "@/hooks/useNavigateTo";
 import useFetchTableData from "@/hooks/UseFetchTableData";
 import { EventCard } from "@/components/blocks/cards/EventCard";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { SquareArrowOutUpRight } from "lucide-react";
 import "swiper/swiper-bundle.css";
+import useNavigateTo from "@/hooks/UseNavigateTo";
 
 export function NewsSection() {
   const {

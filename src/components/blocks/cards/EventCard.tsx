@@ -9,10 +9,10 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ImageDisplay } from "../common/Image";
-import useNavigateTo from "@/hooks/useNavigateTo";
 import { formatDate } from "@/utils/utils";
 import { useImageFromBucket } from "@/hooks/useImageFromBucket";
 import thumbnail from "@/assets/thumbnail.jpg";
+import useNavigateTo from "@/hooks/UseNavigateTo";
 
 export type EventCardVariant = "default" | "simple";
 
@@ -37,7 +37,7 @@ export function EventCard({
   className = "",
   ...props
 }: EventCardProps) {
-  const handleCLick = useNavigateTo("/news");
+  const handleCLick = useNavigateTo(`"${href}`);
 
   const {
     data: imageURL,
