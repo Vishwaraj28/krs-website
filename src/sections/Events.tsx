@@ -1,5 +1,5 @@
 import useNavigateTo from "@/hooks/useNavigateTo";
-import useFetchTableData from "@/hooks/useFetchTableData";
+import useFetchTableData from "@/hooks/UseFetchTableData";
 import { EventCard } from "@/components/blocks/cards/EventCard";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/blocks/common/Container";
