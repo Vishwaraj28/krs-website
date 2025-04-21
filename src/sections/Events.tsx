@@ -46,10 +46,10 @@ export function EventSections() {
         >
           {sortedNews?.map((event: any) => (
             <SwiperSlide key={event.id} className="p-4 !h-auto">
-              {/*Added !h-auto to override Swipper CSS*/}
               <EventCard
                 {...event}
-                image_path={`events/${event.image_path}`}
+                bucket="krs-homepage-assets"
+                imagePath={`events/${event.image_path}`}
                 className="h-full"
               />
             </SwiperSlide>

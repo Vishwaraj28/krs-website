@@ -8,68 +8,66 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ImageDisplay } from "../common/Image";
+import { ImageFromBucket } from "../common/Image";
 import { formatDate } from "@/utils/utils";
-import { useImageFromBucket } from "@/hooks/useImageFromBucket";
 import thumbnail from "@/assets/thumbnail.jpg";
 import useNavigateTo from "@/hooks/UseNavigateTo";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
 
 export type EventCardVariant = "default" | "simple";
 
 export interface EventCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  image_path?: string;
+  imagePath?: string;
   date: string;
   location: string;
   title: string;
   description: string;
   href: string;
   variant?: EventCardVariant;
+  bucket?: string;
 }
 
+const cardVariants = cva("", {
+  variants: {
+    variant: {
+      default: "",
+      simple: "border-b border-b-primary border-x-0 border-5",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+});
+
 export function EventCard({
-  image_path,
+  imagePath: cardImagePath,
   date,
   location,
   title,
   description,
   href,
   variant: cardVariant = "default",
-  className = "",
+  className,
+  bucket,
   ...props
 }: EventCardProps) {
   const handleCLick = useNavigateTo(`"${href}`);
-
-  const {
-    data: imageURL,
-    isLoading: imageLoading,
-    error: imageError,
-  } = useImageFromBucket("krs-homepage-assets", `${image_path}`, {
-    enabled: !!image_path && cardVariant === "default",
-  });
-
   const formattedDate = formatDate(date);
 
-  const borderClass =
-    "border-b border-b-primary border-x-0 border-5 rounded-xl";
-  const cardClassNames = `${
-    cardVariant === "simple" ? borderClass : ""
-  } ${className}`;
-
-  const ImageComponent = () => {
-    if (image_path && cardVariant === "default") {
-      if (imageLoading) return <p>Image is Loading..</p>;
-      if (imageError) return <p>{imageError.message}</p>;
-
-      return (
-        <ImageDisplay src={imageURL ?? thumbnail} className="rounded-lg" />
-      );
-    }
-    return null;
-  };
-
   return (
-    <Card className={cardClassNames} {...props}>
-      <ImageComponent />
+    <Card
+      className={cn(cardVariants({ variant: cardVariant }), className)}
+      {...props}
+    >
+      {cardImagePath && (
+        <ImageFromBucket
+          bucket={`${bucket}`}
+          imagePath={`${cardImagePath}`}
+          altImage={thumbnail}
+          className="rounded-lg"
+        />
+      )}
       <CardContent className="h-full">
         {cardVariant === "simple" && <Separator />}
         <div className="flex gap-3 flex-wrap">

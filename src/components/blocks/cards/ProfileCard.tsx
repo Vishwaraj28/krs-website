@@ -5,23 +5,26 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ImageDisplay, ImageFromBucket } from "../common/Image";
 
 export type ProfileCardVariant = "default" | "wide";
 export interface ProfileCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  imagePath: string;
+  image_path: string;
   category: string;
   location: string;
   title: string;
   description?: string;
+  bucket?: string;
   variant?: ProfileCardVariant;
 }
 
 export function ProfileCard({
-  imagePath,
+  image_path: cardImagePath,
   category,
   location,
   title,
   description,
+  bucket,
   variant: cardVariant = "default",
   ...props
 }: ProfileCardProps) {
@@ -32,16 +35,18 @@ export function ProfileCard({
           {category}
         </Badge>
       )}
-      <img
-        src={imagePath}
-        alt={imagePath.split("/").pop()?.split(".").slice(0, -1).join(".")}
+      <ImageFromBucket
+        imagePath={`${cardImagePath}`}
+        bucket={`${bucket}`}
         className={`object-cover rounded-lg self-center ${
-          cardVariant == "default" ? "w-48 h-48" : ""
+          cardVariant == "default" && "w-48 h-48"
         }`}
       />
       <CardContent className="w-80 items-center gap-4">
-        {description && <CardDescription>{description}</CardDescription>}
-        <CardTitle className="text-center">{title}</CardTitle>
+        {title && (
+          <CardDescription className="text-center">{title}</CardDescription>
+        )}
+        <CardTitle className="text-center">{description}</CardTitle>
         <Badge>{location}</Badge>
       </CardContent>
     </Card>

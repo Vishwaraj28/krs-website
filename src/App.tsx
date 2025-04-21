@@ -6,6 +6,7 @@ import "./App.css";
 // import SponserImage from "@/assets/Sample Sponser logo.svg";
 import { NewsSection } from "@/sections/News";
 import { EventSections } from "./sections/Events";
+import { AchieverSection } from "./sections/Achievers";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <div className="container mx-auto max-w-full space-y-8">
           <h1>This is Home</h1>
           <NewsSection />
+          <AchieverSection />
           <EventSections />
           {/* <div className="flex gap-6 items-center">
             <ProfileCard

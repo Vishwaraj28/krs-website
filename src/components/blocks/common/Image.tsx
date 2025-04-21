@@ -1,4 +1,6 @@
 import { cn } from "@/lib/utils";
+import { useImageFromBucket } from "@/hooks/useImageFromBucket";
+import thumbnail from "@/assets/thumbnail.jpg";
 
 // Reusable Responsive Image Component
 type ImageDisplayProps = {
@@ -20,3 +22,35 @@ export const ImageDisplay = ({ src, alt, className }: ImageDisplayProps) => {
     />
   );
 };
+
+interface ImageFromBucketProps {
+  imagePath: string;
+  bucket: string;
+  altImage?: string;
+  className?: string;
+}
+
+export function ImageFromBucket({
+  imagePath,
+  bucket,
+  altImage = thumbnail,
+  className,
+}: ImageFromBucketProps) {
+  if (!imagePath || !bucket) {
+    console.warn("ImageFromBucket: image_path, and bucket are required");
+    return null;
+  }
+
+  const {
+    data: imageURL,
+    isLoading,
+    error,
+  } = useImageFromBucket(bucket, imagePath, {
+    enabled: true,
+  });
+
+  if (isLoading) return <p>Image is Loading...</p>;
+  if (error) return <p>{error.message}</p>;
+
+  return <ImageDisplay src={imageURL ?? altImage} className={className} />;
+}
