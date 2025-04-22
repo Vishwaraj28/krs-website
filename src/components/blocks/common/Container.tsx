@@ -6,26 +6,24 @@ interface ContainerProps {
   className?: string;
   children: React.ReactNode;
   as?: keyof JSX.IntrinsicElements; // Allows using 'section', 'article', etc.
-  padding?: boolean; // Optional padding control
-  maxWidth?: string; // Optional maxWidth control
+  wide?: boolean; // Optional maxWidth control
+  style?: React.CSSProperties; // Optional inline styles
 }
 
 export const Container = ({
   className,
   children,
+  style,
   as: Component = "div", // Default to 'div', but can be any HTML element
-  padding = false, // Default to true (to apply padding)
-  maxWidth = "7xl", // Default to max width '7xl'
+  wide = false,
 }: ContainerProps) => {
-  return (
-    <Component
-      className={cn(
-        `max-w-${maxWidth} w-full mx-auto ${
-          padding ? "px-4 sm:px-6 lg:px-8" : ""
-        }`,
-        className
-      )}
-    >
+  const maxWidthClass = "max-w-7xl w-full mx-auto";
+  return wide ? (
+    <Component style={style} className={cn("w-full", className)}>
+      <div className={cn(maxWidthClass, "main_wrapper")}>{children}</div>
+    </Component>
+  ) : (
+    <Component style={style} className={cn(maxWidthClass, className)}>
       {children}
     </Component>
   );

@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ImageDisplay, ImageFromBucket } from "../common/Image";
+import { ImageFromBucket } from "../common/Image";
 
 export type ProfileCardVariant = "default" | "wide";
 export interface ProfileCardProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -42,7 +42,7 @@ export function ProfileCard({
           cardVariant == "default" && "w-48 h-48"
         }`}
       />
-      <CardContent className="w-80 items-center gap-4">
+      <CardContent className="items-center gap-4">
         {title && (
           <CardDescription className="text-center">{title}</CardDescription>
         )}

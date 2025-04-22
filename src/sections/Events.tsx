@@ -6,7 +6,6 @@ import { Container } from "@/components/blocks/common/Container";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { SquareArrowOutUpRight } from "lucide-react";
-import "swiper/swiper-bundle.css";
 import { sortByDate } from "@/utils/utils";
 
 export function EventSections() {
@@ -23,44 +22,10 @@ export function EventSections() {
     "image_path",
   ]);
   const handleCLick = useNavigateTo("/events");
-  const RightContainer = () => {
-    if (tableDataLoading) return <p>Loading...</p>;
-    if (tableDataError)
-      return <p>Ooops..!! We are Facing Some issue Please Try Again later.</p>;
-    const sortedNews = sortByDate(news, "latestFirst");
-
-    return (
-      <div className="right_container min-w-0">
-        <Swiper
-          modules={[Autoplay]}
-          loop={true}
-          speed={1500}
-          autoplay={{
-            delay: 4000,
-            disableOnInteraction: false,
-          }}
-          pagination={false}
-          navigation={false}
-          slidesPerView={3}
-          slidesPerGroup={3}
-        >
-          {sortedNews?.map((event: any) => (
-            <SwiperSlide key={event.id} className="p-4 !h-auto">
-              <EventCard
-                {...event}
-                bucket="krs-homepage-assets"
-                imagePath={`events/${event.image_path}`}
-                className="h-full"
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    );
-  };
+  const sortedNews = news ? sortByDate(news, "latestFirst") : [];
 
   return (
-    <Container as="section" padding className="events_container">
+    <Container as="section" className="events_container">
       <div className="header_container flex gap-3.5 justify-between items-center mb-6 p-4">
         <h1 className="text-primary flex-[0_1_30%]">Events and Updates</h1>
         <div className="right_header_section flex-[0_1_50%]">
@@ -74,7 +39,40 @@ export function EventSections() {
           </Button>
         </div>
       </div>
-      <RightContainer />
+      {/* Swiper Section */}
+      <div className="right_container min-w-0">
+        {tableDataLoading && <p>Loading...</p>}
+        {tableDataError && (
+          <p>Ooops..!! We are Facing Some issue. Please Try Again later.</p>
+        )}
+
+        {!tableDataLoading && !tableDataError && sortedNews.length > 0 && (
+          <Swiper
+            modules={[Autoplay]}
+            loop={true}
+            speed={1500}
+            autoplay={{
+              delay: 4000,
+              disableOnInteraction: false,
+            }}
+            pagination={false}
+            navigation={false}
+            slidesPerView={3}
+            slidesPerGroup={3}
+          >
+            {sortedNews?.map((event: any) => (
+              <SwiperSlide key={event.id} className="p-4 !h-auto">
+                <EventCard
+                  {...event}
+                  bucket="krs-homepage-assets"
+                  imagePath={`events/${event.image_path}`}
+                  className="h-full"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
+      </div>
     </Container>
   );
 }

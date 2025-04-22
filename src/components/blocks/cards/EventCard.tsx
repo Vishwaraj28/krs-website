@@ -15,19 +15,7 @@ import useNavigateTo from "@/hooks/UseNavigateTo";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-export type EventCardVariant = "default" | "simple";
-
-export interface EventCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  imagePath?: string;
-  date: string;
-  location: string;
-  title: string;
-  description: string;
-  href: string;
-  variant?: EventCardVariant;
-  bucket?: string;
-}
-
+// 👇 Define card variants using class-variance-authority
 const cardVariants = cva("", {
   variants: {
     variant: {
@@ -40,36 +28,49 @@ const cardVariants = cva("", {
   },
 });
 
+// 👇 This gives us type-safe access to `variant` prop
+type CardVariantProps = VariantProps<typeof cardVariants>;
+
+export interface EventCardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    CardVariantProps {
+  imagePath?: string;
+  date: string;
+  location: string;
+  title: string;
+  description: string;
+  href: string;
+  bucket?: string;
+}
+
 export function EventCard({
-  imagePath: cardImagePath,
+  imagePath,
   date,
   location,
   title,
   description,
   href,
-  variant: cardVariant = "default",
+  variant = "default", // default from cva
   className,
-  bucket,
+  bucket = "krs-homepage-assets", // optional default
   ...props
 }: EventCardProps) {
   const handleCLick = useNavigateTo(`"${href}`);
   const formattedDate = formatDate(date);
 
   return (
-    <Card
-      className={cn(cardVariants({ variant: cardVariant }), className)}
-      {...props}
-    >
-      {cardImagePath && (
+    <Card className={cn(cardVariants({ variant }), className)} {...props}>
+      {imagePath && (
         <ImageFromBucket
-          bucket={`${bucket}`}
-          imagePath={`${cardImagePath}`}
+          bucket={bucket}
+          imagePath={imagePath}
           altImage={thumbnail}
           className="rounded-lg"
         />
       )}
+
       <CardContent className="h-full">
-        {cardVariant === "simple" && <Separator />}
+        {variant === "simple" && <Separator />}
         <div className="flex gap-3 flex-wrap">
           <Badge>
             <Calendar />
@@ -80,13 +81,13 @@ export function EventCard({
             {location}
           </Badge>
         </div>
-        <CardTitle className={cardVariant === "simple" ? "order-first" : ""}>
+        <CardTitle className={variant === "simple" ? "order-first" : ""}>
           {title}
         </CardTitle>
         <CardDescription>{description}</CardDescription>
         <Button
           onClick={handleCLick}
-          variant={cardVariant === "simple" ? "outline" : "default"}
+          variant={variant === "simple" ? "outline" : "default"}
           className="mt-auto"
           size="sm"
         >
