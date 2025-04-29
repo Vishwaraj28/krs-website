@@ -4,33 +4,36 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { ImageDisplay } from "../common/Image";
+import { ImageFromBucket } from "../common/Image";
 import { Globe, List, Mail, MapPin, Phone } from "lucide-react";
 import { FlexBox } from "../common/FlexBox";
+import thumbnail from "@/assets/thumbnail.jpg";
 
 export interface SponserCardProps extends React.HTMLAttributes<HTMLDivElement> {
   imagePath?: string;
   title: string;
   description?: string;
-  mail?: string;
+  email?: string;
   phone?: string;
   address?: string;
   website?: string;
+  bucket?: string;
 }
 
 export function SponserCard({
   imagePath,
   title,
   description,
-  mail,
+  email,
   phone,
   address,
   website,
+  bucket = "krs-homepage-assets", // optional default
   ...props
 }: SponserCardProps) {
   const infoFields = [
     { icon: List, content: description },
-    { icon: Mail, content: mail, href: `mailto:${mail}` },
+    { icon: Mail, content: email, href: `mailto:${email}` },
     { icon: Phone, content: phone },
     { icon: MapPin, content: address },
     { icon: Globe, content: website, href: website },
@@ -38,14 +41,21 @@ export function SponserCard({
 
   return (
     <Card {...props}>
-      {imagePath && <ImageDisplay src={imagePath} className="self-center" />}
+      {imagePath && (
+        <ImageFromBucket
+          imagePath={imagePath}
+          bucket={bucket}
+          altImage={thumbnail}
+          className="rounded-lg"
+        />
+      )}
       <CardTitle className="text-center">{title}</CardTitle>
       <CardContent>
         {infoFields.map(
           (field, index) =>
             field.content && (
-              <FlexBox key={index}>
-                <field.icon />
+              <FlexBox firstColWidth="8.5" secondColWidth="92.5" key={index}>
+                <field.icon color="#f37e20" />
                 <CardDescription>
                   {field.href ? (
                     <a

@@ -32,16 +32,16 @@ export function AchieverSection() {
     <Container
       wide
       as="section"
-      className="achievers_container relative bg-[#FFE1BA] py-16 my-4"
+      className="relative bg-[#FFE1BA] py-16 achievers_container"
     >
       <div
         className="absolute inset-0 bg-cover bg-center opacity-40 z-0"
         style={{
           backgroundImage: `url(${achieversBackground})`,
         }}
-      ></div>
+      />
       <h1 className="text-primary mb-4 px-3 relative">Our Achievers</h1>
-      <div className="flex justify-between items-center mb-4 flex-wrap gap-2 px-3 relative">
+      <div className="flex justify-between items-center mb-10 flex-wrap gap-2 px-3 relative">
         <h4 className="font-semibold">
           આપણા સમાજના સ્ટાર્સ, જેમણે કેટલીક અસાધારણ સિદ્ધિઓ હાંસલ કરી છે
         </h4>
@@ -102,12 +102,12 @@ export function AchieverSection() {
             slidesPerView={4}
             slidesPerGroup={2}
           >
-            {achievers?.map((event: any) => (
-              <SwiperSlide key={event.id} className="p-3 !h-auto mb-10">
+            {achievers?.map((achiever: any) => (
+              <SwiperSlide key={achiever.id} className="p-3 !h-auto mb-12">
                 <ProfileCard
-                  {...event}
+                  {...achiever}
                   bucket="krs-homepage-assets"
-                  image_path={`achievers/${event.image_path}`}
+                  imagePath={`achievers/${achiever.image_path}`}
                   className="h-full"
                 />
               </SwiperSlide>

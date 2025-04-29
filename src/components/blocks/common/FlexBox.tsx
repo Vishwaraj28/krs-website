@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 // Define the types for props
 interface FlexProps {
   children: ReactNode; // Allow any type of child (string, number, React elements)
-  firstColWidth?: string; // e.g., "20%"
-  secondColWidth?: string; // e.g., "80%"
+  firstColWidth?: string; // e.g., "20"
+  secondColWidth?: string; // e.g., "80"
   className?: string;
 }
 
@@ -27,16 +27,16 @@ export const FlexBox = ({
     if (first && second) {
       // If both first and second are defined, handle like traditional flex layout
       if (index === 0) {
-        return { flex: `0 1 ${first}` }; // Apply flex to the first child
+        return { flex: `0 1 ${first}%` }; // Apply flex to the first child
       } else if (index === 1) {
-        return { flex: `0 1 ${second}` }; // Apply flex to the second child
+        return { flex: `0 1 ${second}%` }; // Apply flex to the second child
       }
     }
 
     if (first && !second) {
       // If first is defined but second is not, share remaining space
       if (index === 0) {
-        return { flex: `0 1 ${first}` }; // First child gets defined width
+        return { flex: `0 1 ${first}%` }; // First child gets defined width
       } else {
         return { flex: "1 1 auto" }; // Remaining children take up equal space
       }
@@ -64,7 +64,7 @@ export const FlexBox = ({
 
           // Merge existing style with the new style from getChildStyles
           const mergedStyle = { ...childStyle, ...getChildStyles(index) };
-          console.log("Merged style for child at index", mergedStyle);
+          // console.log("Merged style for child at index", mergedStyle);
           // Only pass merged style to valid ReactElement children
           return React.cloneElement(childElement, {
             style: mergedStyle,

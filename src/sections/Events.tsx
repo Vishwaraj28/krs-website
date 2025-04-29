@@ -25,7 +25,7 @@ export function EventSections() {
   const sortedNews = news ? sortByDate(news, "latestFirst") : [];
 
   return (
-    <Container as="section" className="events_container my-4 py-8">
+    <Container as="section" className="events_container">
       <div className="header_container flex gap-3.5 justify-between items-center mb-6 p-4">
         <h1 className="text-primary flex-[0_1_30%]">Events and Updates</h1>
         <div className="right_header_section flex-[0_1_50%]">

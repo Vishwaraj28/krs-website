@@ -6,10 +6,11 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ImageFromBucket } from "../common/Image";
+import thumbnail from "@/assets/thumbnail.jpg";
 
 export type ProfileCardVariant = "default" | "wide";
 export interface ProfileCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  image_path: string;
+  imagePath: string;
   category: string;
   location: string;
   title: string;
@@ -19,12 +20,12 @@ export interface ProfileCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function ProfileCard({
-  image_path: cardImagePath,
+  imagePath,
   category,
   location,
   title,
   description,
-  bucket,
+  bucket = "krs-homepage-assets", // optional default
   variant: cardVariant = "default",
   ...props
 }: ProfileCardProps) {
@@ -36,17 +37,20 @@ export function ProfileCard({
         </Badge>
       )}
       <ImageFromBucket
-        imagePath={`${cardImagePath}`}
-        bucket={`${bucket}`}
+        imagePath={imagePath}
+        bucket={bucket}
         className={`object-cover rounded-lg self-center ${
           cardVariant == "default" && "w-48 h-48"
         }`}
+        altImage={thumbnail}
       />
       <CardContent className="items-center gap-4">
         {title && (
           <CardDescription className="text-center">{title}</CardDescription>
         )}
-        <CardTitle className="text-center">{description}</CardTitle>
+        {description && (
+          <CardTitle className="text-center">{description}</CardTitle>
+        )}
         <Badge>{location}</Badge>
       </CardContent>
     </Card>

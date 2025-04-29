@@ -1,6 +1,17 @@
 .swiper-pagination-bullet {
-    transition: all 0.3s ease;
-    transform: scale(1.75);
-    margin: 0 8px !important;
-    border: 1px solid var(--swiper-theme-color) !important;
+  transition: all 0.3s ease;
+  transform: scale(1.75);
+  margin: 0 8px !important;
+  border: 1px solid var(--swiper-theme-color) !important;
+}
+
+.masonry-grid-layout {
+  display: flex;
+  margin-left: -16px; /* gutter size offset */
+  width: auto;
+}
+
+.masonry-grid-layout_column {
+  padding-left: 16px; /* gutter size */
+  background-clip: padding-box;
 }

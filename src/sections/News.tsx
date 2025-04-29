@@ -25,7 +25,7 @@ export function NewsSection() {
   const sortedNews = news ? sortByDate(news, "latestFirst") : [];
 
   return (
-    <Container as="section" className="news_section_container my-4 py-8">
+    <Container as="section" className="news_container">
       <div className="flex gap-4 items-center">
         <div className="flex flex-col gap-3.5 items-start left_container flex-[0_1_30%]">
           <h1 className="text-primary">Latest News</h1>
@@ -56,9 +56,9 @@ export function NewsSection() {
               slidesPerView={2}
               slidesPerGroup={1}
             >
-              {sortedNews.map((event: any) => (
-                <SwiperSlide key={event.id} className="p-4 !h-auto">
-                  <EventCard {...event} variant="simple" className="h-full" />
+              {sortedNews.map((news: any) => (
+                <SwiperSlide key={news.id} className="p-4 !h-auto">
+                  <EventCard {...news} variant="simple" className="h-full" />
                 </SwiperSlide>
               ))}
             </Swiper>

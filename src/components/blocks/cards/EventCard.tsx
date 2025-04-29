@@ -1,3 +1,6 @@
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "@/lib/utils";
+import useNavigateTo from "@/hooks/UseNavigateTo";
 import { Calendar, MapPin, SquareArrowOutUpRight } from "lucide-react";
 import {
   Card,
@@ -11,9 +14,6 @@ import { Button } from "@/components/ui/button";
 import { ImageFromBucket } from "../common/Image";
 import { formatDate } from "@/utils/utils";
 import thumbnail from "@/assets/thumbnail.jpg";
-import useNavigateTo from "@/hooks/UseNavigateTo";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/lib/utils";
 
 // 👇 Define card variants using class-variance-authority
 const cardVariants = cva("", {
