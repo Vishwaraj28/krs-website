@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useImageFromBucket } from "@/hooks/useImageFromBucket";
 import thumbnail from "@/assets/thumbnail.jpg";
+import { isValidValue } from "@/utils/utils";
 
 // Reusable Responsive Image Component
 type ImageDisplayProps = {
@@ -36,6 +37,7 @@ export function ImageFromBucket({
   altImage = thumbnail,
   className,
 }: ImageFromBucketProps) {
+  const isValid = isValidValue(bucket) && isValidValue(imagePath);
   if (!imagePath || !bucket) {
     console.warn("ImageFromBucket: image_path, and bucket are required");
     return null;
@@ -46,7 +48,7 @@ export function ImageFromBucket({
     isLoading,
     error,
   } = useImageFromBucket(bucket, imagePath, {
-    enabled: true,
+    enabled: isValid,
   });
 
   if (isLoading) return <p>Image is Loading...</p>;

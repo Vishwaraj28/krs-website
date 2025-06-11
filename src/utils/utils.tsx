@@ -37,3 +37,12 @@ export const sortByDate = (
     return direction === "latestFirst" ? dateB - dateA : dateA - dateB;
   });
 };
+
+export function isValidValue(value: unknown): boolean {
+  return (
+    value !== null &&
+    value !== undefined &&
+    value !== "null" &&
+    value !== "undefined"
+  );
+}
