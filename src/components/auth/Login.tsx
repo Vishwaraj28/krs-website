@@ -7,7 +7,6 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
 import { loginThunk } from "@/store/thunk/loginThunk";
-import { navThunk } from "@/store/thunk/navThunk";
 
 export function LoginForm({
   className,
@@ -28,15 +27,7 @@ export function LoginForm({
       if (loginThunk.rejected.match(result)) {
         setError(result.payload as string);
       } else {
-        // const userId = result.payload.user.id;
         navigate("/dashboard");
-        // // const navResult = await dispatch(navThunk(userId));
-
-        // //set error wont work
-        // if (navThunk.rejected.match(navResult)) {
-        //   setError("Failed to load navigation items");
-        //   return;
-        // }
       }
     },
   };
