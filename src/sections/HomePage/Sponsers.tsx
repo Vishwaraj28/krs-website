@@ -23,8 +23,8 @@ export function SponserSection() {
             backgroundImage: `url(${sponsersBackgroundImage})`,
           }}
         />
-        <h1 className="text-center mb-4">Our Sponsors</h1>
-        <h4 className="font-semibold mb-4 text-center">
+        <h1 className="text-black text-center mb-4">Our Sponsors</h1>
+        <h4 className="mb-4 text-center">
           અમે અમારા પ્રાયોજકોના તમામ સમર્થન માટે આભારી છીએ!
         </h4>
       </Container>

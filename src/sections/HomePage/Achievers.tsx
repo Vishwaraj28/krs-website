@@ -8,6 +8,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { SquareArrowOutUpRight, ChevronRight, ChevronLeft } from "lucide-react";
 import { ProfileCard } from "@/components/blocks/cards/ProfileCard";
 import achieversBackground from "@/assets/achievers_background.png";
+import { FlexBox } from "@/components/blocks/common/FlexBox";
 
 export function AchieverSection() {
   const {
@@ -40,12 +41,9 @@ export function AchieverSection() {
           backgroundImage: `url(${achieversBackground})`,
         }}
       />
-      <h1 className="text-primary mb-4 px-3 relative">Our Achievers</h1>
-      <div className="flex justify-between items-center mb-10 flex-wrap gap-2 px-3 relative">
-        <h4 className="font-semibold">
-          આપણા સમાજના સ્ટાર્સ, જેમણે કેટલીક અસાધારણ સિદ્ધિઓ હાંસલ કરી છે
-        </h4>
-
+      <h1 className="mb-4 px-3 relative">Our Achievers</h1>
+      <FlexBox className="justify-between mb-10 flex-wrap gap-2 px-3 relative">
+        <h4>આપણા સમાજના સ્ટાર્સ, જેમણે કેટલીક અસાધારણ સિદ્ધિઓ હાંસલ કરી છે</h4>
         <div className="flex items-center gap-2">
           <Button
             ref={prevRef}
@@ -68,7 +66,7 @@ export function AchieverSection() {
             <SquareArrowOutUpRight />
           </Button>
         </div>
-      </div>
+      </FlexBox>
       <div className="right_container min-w-0">
         {tableDataLoading && <p>Loading...</p>}
         {tableDataError && (

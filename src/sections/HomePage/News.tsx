@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { sortByDate } from "@/utils/utils";
+import { FlexBox } from "@/components/blocks/common/FlexBox";
 
 export function NewsSection() {
   const {
@@ -26,10 +27,10 @@ export function NewsSection() {
 
   return (
     <Container as="section" className="news_container">
-      <div className="flex gap-4 items-center">
-        <div className="flex flex-col gap-3.5 items-start left_container flex-[0_1_30%]">
-          <h1 className="text-primary">Latest News</h1>
-          <h4 className="font-semibold">
+      <FlexBox firstColWidth="30" secondColWidth="70">
+        <div className="left_container">
+          <h1 className="mb-3.5">Latest News</h1>
+          <h4 className="mb-4">
             આગામી ઇવેન્ટ અથવા મીટિંગ <br /> વિશે વિગતો
           </h4>
           <Button onClick={handleCLick}>
@@ -38,7 +39,7 @@ export function NewsSection() {
           </Button>
         </div>
         {/* Swiper Section */}
-        <div className="right_container min-w-0 flex-[0_1_70%]">
+        <div className="right_container min-w-0">
           {tableDataLoading && <p>Loading...</p>}
           {tableDataError && <p>Error: {tableDataError.message}</p>}
 
@@ -64,7 +65,7 @@ export function NewsSection() {
             </Swiper>
           )}
         </div>
-      </div>
+      </FlexBox>
     </Container>
   );
 }

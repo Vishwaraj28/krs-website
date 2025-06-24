@@ -1,17 +1,23 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider as ReduxProvider } from "react-redux";
 import { RouterProvider } from "react-router";
-import { router } from "./utils/router";
+import { store } from "@/store/store";
+import { router } from "@/utils/router";
+import { AuthProvider } from "@/provider/AuthProvider";
 import "./index.css";
 
-// Create a QueryClient instance
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <ReduxProvider store={store}>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </AuthProvider>
+    </ReduxProvider>
   </StrictMode>
 );

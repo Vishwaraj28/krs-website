@@ -1,18 +1,18 @@
 // Define the message template function type
 export type MessageTemplate = (params: {
-  label: string
-  value?: any
-  fieldName?: string
-}) => string
+  label: string;
+  value?: any;
+  fieldName?: string;
+}) => string;
 
 // Supported languages
-export type Language = 'en' | 'gu'
+export type Language = "en" | "gu";
 
 // Validation messages organized by type and language
 type ValidationMessages = Record<
   string,
   Partial<Record<Language, MessageTemplate>>
->
+>;
 
 // Registry of validation message templates
 export const validationMessages: ValidationMessages = {
@@ -48,25 +48,41 @@ export const validationMessages: ValidationMessages = {
     en: ({ label }) => `${label} must contain only letters and numbers`,
     gu: ({ label }) => `${label} માં ફક્ત અક્ષરો અને નંબરો હોવા જોઈએ`,
   },
-}
+  password_uppercase: {
+    en: ({ label }) => `${label} must contain at least one uppercase letter`,
+    gu: ({ label }) => `${label} માં ઓછામાં ઓછું એક મોટું અક્ષર હોવું જોઈએ`,
+  },
+  password_lowercase: {
+    en: ({ label }) => `${label} must contain at least one lowercase letter`,
+    gu: ({ label }) => `${label} માં ઓછામાં ઓછું એક નાનું અક્ષર હોવું જોઈએ`,
+  },
+  password_digit: {
+    en: ({ label }) => `${label} must contain at least one number`,
+    gu: ({ label }) => `${label} માં ઓછામાં ઓછો એક નંબર હોવો જોઈએ`,
+  },
+  password_special: {
+    en: ({ label }) => `${label} must contain at least one special character`,
+    gu: ({ label }) => `${label} માં ઓછામાં ઓછો એક વિશેષ અક્ષર હોવો જોઈએ`,
+  },
+};
 
 // Function to get a validation message
 export function getValidationMessage(
   type: string,
   params: {
-    label: string
-    value?: any
-    fieldName?: string
-    language?: Language
+    label: string;
+    value?: any;
+    fieldName?: string;
+    language?: Language;
   }
 ): string {
-  const { language = 'en' } = params
-  const templates = validationMessages[type]
+  const { language = "en" } = params;
+  const templates = validationMessages[type];
 
   const template =
     templates?.[language] ||
     templates?.en || // Fallback to English
-    (({ label }) => `${label} is invalid`) // Generic fallback
+    (({ label }) => `${label} is invalid`); // Generic fallback
 
-  return template(params)
+  return template(params);
 }

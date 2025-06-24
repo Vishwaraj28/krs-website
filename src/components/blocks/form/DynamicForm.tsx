@@ -63,12 +63,7 @@ export function DynamicForm({ config }: { config: FormConfig }) {
   // Handle form submission
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("Form submitted with values:", form.formState);
-    console.log(values);
-    // toast({
-    //   title: "Form submitted",
-    //   description: "Your form has been submitted successfully.",
-    // });
-
+    //Add Loading state
     if (config.onSubmitSuccess) {
       config.onSubmitSuccess(values);
     }

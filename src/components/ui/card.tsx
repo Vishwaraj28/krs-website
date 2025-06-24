@@ -32,7 +32,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"h4">) {
   return (
     <h4
       data-slot="card-title"
-      className={cn("text-primary-gradient", className)}
+      className={cn("text-primary-gradient font-normal", className)}
       {...props}
     />
   );

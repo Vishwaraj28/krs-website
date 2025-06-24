@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { sortByDate } from "@/utils/utils";
+import { FlexBox } from "@/components/blocks/common/FlexBox";
 
 export function EventSections() {
   const {
@@ -26,10 +27,14 @@ export function EventSections() {
 
   return (
     <Container as="section" className="events_container">
-      <div className="header_container flex gap-3.5 justify-between items-center mb-6 p-4">
-        <h1 className="text-primary flex-[0_1_30%]">Events and Updates</h1>
-        <div className="right_header_section flex-[0_1_50%]">
-          <h4 className="font-semibold mb-4">
+      <FlexBox
+        firstColWidth="30"
+        secondColWidth="60"
+        className="header_container gap-3.5 justify-between mb-6 p-4"
+      >
+        <h1 className="left_header_section">Events and Updates</h1>
+        <div className="right_header_section">
+          <h4 className="mb-4">
             આપણા સમાજમાં વર્ષોથી યોજાતી ઘટનાઓ, જે તમામ આનંદ અને એકતા સાથે
             ઉજવવામાં આવે છે
           </h4>
@@ -38,9 +43,9 @@ export function EventSections() {
             <SquareArrowOutUpRight />
           </Button>
         </div>
-      </div>
+      </FlexBox>
       {/* Swiper Section */}
-      <div className="right_container min-w-0">
+      <div className="min-w-0">
         {tableDataLoading && <p>Loading...</p>}
         {tableDataError && (
           <p>Ooops..!! We are Facing Some issue. Please Try Again later.</p>
