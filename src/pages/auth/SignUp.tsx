@@ -1,4 +1,4 @@
-import { Flame } from "lucide-react";
+// import { Flame } from "lucide-react";
 import { SignupForm } from "@/components/auth/SignUp";
 
 export default function SignupPage() {

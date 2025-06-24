@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { getValidationMessage } from "@/lib/validation-registry";
-import { Cone } from "lucide-react";
 import { RegisteredFieldKey } from "@/lib/field-registry";
 
 // Define supported languages

@@ -10,7 +10,7 @@ import ProfileSettings from "@/pages/profile/ProfileSettings";
 import GlobalSearch from "@/pages/GlobalSearch";
 import GroupUsers from "@/pages/GroupUsers";
 import AdminPanel from "@/pages/AdminPanel";
-import ContentEditor from "@/pages/ContentEditor";
+// import ContentEditor from "@/pages/ContentEditor";
 // import Unauthorized from "@/pages/Unauthorized";
 
 // Route guards
