@@ -1,10 +1,10 @@
 import type React from "react";
 import { Button } from "@/components/ui/button";
 import { FormConfig } from "@/types/form-types";
-import { DynamicForm } from "../blocks/form/DynamicForm";
-import { FlexBox } from "../blocks/common/FlexBox";
+import { DynamicForm } from "@/components/blocks/form/DynamicForm";
+import { FlexBox } from "@/components/blocks/common/FlexBox";
 import { useNavigate } from "react-router";
-import { handlePendingSignup } from "@/lib/handle-submission";
+import { handlePendingSignup } from "@/utils/handle-submission";
 
 export function SignupForm({
   className,

@@ -6,7 +6,7 @@ const transformNavData = (items: NavItem[]): NavGroup[] => {
     {
       title: string;
       url: string;
-      items: { title: string; url: string }[];
+      items: { title: string; url: string, isActive: boolean, order: number, id: string }[];
       order: number;
     }
   > = {};
@@ -26,6 +26,9 @@ const transformNavData = (items: NavItem[]): NavGroup[] => {
     grouped[section].items.push({
       title: item.title,
       url: item.url,
+      isActive: item.is_active,
+      order: item.item_order,
+      id: item.nav_item_id
     });
   }
 

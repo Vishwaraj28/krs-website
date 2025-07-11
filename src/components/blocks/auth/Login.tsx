@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { DynamicForm } from "../blocks/form/DynamicForm";
+import { DynamicForm } from "@/components/blocks/form/DynamicForm";
 import { FormConfig } from "@/types/form-types";
-import { FlexBox } from "../blocks/common/FlexBox";
-import { Button } from "../ui/button";
+import { FlexBox } from "@/components/blocks/common/FlexBox";
+import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";

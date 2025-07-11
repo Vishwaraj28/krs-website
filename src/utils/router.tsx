@@ -1,99 +1,103 @@
-// utils/router.tsx
 import { createBrowserRouter } from "react-router";
 import App from "@/App";
 
-// Pages
-import DesignElements from "@/pages/DesignElements";
+// Auth
+import LoginPage from "@/pages/auth/Login";
+import SignupPage from "@/pages/auth/SignUp";
+
+// Dashboard
+import Dashboard from "@/pages/dashboard/DashBoard";
+
+// Profile
 import Profile from "@/pages/profile/Profile";
 import ProfileEdit from "@/pages/profile/ProfileEdit";
 import ProfileSettings from "@/pages/profile/ProfileSettings";
-import GlobalSearch from "@/pages/GlobalSearch";
-import GroupUsers from "@/pages/GroupUsers";
-import AdminPanel from "@/pages/AdminPanel";
-// import ContentEditor from "@/pages/ContentEditor";
-// import Unauthorized from "@/pages/Unauthorized";
 
-// Route guards
-import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
-import { RoleBasedRoute } from "@/components/auth/RoleBasedRoute";
-import LoginPage from "@/pages/auth/Login";
-import SignupPage from "@/pages/auth/SignUp";
-import Dashboard from "@/pages/dashboard/DashBoard";
+// Family
+import MyFamily from "@/pages/family/MyFamily";
+import ManageMembers from "@/pages/family/ManageMembers";
+
+// User Management
+import NewUserApprovals from "@/pages/userManagement/NewUserApproval";
+import AssignRoles from "@/pages/userManagement/AssignRoles";
+import GroupMembers from "@/pages/userManagement/GroupMembers";
+
+// Logs
+import ActionLogs from "@/pages/activity_logs/ActionLogs";
+
+// Support
+// import HelpDocs from "@/pages/support/HelpDocs";
+// import ContactAdmin from "@/pages/support/ContactAdmin";
+
+// Search
+import GlobalSearch from "@/pages/search/GlobalSearch";
+
+// Design Elements
+import DesignElements from "@/pages/DesignElements";
+
+// Auth guards
+import { ProtectedRoute } from "@/components/blocks/auth/ProtectedRoute";
 
 export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />, // Public Home Page
-  },
-  {
-    path: "/design-elements",
-    element: <DesignElements />, // Example page
-  },
-  {
-    path: "/login",
-    element: <LoginPage />, // Example page
-  },
-  {
-    path: "/signup",
-    element: <SignupPage />, // Reusing LoginPage for signup, can be customized
-  },
+  { path: "/", element: <App /> },
+  { path: "/login", element: <LoginPage /> },
+  { path: "/signup", element: <SignupPage /> },
+  { path: "/design-elements", element: <DesignElements /> },
+
   {
     path: "/dashboard",
     element: <ProtectedRoute />,
-    children: [
-      {
-        index: true,
-        element: <Dashboard />, // /profile
-      },
-    ],
+    children: [{ index: true, element: <Dashboard /> }],
   },
-  // {
-  //   path: "/unauthorized",
-  //   element: <Unauthorized />, // Fallback for denied access
-  // },
+
   {
     path: "/profile",
-    element: <ProtectedRoute />, // Require login
-    children: [
-      {
-        index: true,
-        element: <Profile />, // /profile
-      },
-      {
-        path: "edit",
-        element: <ProfileEdit />, // /profile/edit
-      },
-      {
-        path: "settings",
-        element: <ProfileSettings />, // /profile/settings
-      },
-      {
-        path: "global-search",
-        element: <GlobalSearch />, // /profile/global-search
-      },
-      {
-        path: "group-users",
-        element: <RoleBasedRoute allowedRoles={["krs_user_group_manager"]} />,
-        children: [{ index: true, element: <GroupUsers /> }],
-      },
-    ],
-  },
-  {
-    path: "/admin-panel",
     element: <ProtectedRoute />,
     children: [
-      {
-        index: true,
-        element: <AdminPanel />, // /profile
-      },
+      { index: true, element: <Profile /> },
+      { path: "edit", element: <ProfileEdit /> },
+      { path: "settings", element: <ProfileSettings /> },
     ],
   },
+
+  {
+    path: "/family",
+    element: <ProtectedRoute />,
+    children: [
+      { index: true, element: <MyFamily /> },
+      { path: "manage-members", element: <ManageMembers /> },
+    ],
+  },
+
+  {
+    path: "/user-management",
+    element: <ProtectedRoute />,
+    children: [
+      // { path: "all-users", element: <AllUsers /> },
+      { path: "new-users", element: <NewUserApprovals /> },
+      { path: "assign-roles", element: <AssignRoles /> },
+      { path: "group-members", element: <GroupMembers /> },
+    ],
+  },
+
+  {
+    path: "/logs",
+    element: <ProtectedRoute />,
+    children: [{ path: "action-log", element: <ActionLogs /> }],
+  },
+
   // {
-  //   path: "/content-edit",
-  //   element: (
-  //     <RoleBasedRoute allowedRoles={["krs_site_content_editor"]}>
-  //       <ContentEditor />
-  //     </RoleBasedRoute>
-  //   ),
+  //   path: "/support",
+  //   element: <ProtectedRoute />,
+  //   children: [
+  //     // { path: "help", element: <HelpDocs /> },
+  //     { path: "contact", element: <ContactAdmin /> },
+  //   ],
   // },
+
+  {
+    path: "/search",
+    element: <ProtectedRoute />,
+    children: [{ path: "global-search", element: <GlobalSearch /> }],
+  },
 ]);

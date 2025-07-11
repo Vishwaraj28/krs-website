@@ -1,6 +1,7 @@
-import { Navigate, Outlet } from "react-router";
+import { Navigate } from "react-router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import ShellLayout from "../dashboard/ShellLayout";
 
 export const ProtectedRoute = () => {
   const { isAuthenticated, initialized } = useSelector(
@@ -11,5 +12,9 @@ export const ProtectedRoute = () => {
     return <div className="p-4 text-center">Checking authentication...</div>;
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+   if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <ShellLayout />;
 };

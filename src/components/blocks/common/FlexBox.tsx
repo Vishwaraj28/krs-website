@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactElement } from "react";
+import React, { ReactNode, ReactElement, JSX } from "react";
 import { cn } from "@/lib/utils";
 
 // Define the types for props
@@ -8,6 +8,7 @@ interface FlexProps {
   secondColWidth?: string;
   className?: string;
   orientation?: "row" | "column"; // Add orientation prop
+  as?: keyof JSX.IntrinsicElements; // Allows using 'section', 'article', etc.
 }
 
 type ChildrenProps = {
@@ -20,6 +21,7 @@ export const FlexBox = ({
   secondColWidth: second,
   className,
   orientation = "row", // Default to row
+  as: Component = "div",
 }: FlexProps) => {
   const childrenArray = React.Children.toArray(children);
 
@@ -52,7 +54,7 @@ export const FlexBox = ({
   };
 
   return (
-    <div
+    <Component
       className={cn(
         "flex gap-4 w-full items-center ",
         orientation === "column" ? "flex-col" : "flex-row",
@@ -71,6 +73,6 @@ export const FlexBox = ({
         }
         return child;
       })}
-    </div>
+    </Component>
   );
 };

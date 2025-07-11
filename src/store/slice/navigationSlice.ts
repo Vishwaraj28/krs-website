@@ -10,16 +10,17 @@ export interface NavItem {
   title: string;
   url: string;
   item_order: number;
+  is_active: boolean
 }
 
 export interface NavGroup {
   title: string;
   url: string;
-  items: { title: string; url: string }[];
+  items: { title: string; url: string, isActive: boolean, order: number, id: string }[];
 }
 
 interface NavState {
-  navMain: NavGroup[]; // transformed structure
+  navMain: NavGroup[];
   loading: boolean;
   error: string | null;
 }

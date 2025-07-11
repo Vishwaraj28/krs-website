@@ -17,10 +17,10 @@ import {
 } from "@/components/ui/sidebar";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
-import { Button } from "../ui/button";
-import { useNavigate } from "react-router";
+import { Button } from "@/components/ui/button";
+import { useLocation, useNavigate } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FlexBox } from "../blocks/common/FlexBox";
+import { FlexBox } from "@/components/blocks/common/FlexBox";
 
 function SidebarSkeleton() {
   return (
@@ -48,6 +48,7 @@ function SidebarSkeleton() {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const {pathname} = useLocation();
   const navigate = useNavigate();
   const {
     navMain: navigationData,
@@ -84,26 +85,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         ) : (
           <SidebarGroup>
             <SidebarMenu>
-              {navigationData.map((item) => (
-                <SidebarMenuItem key={item.title}>
+              {navigationData.map((navGroup) => (
+                <SidebarMenuItem key={navGroup.title}>
                   <SidebarMenuButton asChild>
-                    <span className="font-medium">{item.title}</span>
+                    <span className="font-medium">{navGroup.title}</span>
                   </SidebarMenuButton>
-                  {item.items?.length ? (
+                  {navGroup.items?.length ? (
                     <SidebarMenuSub>
-                      {item.items.map((item) => (
-                        <SidebarMenuSubItem key={item.title}>
+                      {navGroup.items.map((navItem) => (
+                        <SidebarMenuSubItem key={navItem.id}>
                           <SidebarMenuSubButton
                             asChild
-                            // isActive={item.isActive}
+                            current={pathname == navItem.url}
+                            isActive={navItem.isActive}
                           >
                             <Button
                               variant="ghost"
                               size="sm"
                               className="w-full justify-start"
-                              onClick={() => navigate(item.url)}
+                              onClick={() => navigate(navItem.url)}
                             >
-                              {item.title}
+                              {navItem.title}
                             </Button>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
