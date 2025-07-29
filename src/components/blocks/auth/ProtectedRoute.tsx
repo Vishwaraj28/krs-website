@@ -12,7 +12,7 @@ export const ProtectedRoute = () => {
     return <div className="p-4 text-center">Checking authentication...</div>;
   }
 
-   if (!isAuthenticated) {
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 

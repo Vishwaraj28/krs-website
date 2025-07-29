@@ -12,18 +12,30 @@ import { navThunk } from "@/store/thunk/navThunk";
 import { Outlet } from "react-router";
 import { FlexBox } from "../common/FlexBox";
 import HeaderBreadcrumb from "./HeaderBreadcrumb";
+import UnderReviewPage from "../auth/UnderReview";
 
 export default function ShellLayout() {
   const dispatch = useDispatch<AppDispatch>();
-  const { user } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  // Destructure user properties
+  const {
+    role: userRole,
+    id: userID,
+    user_metadata: userMetaData,
+  } = user || {};
 
   useEffect(() => {
-    if (user?.role) {
-      dispatch(navThunk(user.id));
+    if (userRole && userID) {
+      dispatch(navThunk(userID));
     }
-  }, [user?.role, dispatch]);
+  }, [userRole, userID, dispatch]);
+
+  const isApproved = userMetaData?.is_approved === true;
+
+  if (!isApproved) {
+    return <UnderReviewPage userData={userMetaData?.fullName} />;
+  }
 
   return (
     <>
@@ -38,7 +50,9 @@ export default function ShellLayout() {
             </FlexBox>
           </FlexBox>
           <main>
-            <Outlet />
+            <div className="right_container min-h-screen min-w-0 z-3 relative px-4">
+              <Outlet />
+            </div>
           </main>
         </SidebarInset>
       </SidebarProvider>

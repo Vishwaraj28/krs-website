@@ -4,20 +4,33 @@ import { FormConfig } from "@/types/form-types";
 import { DynamicForm } from "@/components/blocks/form/DynamicForm";
 import { FlexBox } from "@/components/blocks/common/FlexBox";
 import { useNavigate } from "react-router";
-import { handlePendingSignup } from "@/utils/handle-submission";
+import { signupThunk } from "@/store/thunk/signupThunk";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { AppDispatch } from "@/store/store";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"form">) {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const [error, setError] = useState<string | null>(null);
 
   const formConfig: FormConfig = {
     id: "login-form",
     fields: ["fullName", "email", "password", "area"],
     language: "en", // Explicitly set English language
     submitButtonText: "Create Account",
-    onSubmitSuccess: (data) => handlePendingSignup(data),
+    submitButtonClassName: "w-full mt-2",
+    onSubmitSuccess: async (data) => {
+      const result = await dispatch(signupThunk(data));
+      if (signupThunk.rejected.match(result)) {
+        setError(result.payload as string);
+      } else {
+        navigate("/login");
+      }
+    },
   };
 
   return (
@@ -29,6 +42,9 @@ export function SignupForm({
       <div className="grid gap-6 w-full">
         <DynamicForm config={formConfig} />
       </div>
+
+      {error && <p className="text-red-700 text-center">{error}</p>}
+
       <div className="text-center text-sm text-muted-foreground">
         Already have an account?{" "}
         <Button

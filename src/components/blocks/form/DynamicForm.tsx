@@ -93,7 +93,7 @@ export function DynamicForm({ config }: { config: FormConfig }) {
                   onValueChange={formField.onChange}
                   defaultValue={formField.value}
                 >
-                  <SelectTrigger className={`${field.className || ""}`}>
+                  <SelectTrigger className={`${field.className || ""} w-full`}>
                     <SelectValue placeholder={localizedPlaceholder} />
                   </SelectTrigger>
                   <SelectContent>

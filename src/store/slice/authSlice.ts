@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User, Session } from "@supabase/supabase-js";
 import { loginThunk } from "@/store/thunk/loginThunk";
 import { sessionThunk } from "@/store/thunk/sessionThunk";
+import { signupThunk } from "@/store/thunk/signupThunk";
+import { logoutThunk } from "../thunk/logoutThunk";
 
 interface AuthState {
   user: User | null;
@@ -17,17 +19,21 @@ const initialState: AuthState = {
   initialized: false,
 };
 
-// Helper functions to avoid repetition
+// Common success handler
 const setAuthSuccess = (
   state: AuthState,
-  action: PayloadAction<{ user: User; session: Session }>
+  action: PayloadAction<{
+    user: User | null;
+    session: Session | null;
+  }>
 ) => {
   state.user = action.payload.user;
   state.session = action.payload.session;
-  state.isAuthenticated = true;
+  state.isAuthenticated = !!action.payload.session;
   state.initialized = true;
 };
 
+// Common failure handler
 const setAuthFailure = (state: AuthState) => {
   state.user = null;
   state.session = null;
@@ -48,7 +54,11 @@ const authSlice = createSlice({
       .addCase(loginThunk.fulfilled, setAuthSuccess)
       .addCase(loginThunk.rejected, setAuthFailure)
       .addCase(sessionThunk.fulfilled, setAuthSuccess)
-      .addCase(sessionThunk.rejected, setAuthFailure);
+      .addCase(sessionThunk.rejected, setAuthFailure)
+      .addCase(signupThunk.fulfilled, setAuthSuccess)
+      .addCase(signupThunk.rejected, setAuthFailure)
+      .addCase(logoutThunk.fulfilled, setAuthFailure)
+      .addCase(logoutThunk.rejected, setAuthFailure);
   },
 });
 

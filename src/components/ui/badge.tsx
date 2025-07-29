@@ -16,7 +16,8 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/70",
         outline:
-          "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
+          "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground border-primary/20 text-primary bg-primary/10",
+        ghost: "border-transparent text-foreground px-0",
       },
       shape: {
         default: "rounded-2xl",

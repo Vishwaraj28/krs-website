@@ -21,6 +21,7 @@ export function LoginForm({
     fields: ["email", "password"],
     language: "en",
     submitButtonText: "Login",
+    submitButtonClassName: "w-full mt-2",
     onSubmitSuccess: async (data) => {
       const result = await dispatch(loginThunk(data));
 
