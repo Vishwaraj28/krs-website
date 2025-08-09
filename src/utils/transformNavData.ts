@@ -5,8 +5,7 @@ const transformNavData = (items: NavItem[]): NavGroup[] => {
     string,
     {
       title: string;
-      url: string;
-      items: { title: string; url: string, isActive: boolean, order: number, id: string }[];
+      items: { title: string; url: string, isActive: boolean, order: number }[];
       order: number;
     }
   > = {};
@@ -17,7 +16,6 @@ const transformNavData = (items: NavItem[]): NavGroup[] => {
     if (!grouped[section]) {
       grouped[section] = {
         title: section,
-        url: "#",
         items: [],
         order: item.section_order,
       };
@@ -28,7 +26,6 @@ const transformNavData = (items: NavItem[]): NavGroup[] => {
       url: item.url,
       isActive: item.is_active,
       order: item.item_order,
-      id: item.nav_item_id
     });
   }
 
@@ -36,9 +33,8 @@ const transformNavData = (items: NavItem[]): NavGroup[] => {
     Object.values(grouped)
       // Sort using internal `order`, but strip it before returning
       .sort((a, b) => a.order - b.order)
-      .map(({ title, url, items }) => ({
+      .map(({ title, items }) => ({
         title,
-        url,
         items: items.sort((a, b) => a.title.localeCompare(b.title)),
       }))
   );

@@ -1,15 +1,16 @@
 import { LoginForm } from "@/components/blocks/auth/Login";
+import { FlexBox } from "@/components/blocks/common/FlexBox";
 
 export default function LoginPage() {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="flex flex-col gap-4 p-6 md:p-10 bg-background">
-        <div className="flex flex-1 items-center justify-center">
+      <FlexBox orientation="column" className="gap-4 p-6 md:p-10">
+        <FlexBox className="flex-1 justify-center">
           <div className="w-full max-w-xs">
             <LoginForm className="items-start" />
           </div>
-        </div>
-      </div>
+        </FlexBox>
+      </FlexBox>
       <div className="relative hidden bg-gradient-to-br from-secondary via-primary to-accent lg:block">
         <div className="absolute inset-0 bg-black/20" />
         <img

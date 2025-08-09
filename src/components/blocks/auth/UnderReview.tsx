@@ -33,7 +33,7 @@ export default function UnderReviewPage({ userData }: Props) {
             <User className="size-8" />
           </FlexBox>
         </div>
-        <h4>Account Review</h4>
+        <h4>Account Under Review</h4>
         <Card>
           <FlexBox orientation="column" className="text-center gap-1">
             <CardTitle>{`Hello ${userData ?? "User"} !`}</CardTitle>

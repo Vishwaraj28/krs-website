@@ -48,7 +48,7 @@ function SidebarSkeleton() {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const {
     navMain: navigationData,
@@ -66,10 +66,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <FlexBox className="aspect-square size-8 justify-center rounded-lg bg-primary text-primary-foreground">
                   <GalleryVerticalEnd className="size-4" />
                 </FlexBox>
-                <div className="flex flex-col gap-0.5 leading-none">
-                  <span className="font-semibold">Documentation</span>
-                  <span className="">v1.0.0</span>
-                </div>
+                <span className="font-semibold">KRS Dashboard</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -92,8 +89,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </SidebarMenuButton>
                   {navGroup.items?.length ? (
                     <SidebarMenuSub>
-                      {navGroup.items.map((navItem) => (
-                        <SidebarMenuSubItem key={navItem.id}>
+                      {navGroup.items.map((navItem, index) => (
+                        <SidebarMenuSubItem key={index}>
                           <SidebarMenuSubButton
                             asChild
                             current={pathname == navItem.url}

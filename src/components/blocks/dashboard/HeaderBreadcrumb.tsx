@@ -9,45 +9,64 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { Skeleton } from "@/components/ui/skeleton";
+import { FlexBox } from "../common/FlexBox";
+import { useLocation } from "react-router";
 
 function BreadcrumbSkeleton() {
   return (
-    <div className="flex items-center space-x-2">
+    <FlexBox className="space-x-2">
       <Skeleton className="h-4 w-24" />
       <div className="text-muted-foreground">/</div>
       <Skeleton className="h-4 w-20" />
-    </div>
+    </FlexBox>
   );
 }
 
 export default function HeaderBreadcrumb() {
   const {
-    // navMain: navigationData,
+    navMain: navigationData,
     loading: navigationLoading,
     error: navigationError,
   } = useSelector((state: RootState) => state.navigation);
 
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  // Find the active group (section) based on current URL
+  const activeItemGroup = navigationData?.find((group) =>
+    group.items.some((item) => item.url === currentPath)
+  );
+
+  // Find the active item inside the group
+  const activeItem =
+    activeItemGroup?.items.find((item) => item.url === currentPath) ?? null;
+
+  // Fallback to first active item if direct match not found
+  const fallbackItem =
+    activeItemGroup?.items.find((item) => item.isActive) ?? null;
+
+  const SectionTitle = activeItemGroup?.title ?? "Section";
+  const PageTitle = activeItem?.title ?? fallbackItem?.title ?? "Page";
+
   return (
-    <>
-      <Breadcrumb>
-        {navigationLoading || navigationError ? (
-          <BreadcrumbSkeleton />
-        ) : (
-          <BreadcrumbList>
-            <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="#" className="text-primary">
-                Building Your Application
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage className="text-primary">
-                Data Fetching
-              </BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        )}
-      </Breadcrumb>
-    </>
+    <Breadcrumb>
+      {navigationLoading || navigationError ? (
+        <BreadcrumbSkeleton />
+      ) : (
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="#" className="text-primary">
+              {SectionTitle}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage className="text-primary">
+              {PageTitle}
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      )}
+    </Breadcrumb>
   );
 }

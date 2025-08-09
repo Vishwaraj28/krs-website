@@ -1,10 +1,10 @@
 import "./App.css";
-import { NewsSection } from "@/sections/HomePage/News";
-import { EventSections } from "@/sections/HomePage/Events";
-import { AchieverSection } from "@/sections/HomePage/Achievers";
-import { MainHeader } from "@/sections/HomePage/Header";
-import { SponserSection } from "@/sections/HomePage/Sponsers";
-import { JoinUsSection } from "@/sections/HomePage/JoinUs";
+import { NewsSection } from "@/pages/homepage/sections/News";
+import { EventSections } from "@/pages/homepage/sections/Events";
+import { AchieverSection } from "@/pages/homepage/sections/Achievers";
+import { MainHeader } from "@/pages/homepage/sections/Header";
+import { SponserSection } from "@/pages/homepage/sections/Sponsers";
+import { JoinUsSection } from "@/pages/homepage/sections/JoinUs";
 
 function App() {
   return (

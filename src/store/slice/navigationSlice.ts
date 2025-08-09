@@ -4,7 +4,6 @@ import transformNavData from "@/utils/transformNavData";
 
 export interface NavItem {
   user_id: string;
-  nav_item_id: string;
   section: string;
   section_order: number;
   title: string;
@@ -15,8 +14,7 @@ export interface NavItem {
 
 export interface NavGroup {
   title: string;
-  url: string;
-  items: { title: string; url: string, isActive: boolean, order: number, id: string }[];
+  items: { title: string; url: string, isActive: boolean, order: number }[];
 }
 
 interface NavState {

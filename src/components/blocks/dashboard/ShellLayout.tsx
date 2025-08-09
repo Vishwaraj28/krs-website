@@ -27,7 +27,7 @@ export default function ShellLayout() {
 
   useEffect(() => {
     if (userRole && userID) {
-      dispatch(navThunk(userID));
+      dispatch(navThunk());
     }
   }, [userRole, userID, dispatch]);
 
