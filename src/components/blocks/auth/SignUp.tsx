@@ -19,7 +19,7 @@ export function SignupForm({
 
   const formConfig: FormConfig = {
     id: "login-form",
-    fields: ["fullName", "email", "password", "area"],
+    fields: ["fullName", "email", "password", "phone", "area"],
     language: "en", // Explicitly set English language
     submitButtonText: "Create Account",
     submitButtonClassName: "w-full mt-2",
@@ -28,7 +28,7 @@ export function SignupForm({
       if (signupThunk.rejected.match(result)) {
         setError(result.payload as string);
       } else {
-        navigate("/login");
+        navigate("/dashboard");
       }
     },
   };

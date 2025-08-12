@@ -89,24 +89,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   </SidebarMenuButton>
                   {navGroup.items?.length ? (
                     <SidebarMenuSub>
-                      {navGroup.items.map((navItem, index) => (
-                        <SidebarMenuSubItem key={index}>
-                          <SidebarMenuSubButton
-                            asChild
-                            current={pathname == navItem.url}
-                            isActive={navItem.isActive}
-                          >
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="w-full justify-start"
-                              onClick={() => navigate(navItem.url)}
+                      {navGroup.items
+                        .slice()
+                        .sort((a, b) => a.order - b.order)
+                        .map((navItem, index) => (
+                          <SidebarMenuSubItem key={index}>
+                            <SidebarMenuSubButton
+                              asChild
+                              current={pathname == navItem.url}
+                              isActive={navItem.isActive}
                             >
-                              {navItem.title}
-                            </Button>
-                          </SidebarMenuSubButton>
-                        </SidebarMenuSubItem>
-                      ))}
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="w-full justify-start"
+                                onClick={() => navigate(navItem.url)}
+                              >
+                                {navItem.title}
+                              </Button>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        ))}
                     </SidebarMenuSub>
                   ) : null}
                 </SidebarMenuItem>

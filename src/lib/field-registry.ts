@@ -29,8 +29,8 @@ export const fieldRegistry: Record<string, FieldConfig> = {
     },
     validations: [{ type: "required" }, { type: "email" }],
   },
-  phoneNumber: {
-    name: "mobile",
+  phone: {
+    name: "phone",
     label: {
       en: "Phone Number",
       gu: "મોબાઈલ નંબર",
@@ -77,41 +77,6 @@ export const fieldRegistry: Record<string, FieldConfig> = {
       gu: "મૂળ વતન",
     },
     validations: [{ type: "required" }, { type: "min", value: 2 }],
-  },
-  subject: {
-    name: "subject",
-    label: {
-      en: "Subject",
-      gu: "વિષય",
-    },
-    type: "select",
-    placeholder: {
-      en: "Select a subject",
-      gu: "વિષય પસંદ કરો",
-    },
-    options: [
-      {
-        label: { en: "General Inquiry", gu: "સામાન્ય પૂછપરછ" },
-        value: "general",
-      },
-      { label: { en: "Support", gu: "સપોર્ટ" }, value: "support" },
-      { label: { en: "Feedback", gu: "પ્રતિસાદ" }, value: "feedback" },
-      { label: { en: "Other", gu: "અન્ય" }, value: "other" },
-    ],
-    validations: [{ type: "required" }],
-  },
-  message: {
-    name: "message",
-    label: {
-      en: "Message",
-      gu: "સંદેશ",
-    },
-    type: "textarea",
-    placeholder: {
-      en: "Your message",
-      gu: "તમારો સંદેશ",
-    },
-    validations: [{ type: "required" }, { type: "min", value: 10 }],
   },
   password: {
     name: "password",

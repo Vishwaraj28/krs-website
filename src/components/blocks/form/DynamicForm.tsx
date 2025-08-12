@@ -62,7 +62,6 @@ export function DynamicForm({ config }: { config: FormConfig }) {
 
   // Handle form submission
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("Form submitted with values:", form.formState);
     //Add Loading state
     if (config.onSubmitSuccess) {
       config.onSubmitSuccess(values);

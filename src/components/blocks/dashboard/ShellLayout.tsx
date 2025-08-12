@@ -18,7 +18,6 @@ export default function ShellLayout() {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
 
-  // Destructure user properties
   const {
     role: userRole,
     id: userID,

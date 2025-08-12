@@ -16,7 +16,7 @@ function BreadcrumbSkeleton() {
   return (
     <FlexBox className="space-x-2">
       <Skeleton className="h-4 w-24" />
-      <div className="text-muted-foreground">/</div>
+      <div className="text-muted-foreground">{">"}</div>
       <Skeleton className="h-4 w-20" />
     </FlexBox>
   );
@@ -32,16 +32,13 @@ export default function HeaderBreadcrumb() {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  // Find the active group (section) based on current URL
   const activeItemGroup = navigationData?.find((group) =>
     group.items.some((item) => item.url === currentPath)
   );
 
-  // Find the active item inside the group
   const activeItem =
     activeItemGroup?.items.find((item) => item.url === currentPath) ?? null;
 
-  // Fallback to first active item if direct match not found
   const fallbackItem =
     activeItemGroup?.items.find((item) => item.isActive) ?? null;
 
@@ -55,15 +52,11 @@ export default function HeaderBreadcrumb() {
       ) : (
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="#" className="text-primary">
-              {SectionTitle}
-            </BreadcrumbLink>
+            <BreadcrumbLink href="#">{SectionTitle}</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage className="text-primary">
-              {PageTitle}
-            </BreadcrumbPage>
+            <BreadcrumbPage>{PageTitle}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       )}
