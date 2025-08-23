@@ -13,6 +13,7 @@ import { Outlet } from "react-router";
 import { FlexBox } from "../common/FlexBox";
 import HeaderBreadcrumb from "./HeaderBreadcrumb";
 import UnderReviewPage from "../auth/UnderReview";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function ShellLayout() {
   const dispatch = useDispatch<AppDispatch>();
@@ -33,7 +34,7 @@ export default function ShellLayout() {
   const isApproved = userMetaData?.is_approved === true;
 
   if (!isApproved) {
-    return <UnderReviewPage userData={userMetaData?.fullName} />;
+    return <UnderReviewPage userData={userMetaData?.firstName} />;
   }
 
   return (
@@ -54,6 +55,7 @@ export default function ShellLayout() {
             </div>
           </main>
         </SidebarInset>
+        <Toaster richColors position="top-right" />
       </SidebarProvider>
     </>
   );

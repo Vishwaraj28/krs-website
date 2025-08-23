@@ -10,9 +10,10 @@ import { Badge } from "@/components/ui/badge";
 
 type PendingUser = {
   id: string;
-  full_name: string;
+  firstname: string;
+  lastname: string;
   created_at: string;
-  area?: string;
+  area: { en: string; gu?: string };
   email: string;
 };
 

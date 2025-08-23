@@ -6,7 +6,8 @@ type SignupInput = {
   email: string;
   password: string;
   phone: string;
-  fullName: string;
+  firstName: string;
+  lastName: string;
   area: string;
 };
 
@@ -16,14 +17,15 @@ export const signupThunk = createAsyncThunk<
   { rejectValue: string }
 >(
   "auth/signupThunk",
-  async ({ email, password, phone, fullName, area }, thunkAPI) => {
+  async ({ email, password, phone, firstName, lastName, area }, thunkAPI) => {
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
       {
         email,
         password,
         options: {
           data: {
-            fullName,
+            firstName,
+            lastName,
             area,
             phone,
             is_approved: false,
