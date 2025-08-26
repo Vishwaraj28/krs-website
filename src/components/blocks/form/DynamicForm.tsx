@@ -15,14 +15,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-// import { toast } from "@/components/ui/use-toast";
 
 import {
   type FieldConfig,
@@ -30,22 +22,15 @@ import {
   buildZodSchema,
   getLocalizedText,
 } from "@/types/form-types";
-import { fieldRegistry, getRegisteredField } from "@/lib/field-registry";
+import { getRegisteredField } from "@/lib/field-registry";
+import { FormSelect } from "./FormSelect";
+import { FormDatePicker } from "./FormDatePicker";
 
 export function DynamicForm({ config }: { config: FormConfig }) {
-  const language = config.language;
-  // Process field references to get actual field configs
-  const processedFields: FieldConfig[] = config.fields.map((fieldRef) => {
-    if (typeof fieldRef === "string") {
-      return getRegisteredField(fieldRef);
-    } else {
-      if (fieldRef.name && fieldRef.name in fieldRegistry) {
-        return getRegisteredField(fieldRef.name, fieldRef);
-      }
-      return fieldRef as FieldConfig;
-    }
-  });
-  // Build the zod schema from the processed field configurations
+  const language = config.language ?? "en";
+  const processedFields: FieldConfig[] = config.fields.map((fieldRef) =>
+    getRegisteredField(fieldRef, language)
+  );
   const formSchema = buildZodSchema(processedFields, language);
 
   // Create default values from field configurations
@@ -70,45 +55,52 @@ export function DynamicForm({ config }: { config: FormConfig }) {
 
   // Render the appropriate field based on type
   const renderField = (field: FieldConfig) => {
-    const localizedLabel = getLocalizedText(field.label, language);
-    const localizedPlaceholder = getLocalizedText(field.placeholder, language);
+    const {
+      name: fieldName,
+      label: fieldLabel,
+      placeholder: fieldPlaceHolder,
+    } = field;
     return (
       <FormField
-        key={field.name}
+        key={fieldName}
         control={form.control}
-        name={field.name}
+        name={fieldName}
         render={({ field: formField }) => (
           <FormItem>
-            <FormLabel>{localizedLabel}</FormLabel>
+            <FormLabel>{fieldLabel}</FormLabel>
             <FormControl>
               {field.type === "textarea" ? (
                 <Textarea
-                  placeholder={localizedPlaceholder}
+                  placeholder={fieldPlaceHolder}
                   className={`${field.className || ""}`}
                   {...formField}
+                  readOnly={config.readOnly}
                 />
               ) : field.type === "select" ? (
-                <Select
-                  onValueChange={formField.onChange}
-                  defaultValue={formField.value}
-                >
-                  <SelectTrigger className={`${field.className || ""} w-full`}>
-                    <SelectValue placeholder={localizedPlaceholder} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {field.options?.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        {getLocalizedText(option.label, language)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <FormSelect
+                  value={formField.value}
+                  onChange={formField.onChange}
+                  options={field.options || []}
+                  placeholder={fieldPlaceHolder}
+                  className={field.className}
+                  language={language}
+                  disabled={config.readOnly}
+                />
+              ) : field.type === "date" ? (
+                <FormDatePicker
+                  value={formField.value}
+                  onChange={formField.onChange}
+                  placeholder={fieldPlaceHolder}
+                  className={field.className}
+                  disabled={config.readOnly}
+                />
               ) : (
                 <Input
                   type={field.type}
-                  placeholder={localizedPlaceholder}
+                  placeholder={fieldPlaceHolder}
                   className={`${field.className || ""}`}
                   {...formField}
+                  readOnly={config.readOnly}
                 />
               )}
             </FormControl>
@@ -124,14 +116,16 @@ export function DynamicForm({ config }: { config: FormConfig }) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         {processedFields.map(renderField)}
 
-        <div className="flex justify-end">
-          <Button
-            type="submit"
-            className={`${config.submitButtonClassName || ""}`}
-          >
-            {getLocalizedText(config.submitButtonText, language)}
-          </Button>
-        </div>
+        {config.submitButtonText && (
+          <div className="flex justify-end">
+            <Button
+              type="submit"
+              className={`${config.submitButtonClassName || ""}`}
+            >
+              {getLocalizedText(config.submitButtonText, language)}
+            </Button>
+          </div>
+        )}
       </form>
     </Form>
   );

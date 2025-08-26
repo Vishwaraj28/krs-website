@@ -46,3 +46,12 @@ export function isValidValue(value: unknown): boolean {
     value !== "undefined"
   );
 }
+
+export function getAreasFromStorage(): { value: string; label: string }[] {
+  try {
+    const stored = localStorage.getItem("areas");
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}

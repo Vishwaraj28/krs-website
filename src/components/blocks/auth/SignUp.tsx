@@ -6,7 +6,7 @@ import { FlexBox } from "@/components/blocks/common/FlexBox";
 import { useNavigate } from "react-router";
 import { signupThunk } from "@/store/thunk/signupThunk";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppDispatch } from "@/store/store";
 import useTableData from "@/hooks/useTableData";
 
@@ -19,27 +19,25 @@ export function SignupForm({
   const [error, setError] = useState<string | null>(null);
   const {
     data: areas,
-    isLoading: tableDataLoading,
+    status: tableDataStatus,
     error: tableDataError,
   } = useTableData("krs_area");
+
+  useEffect(() => {
+    if (!tableDataError && areas && tableDataStatus === "success") {
+      localStorage.setItem("areas", JSON.stringify(areas));
+    }
+  }, [tableDataError, areas, tableDataStatus]);
 
   const formConfig: FormConfig = {
     id: "login-form",
     fields: [
-      "firstName",
-      "lastName",
-      "email",
-      "password",
-      "phone",
-      {
-        name: "area",
-        type: "select",
-        label: { en: "Area", gu: "વિસ્તાર" },
-        placeholder: { en: "Select your area", gu: "તમારો વિસ્તાર પસંદ કરો" },
-        options:
-          tableDataLoading || tableDataError ? ["Loading Data.."] : areas,
-        validations: [{ type: "required" }],
-      },
+      "firstName*",
+      "lastName*",
+      "email*",
+      "password*",
+      "phone*",
+      "area*",
     ],
     language: "en", // Explicitly set English language
     submitButtonText: "Create Account",

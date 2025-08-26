@@ -18,7 +18,7 @@ export function LoginForm({
 
   const formConfig: FormConfig = {
     id: "login-form",
-    fields: ["email", "password"],
+    fields: ["email*", "password*"],
     language: "en",
     submitButtonText: "Login",
     submitButtonClassName: "w-full mt-2",

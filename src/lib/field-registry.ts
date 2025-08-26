@@ -1,20 +1,153 @@
-import type { FieldConfig } from "@/types/form-types";
+import type {
+  FieldConfig,
+  RegisteredFieldKey,
+  SupportedLanguage,
+  UnProcessedFieldConfig,
+} from "@/types/form-types";
+import { getAreasFromStorage } from "@/utils/utils";
+
+export const textRegistry: Record<
+  string,
+  Pick<UnProcessedFieldConfig, "label" | "placeholder">
+> = {
+  fullName: {
+    label: { en: "Full Name", gu: "પૂરું નામ" },
+    placeholder: { en: "Enter your full name", gu: "પૂરું નામ દાખલ કરો" },
+  },
+  firstName: {
+    label: { en: "First Name", gu: "પૂરું નામ" },
+    placeholder: { en: "Enter your first name", gu: "પૂરું નામ દાખલ કરો" },
+  },
+  lastName: {
+    label: { en: "Last Name", gu: "પૂરું નામ" },
+    placeholder: { en: "Enter your last name", gu: "પૂરું નામ દાખલ કરો" },
+  },
+  fatherName: {
+    label: { en: "Father's Name", gu: "પિતાનું નામ" },
+    placeholder: { en: "Enter your father's name", gu: "પિતાનું નામ દાખલ કરો" },
+  },
+  motherName: {
+    label: { en: "Mother's Name", gu: "માતાનું નામ" },
+    placeholder: { en: "Enter your mother's name", gu: "માતાનું નામ દાખલ કરો" },
+  },
+  mosalName: {
+    label: { en: "Mosal Paksh's Details", gu: "મોસાળ પક્ષની વિગતો" },
+    placeholder: {
+      en: "Enter Mosal Paksh's name",
+      gu: "મોસાળ પક્ષનું નામ દાખલ કરો",
+    },
+  },
+  mosalAddress: {
+    label: { en: "Mosal Paksh's Address", gu: "મોસાળ પક્ષનું સરનામું" },
+    placeholder: {
+      en: "Enter Mosal Paksh's address",
+      gu: "મોસાળ પક્ષનું સરનામું દાખલ કરો",
+    },
+  },
+  svasurName: {
+    label: { en: "Svasur Paksh's Details", gu: "સસર પક્ષની વિગતો" },
+    placeholder: {
+      en: "Enter Svasur Paksh's name",
+      gu: "સસર પક્ષનું નામ દાખલ કરો",
+    },
+  },
+  svasurAddress: {
+    label: { en: "Svasur Paksh's Address", gu: "સસર પક્ષનું સરનામું" },
+    placeholder: {
+      en: "Enter Svasur Paksh's address",
+      gu: "સસર પક્ષનું સરનામું દાખલ કરો",
+    },
+  },
+  qualification: {
+    label: {
+      en: "Highest Qualification/Degree Achieved",
+      gu: "સર્વોચ્ચ લાયકાત/ડિગ્રી",
+    },
+    placeholder: { en: "Enter qualification", gu: "લાયકાત દાખલ કરો" },
+  },
+  institution: {
+    label: {
+      en: "Name of Institution/University",
+      gu: "સંસ્થા/વિશ્વવિદ્યાલયનું નામ",
+    },
+    placeholder: {
+      en: "Enter institution/university name",
+      gu: "સંસ્થા/વિશ્વવિદ્યાલયનું નામ દાખલ કરો",
+    },
+  },
+  profession: {
+    label: { en: "Profession", gu: "વ્યવસાય" },
+    placeholder: { en: "Enter your profession", gu: "વ્યવસાય દાખલ કરો" },
+  },
+  jobTitle: {
+    label: { en: "Current/Last Job Title", gu: "હાલનું/છેલ્લું પદ" },
+    placeholder: { en: "Enter job title", gu: "પદ દાખલ કરો" },
+  },
+  employerName: {
+    label: { en: "Employer Name", gu: "નિયામકનું નામ" },
+    placeholder: { en: "Enter employer name", gu: "નિયામકનું નામ દાખલ કરો" },
+  },
+  industry: {
+    label: { en: "Industry/Field of Work", gu: "ઉદ્યોગ/કાર્યક્ષેત્ર" },
+    placeholder: {
+      en: "Enter industry or field",
+      gu: "ઉદ્યોગ અથવા ક્ષેત્ર દાખલ કરો",
+    },
+  },
+};
+
+export const textAreaRegistry: Record<
+  string,
+  Pick<UnProcessedFieldConfig, "label" | "placeholder">
+> = {
+  address: {
+    label: { en: "Address", gu: "વર્તમાન સરનામુ" },
+    placeholder: {
+      en: "Enter your address",
+      gu: "વર્તમાન સરનામુ",
+    },
+  },
+  currentAddress: {
+    label: { en: "Permanent/Current Address", gu: "કાયમી/હાલનું સરનામું" },
+    placeholder: {
+      en: "Enter current address",
+      gu: "કાયમી/હાલનું સરનામું દાખલ કરો",
+    },
+  },
+  nativeAddress: {
+    label: { en: "Native Place Address", gu: "મૂળ વતનનું સરનામું" },
+    placeholder: {
+      en: "Enter native address",
+      gu: "મૂળ વતનનું સરનામું દાખલ કરો",
+    },
+  },
+};
+
+export const selectRegistry: Record<
+  string,
+  Pick<UnProcessedFieldConfig, "label" | "placeholder" | "options">
+> = {
+  area: {
+    label: {
+      en: "Area",
+      gu: "વિસ્તાર",
+    },
+    placeholder: {
+      en: "Select your area",
+      gu: "તમારો વિસ્તાર પસંદ કરો",
+    },
+    options: getAreasFromStorage() || [],
+  },
+};
 
 // Define a registry of common form fields with multilingual support
-export const fieldRegistry: Record<string, FieldConfig> = {
-  // Personal information fields
-  fullName: {
-    name: "fullName",
-    label: {
-      en: "Full Name",
-      gu: "પૂરું નામ",
-    },
+export const fieldRegistry: Record<string, UnProcessedFieldConfig> = {
+  text: {
+    name: "text",
+    label: { en: "Text", gu: "ટેક્સ્ટ" },
+    placeholder: { en: "Enter text", gu: "ટેક્સ્ટ દાખલ કરો" },
     type: "text",
-    placeholder: {
-      en: "Enter your full name",
-      gu: "પૂરું નામ",
-    },
-    validations: [{ type: "required" }, { type: "min", value: 2 }],
+    validations: [{ type: "min", value: 2 }],
   },
   email: {
     name: "email",
@@ -27,7 +160,7 @@ export const fieldRegistry: Record<string, FieldConfig> = {
       en: "your.email@example.com",
       gu: "તમારું.ઈમેલ@example.com",
     },
-    validations: [{ type: "required" }, { type: "email" }],
+    validations: [{ type: "email" }],
   },
   phone: {
     name: "phone",
@@ -41,7 +174,6 @@ export const fieldRegistry: Record<string, FieldConfig> = {
       gu: "મોબાઈલ નંબર",
     },
     validations: [
-      { type: "required" },
       {
         type: "regex",
         value: /^\d{10}$/,
@@ -52,31 +184,12 @@ export const fieldRegistry: Record<string, FieldConfig> = {
       },
     ],
   },
-  address: {
-    name: "address",
-    label: {
-      en: "Address",
-      gu: "વર્તમાન સરનામુ",
-    },
+  textarea: {
+    name: "textarea",
+    label: { en: "Text", gu: "ટેક્સ્ટ" },
+    placeholder: { en: "Enter text", gu: "ટેક્સ્ટ દાખલ કરો" },
     type: "textarea",
-    placeholder: {
-      en: "Enter your address",
-      gu: "વર્તમાન સરનામુ",
-    },
-    validations: [{ type: "required" }, { type: "min", value: 5 }],
-  },
-  hometown: {
-    name: "hometown",
-    label: {
-      en: "Hometown",
-      gu: "મૂળ વતન",
-    },
-    type: "textarea",
-    placeholder: {
-      en: "Enter your hometown",
-      gu: "મૂળ વતન",
-    },
-    validations: [{ type: "required" }, { type: "min", value: 2 }],
+    validations: [{ type: "min", value: 5 }],
   },
   password: {
     name: "password",
@@ -90,7 +203,6 @@ export const fieldRegistry: Record<string, FieldConfig> = {
       gu: "પાસવર્ડ દાખલ કરો",
     },
     validations: [
-      { type: "required" },
       {
         type: "min",
         value: 8,
@@ -101,57 +213,64 @@ export const fieldRegistry: Record<string, FieldConfig> = {
       { type: "password_special" },
     ],
   },
-  area: {
-    name: "area",
-    label: {
-      en: "Area",
-      gu: "વિસ્તાર",
-    },
+  select: {
+    name: "select",
+    label: { en: "Select Option", gu: "વિકલ્પ પસંદ કરો" },
+    placeholder: { en: "Select an option", gu: "વિકલ્પ પસંદ કરો" },
     type: "select",
-    placeholder: {
-      en: "Select your area",
-      gu: "તમારો વિસ્તાર પસંદ કરો",
-    },
-    options: [
-      { label: { en: "Downtown", gu: "ડાઉનટાઉન" }, value: "downtown" },
-      { label: { en: "Uptown", gu: "અપટાઉન" }, value: "uptown" },
-      { label: { en: "Midtown", gu: "મિડટાઉન" }, value: "midtown" },
-      { label: { en: "West Side", gu: "વેસ્ટ સાઇડ" }, value: "westside" },
-      { label: { en: "East Side", gu: "ઈસ્ટ સાઇડ" }, value: "eastside" },
-      { label: { en: "North Side", gu: "નોર્થ સાઇડ" }, value: "northside" },
-      { label: { en: "South Side", gu: "સાઉથ સાઇડ" }, value: "southside" },
-    ],
-    validations: [{ type: "required" }],
+    options: [],
+    validations: [],
   },
 };
 
-export type RegisteredFieldKey = keyof typeof fieldRegistry;
 // Function to get a field from the registry with optional overrides
 export function getRegisteredField(
   fieldName: string,
-  overrides: Partial<FieldConfig> = {}
+  language: SupportedLanguage
 ): FieldConfig {
-  const baseField = fieldRegistry[fieldName as keyof typeof fieldRegistry];
-
-  if (!baseField) {
-    // If the field doesn't exist in the registry, create a new field from the overrides
-    if (
-      Object.keys(overrides).length &&
-      overrides.name &&
-      overrides.type &&
-      overrides.label
-    ) {
-      return overrides as FieldConfig;
-    }
-    throw new Error(`Field "${fieldName}" not found in registry`);
+  const isRequired = fieldName.endsWith("*");
+  const cleanFieldName = isRequired ? fieldName.slice(0, -1) : fieldName;
+  const baseField = fieldRegistry[cleanFieldName as RegisteredFieldKey];
+  if (baseField) {
+    return {
+      ...baseField,
+      label: isRequired
+        ? `${baseField.label[language]}*`
+        : baseField.label[language] || "Field Label",
+      validations: isRequired
+        ? [{ type: "required" }, ...(baseField.validations || [])]
+        : baseField.validations || [],
+      placeholder: baseField.placeholder[language] || "Enter value",
+    };
   }
 
-  // Deep merge the base field with overrides
-  return {
-    ...baseField,
-    ...overrides,
-    // Handle nested properties like validations
-    validations: overrides.validations || baseField.validations,
-    options: overrides.options || baseField.options,
-  };
+  const registryMap: Array<{
+    registry: Record<string, any>;
+    templateKey: RegisteredFieldKey;
+  }> = [
+    { registry: textRegistry, templateKey: "text" },
+    { registry: textAreaRegistry, templateKey: "textarea" },
+    { registry: selectRegistry, templateKey: "select" },
+  ];
+
+  for (const { registry, templateKey } of registryMap) {
+    if (registry[cleanFieldName]) {
+      const baseField = fieldRegistry[templateKey];
+      const fieldLabel = isRequired
+        ? `${registry[cleanFieldName].label[language]}*`
+        : registry[cleanFieldName].label[language];
+      return {
+        ...baseField,
+        name: cleanFieldName,
+        label: fieldLabel,
+        placeholder: registry[cleanFieldName].placeholder[language],
+        validations: isRequired
+          ? [{ type: "required" }, ...(baseField.validations || [])]
+          : baseField.validations || [],
+        options: registry[cleanFieldName].options || [],
+      };
+    }
+  }
+
+  throw new Error(`Field "${fieldName}" not found in registry`);
 }

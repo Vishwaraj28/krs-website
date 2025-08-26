@@ -11,15 +11,15 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle, Clock, Mail, MapPin } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FlexBox } from "@/components/blocks/common/FlexBox";
-import { useApproveUser } from "@/hooks/useApproveUser";
-import { useDeclineUser } from "@/hooks/useDeclineUser";
+import { useManageUser } from "@/hooks/useManageUser";
 
 export interface UserApprovalCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
   id: string;
-  full_name: string;
+  firstname: string;
+  lastname: string;
   created_at: string;
-  area?: string;
+  area: { en: string; gu?: string };
   email: string;
 }
 
@@ -57,14 +57,15 @@ export const UserApprovalCardSkeleton = () => {
 
 export const UserApprovalCard = ({
   id: userID,
-  full_name: userName,
+  firstname,
+  lastname,
   created_at,
   area,
   email,
   ...props
 }: UserApprovalCardProps) => {
-  const approveUser = useApproveUser();
-  const declineUser = useDeclineUser();
+  const approveUser = useManageUser({ action: "approve" });
+  const declineUser = useManageUser({ action: "decline" });
 
   return (
     <Card {...props} className="hover:shadow-md transition-shadow gap-3">
@@ -72,7 +73,7 @@ export const UserApprovalCard = ({
         <FlexBox className="justify-between">
           <div>
             <CardTitle className="text-lg text-primary mb-1">
-              {userName}
+              {`${firstname} ${lastname}`}
             </CardTitle>
             <CardDescription>
               Registered on {new Date(created_at).toLocaleDateString()}
@@ -91,13 +92,13 @@ export const UserApprovalCard = ({
         </Badge>
         <Badge variant="ghost">
           <MapPin />
-          <span>{area}</span>
+          <span>{area?.en}</span>
         </Badge>
       </CardContent>
       <CardFooter className="px-0">
         <FlexBox>
           <Button
-            onClick={() => approveUser.mutate({ userID, area })}
+            onClick={() => approveUser.mutate({ userID })}
             disabled={approveUser.status === "pending"}
             size="sm"
           >

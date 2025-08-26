@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { getValidationMessage } from "@/lib/validation-registry";
-import { RegisteredFieldKey } from "@/lib/field-registry";
 
 // Define supported languages
 export type SupportedLanguage = "en" | "gu";
@@ -23,6 +22,34 @@ export type FieldType =
   | "select"
   | "date";
 
+export type WithRequiredMarker<T extends string> = `${T}*` | T;
+export type RegisteredFieldKey =
+  | "fullName"
+  | "firstName"
+  | "lastName"
+  | "fatherName"
+  | "motherName"
+  | "mosalName"
+  | "mosalAddress"
+  | "svasurName"
+  | "svasurAddress"
+  | "qualification"
+  | "institution"
+  | "profession"
+  | "jobTitle"
+  | "employerName"
+  | "industry"
+  | "address"
+  | "currentAddress"
+  | "nativeAddress"
+  | "area"
+  | "text"
+  | "email"
+  | "phone"
+  | "textarea"
+  | "password"
+  | "select";
+
 // Define simplified validation rules
 export type ValidationRule =
   | { type: "required"; message?: string | MultilingualText }
@@ -41,33 +68,43 @@ export type ValidationRule =
 
 // Define options for select fields
 export type SelectOption = {
+  id: string;
   label: string | MultilingualText;
   value: string;
+};
+
+export type UnProcessedFieldConfig = {
+  name: string;
+  label: MultilingualText;
+  type: FieldType;
+  placeholder: MultilingualText;
+  validations?: ValidationRule[];
+  options?: any[]; // For select fields
+  defaultValue?: any;
+  className?: string;
 };
 
 // Define a single field configuration
 export type FieldConfig = {
   name: string;
-  label: string | MultilingualText;
+  label: string;
   type: FieldType;
-  placeholder?: string | MultilingualText;
+  placeholder: string;
   validations?: ValidationRule[];
-  options?: SelectOption[]; // For select fields
+  options?: any[]; // For select fields
   defaultValue?: any;
   className?: string;
 };
 
-// Define a field reference (either a registered field name or a custom field config)
-export type FieldReference = RegisteredFieldKey | FieldConfig;
-
 // Define the entire form configuration
 export type FormConfig = {
   id: string;
-  fields: FieldReference[];
-  submitButtonText: string | MultilingualText;
+  fields: WithRequiredMarker<RegisteredFieldKey>[];
+  submitButtonText?: string | MultilingualText;
   submitButtonClassName?: string;
   onSubmitSuccess?: (data: any) => void;
-  language: SupportedLanguage; // Required language for the form
+  language?: SupportedLanguage; // Required language for the form
+  readOnly?: boolean; // If true, all fields are read-only
 };
 
 // Helper function to get text in the current language
@@ -88,11 +125,13 @@ export function processValidationRules(
   field: FieldConfig,
   language: SupportedLanguage
 ): ValidationRule[] {
-  if (!field.validations) return [];
-
-  const fieldLabel = getLocalizedText(field.label, language);
-
-  return field.validations.map((rule) => {
+  const {
+    label: fieldLabel,
+    validations: fieldValidations,
+    name: fieldName,
+  } = field;
+  if (!fieldValidations) return [];
+  return fieldValidations.map((rule) => {
     // If message is already provided, use it (either as string or get localized version)
     if (rule.message) {
       const message = getLocalizedText(rule.message, language);
@@ -101,9 +140,9 @@ export function processValidationRules(
 
     // Otherwise, generate a message based on the rule type and field properties
     const message = getValidationMessage(rule.type, {
-      label: fieldLabel,
+      label: fieldLabel.endsWith("*") ? fieldLabel.slice(0, -1) : fieldLabel,
       value: "value" in rule ? rule.value : undefined,
-      fieldName: field.name,
+      fieldName: fieldName,
       language,
     });
 
