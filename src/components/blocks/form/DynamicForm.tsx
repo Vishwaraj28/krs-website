@@ -1,8 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, FormState, FieldValues } from "react-hook-form";
 import type * as z from "zod";
+import { useImperativeHandle, forwardRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,55 +27,81 @@ import { getRegisteredField } from "@/lib/field-registry";
 import { FormSelect } from "./FormSelect";
 import { FormDatePicker } from "./FormDatePicker";
 
-export function DynamicForm({ config }: { config: FormConfig }) {
-  const language = config.language ?? "en";
-  const processedFields: FieldConfig[] = config.fields.map((fieldRef) =>
-    getRegisteredField(fieldRef, language)
-  );
-  const formSchema = buildZodSchema(processedFields, language);
+export type DynamicFormHandle<TFieldValues extends FieldValues = any> = {
+  submit: () => void;
+  getValues: () => any;
+  reset: (values?: any) => void;
+  formState: FormState<TFieldValues>;
+};
 
-  // Create default values from field configurations
+export const DynamicForm = forwardRef<
+  DynamicFormHandle,
+  { config: FormConfig; col?: Number }
+>(({ config, col: fieldColumn = 1 }, ref) => {
+  const {
+    id: formId,
+    fields: formField,
+    submitButtonText,
+    submitButtonClassName,
+    onSubmitSuccess,
+    language: formLanguage = "en",
+    readOnly,
+  } = config;
+
+  const processedFields: FieldConfig[] = formField.map((fieldRef) =>
+    getRegisteredField(fieldRef, formLanguage)
+  );
+  const formSchema = buildZodSchema(processedFields, formLanguage);
+
+  // default values
   const defaultValues = processedFields.reduce((acc, field) => {
     acc[field.name] = field.defaultValue || "";
     return acc;
   }, {} as Record<string, any>);
 
-  // Initialize the form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
 
-  // Handle form submission
+  // expose form methods via ref
+  useImperativeHandle(ref, () => ({
+    submit: () => form.handleSubmit(onSubmit)(),
+    getValues: () => form.getValues(),
+    reset: (values) => form.reset(values),
+    formState: form.formState,
+  }));
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    //Add Loading state
-    if (config.onSubmitSuccess) {
-      config.onSubmitSuccess(values);
+    if (onSubmitSuccess) {
+      onSubmitSuccess(values);
     }
   }
 
-  // Render the appropriate field based on type
   const renderField = (field: FieldConfig) => {
     const {
       name: fieldName,
       label: fieldLabel,
       placeholder: fieldPlaceHolder,
     } = field;
+
     return (
       <FormField
         key={fieldName}
         control={form.control}
         name={fieldName}
         render={({ field: formField }) => (
-          <FormItem>
-            <FormLabel>{fieldLabel}</FormLabel>
+          <FormItem className={`${readOnly ? "gap-1" : ""}`}>
+            <FormLabel className={`${readOnly ? "text-primary/65" : ""}`}>
+              {fieldLabel}
+            </FormLabel>
             <FormControl>
               {field.type === "textarea" ? (
                 <Textarea
                   placeholder={fieldPlaceHolder}
                   className={`${field.className || ""}`}
                   {...formField}
-                  readOnly={config.readOnly}
+                  readOnly={readOnly}
                 />
               ) : field.type === "select" ? (
                 <FormSelect
@@ -83,8 +110,9 @@ export function DynamicForm({ config }: { config: FormConfig }) {
                   options={field.options || []}
                   placeholder={fieldPlaceHolder}
                   className={field.className}
-                  language={language}
-                  disabled={config.readOnly}
+                  language={formLanguage}
+                  disabled={readOnly}
+                  name={fieldName}
                 />
               ) : field.type === "date" ? (
                 <FormDatePicker
@@ -92,7 +120,7 @@ export function DynamicForm({ config }: { config: FormConfig }) {
                   onChange={formField.onChange}
                   placeholder={fieldPlaceHolder}
                   className={field.className}
-                  disabled={config.readOnly}
+                  disabled={readOnly}
                 />
               ) : (
                 <Input
@@ -100,7 +128,7 @@ export function DynamicForm({ config }: { config: FormConfig }) {
                   placeholder={fieldPlaceHolder}
                   className={`${field.className || ""}`}
                   {...formField}
-                  readOnly={config.readOnly}
+                  readOnly={readOnly}
                 />
               )}
             </FormControl>
@@ -113,20 +141,28 @@ export function DynamicForm({ config }: { config: FormConfig }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        {processedFields.map(renderField)}
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-6"
+        id={formId}
+      >
+        <div
+          className={`grid w-full grid-cols-1 gap-4 ${
+            Number(fieldColumn) > 1 ? "gap-y-9" : "gap-y-6"
+          } sm:grid-cols-${fieldColumn}`}
+        >
+          {processedFields.map(renderField)}
+        </div>
 
-        {config.submitButtonText && (
+        {submitButtonText && (
           <div className="flex justify-end">
-            <Button
-              type="submit"
-              className={`${config.submitButtonClassName || ""}`}
-            >
-              {getLocalizedText(config.submitButtonText, language)}
+            <Button type="submit" className={`${submitButtonClassName || ""}`}>
+              {getLocalizedText(submitButtonText, formLanguage)}
             </Button>
           </div>
         )}
       </form>
     </Form>
   );
-}
+});
+DynamicForm.displayName = "DynamicForm";

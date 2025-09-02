@@ -4,7 +4,7 @@ import type {
   SupportedLanguage,
   UnProcessedFieldConfig,
 } from "@/types/form-types";
-import { getAreasFromStorage } from "@/utils/utils";
+import { getAreas } from "@/utils/utils";
 
 export const textRegistry: Record<
   string,
@@ -15,20 +15,30 @@ export const textRegistry: Record<
     placeholder: { en: "Enter your full name", gu: "પૂરું નામ દાખલ કરો" },
   },
   firstName: {
-    label: { en: "First Name", gu: "પૂરું નામ" },
-    placeholder: { en: "Enter your first name", gu: "પૂરું નામ દાખલ કરો" },
+    label: { en: "First Name", gu: "નામ" },
+    placeholder: { en: "Enter your first name", gu: "નામ દાખલ કરો" },
+  },
+  middleName: {
+    label: { en: "Middle Name", gu: "પિતાનું નામ" },
+    placeholder: { en: "Enter your first name", gu: "પિતાનું નામ દાખલ કરો" },
   },
   lastName: {
-    label: { en: "Last Name", gu: "પૂરું નામ" },
-    placeholder: { en: "Enter your last name", gu: "પૂરું નામ દાખલ કરો" },
+    label: { en: "Last Name", gu: "અટક" },
+    placeholder: { en: "Enter your last name", gu: "અટક દાખલ કરો" },
   },
   fatherName: {
     label: { en: "Father's Name", gu: "પિતાનું નામ" },
-    placeholder: { en: "Enter your father's name", gu: "પિતાનું નામ દાખલ કરો" },
+    placeholder: {
+      en: "Enter your father's full name",
+      gu: "પિતાનું પૂરું નામ દાખલ કરો",
+    },
   },
   motherName: {
-    label: { en: "Mother's Name", gu: "માતાનું નામ" },
-    placeholder: { en: "Enter your mother's name", gu: "માતાનું નામ દાખલ કરો" },
+    label: { en: "Mother's Name", gu: "માતાનું પૂરું નામ" },
+    placeholder: {
+      en: "Enter your mother's full name",
+      gu: "માતાનું નામ દાખલ કરો",
+    },
   },
   mosalName: {
     label: { en: "Mosal Paksh's Details", gu: "મોસાળ પક્ષની વિગતો" },
@@ -37,25 +47,11 @@ export const textRegistry: Record<
       gu: "મોસાળ પક્ષનું નામ દાખલ કરો",
     },
   },
-  mosalAddress: {
-    label: { en: "Mosal Paksh's Address", gu: "મોસાળ પક્ષનું સરનામું" },
-    placeholder: {
-      en: "Enter Mosal Paksh's address",
-      gu: "મોસાળ પક્ષનું સરનામું દાખલ કરો",
-    },
-  },
   svasurName: {
     label: { en: "Svasur Paksh's Details", gu: "સસર પક્ષની વિગતો" },
     placeholder: {
       en: "Enter Svasur Paksh's name",
       gu: "સસર પક્ષનું નામ દાખલ કરો",
-    },
-  },
-  svasurAddress: {
-    label: { en: "Svasur Paksh's Address", gu: "સસર પક્ષનું સરનામું" },
-    placeholder: {
-      en: "Enter Svasur Paksh's address",
-      gu: "સસર પક્ષનું સરનામું દાખલ કરો",
     },
   },
   qualification: {
@@ -121,6 +117,20 @@ export const textAreaRegistry: Record<
       gu: "મૂળ વતનનું સરનામું દાખલ કરો",
     },
   },
+  mosalAddress: {
+    label: { en: "Mosal Paksh's Address", gu: "મોસાળ પક્ષનું સરનામું" },
+    placeholder: {
+      en: "Enter Mosal Paksh's address",
+      gu: "મોસાળ પક્ષનું સરનામું દાખલ કરો",
+    },
+  },
+  svasurAddress: {
+    label: { en: "Svasur Paksh's Address", gu: "સસર પક્ષનું સરનામું" },
+    placeholder: {
+      en: "Enter Svasur Paksh's address",
+      gu: "સસર પક્ષનું સરનામું દાખલ કરો",
+    },
+  },
 };
 
 export const selectRegistry: Record<
@@ -136,7 +146,66 @@ export const selectRegistry: Record<
       en: "Select your area",
       gu: "તમારો વિસ્તાર પસંદ કરો",
     },
-    options: getAreasFromStorage() || [],
+    options: getAreas,
+  },
+  maritalStatus: {
+    label: {
+      en: "Marital Status",
+      gu: "લગ્ન સ્થિતિ",
+    },
+    placeholder: {
+      en: "Select your marital status",
+      gu: "તમારી લગ્ન સ્થિતિ પસંદ કરો",
+    },
+    options: [
+      { label: { en: "Single", gu: "એકલો" }, value: "single" },
+      { label: { en: "Married", gu: "લગ્નિત" }, value: "married" },
+    ],
+  },
+  gender: {
+    label: {
+      en: "Gender",
+      gu: "લિંગ",
+    },
+    placeholder: {
+      en: "Select your gender",
+      gu: "તમારું લિંગ પસંદ કરો",
+    },
+    options: [
+      { label: { en: "Male", gu: "પુરુષ" }, value: "male" },
+      { label: { en: "Female", gu: "સ્ત્રી" }, value: "female" },
+      { label: { en: "Other", gu: "અન્ય" }, value: "other" },
+    ],
+  },
+  bloodGroup: {
+    label: {
+      en: "Blood Group",
+      gu: "લોહી જૂથ",
+    },
+    placeholder: {
+      en: "Select your blood group",
+      gu: "તમારું લોહી જૂથ પસંદ કરો",
+    },
+    options: [
+      { label: { en: "A+", gu: "A+" }, value: "A+" },
+      { label: { en: "A-", gu: "A-" }, value: "A-" },
+      { label: { en: "B+", gu: "B+" }, value: "B+" },
+      { label: { en: "B-", gu: "B-" }, value: "B-" },
+      { label: { en: "AB+", gu: "AB+" }, value: "AB+" },
+      { label: { en: "AB-", gu: "AB-" }, value: "AB-" },
+      { label: { en: "O+", gu: "O+" }, value: "O+" },
+      { label: { en: "O-", gu: "O-" }, value: "O-" },
+    ],
+  },
+};
+
+export const dateRegistry: Record<
+  string,
+  Pick<UnProcessedFieldConfig, "label" | "placeholder">
+> = {
+  dob: {
+    label: { en: "Date of Birth", gu: "જન્મતારીખ" },
+    placeholder: { en: "Select Date of Birth", gu: "જન્મતારીખ પસંદ કરો" },
   },
 };
 
@@ -221,6 +290,13 @@ export const fieldRegistry: Record<string, UnProcessedFieldConfig> = {
     options: [],
     validations: [],
   },
+  date: {
+    name: "date",
+    label: { en: "Date", gu: "તારીખ" },
+    placeholder: { en: "Select Date", gu: "તારીખ પસંદ કરો" },
+    type: "date",
+    validations: [],
+  },
 };
 
 // Function to get a field from the registry with optional overrides
@@ -251,6 +327,7 @@ export function getRegisteredField(
     { registry: textRegistry, templateKey: "text" },
     { registry: textAreaRegistry, templateKey: "textarea" },
     { registry: selectRegistry, templateKey: "select" },
+    { registry: dateRegistry, templateKey: "date" },
   ];
 
   for (const { registry, templateKey } of registryMap) {

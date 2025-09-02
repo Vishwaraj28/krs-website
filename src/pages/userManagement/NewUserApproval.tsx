@@ -24,7 +24,6 @@ const fetchPendingUsers = async (): Promise<PendingUser[]> => {
 };
 
 const NewUserApproval = () => {
-  // const queryClient = useQueryClient();
   const {
     data: pendingUsers = [],
     isLoading,

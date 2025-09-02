@@ -5,6 +5,9 @@
  * @returns {string} - The formatted date.
  * @throws {Error} - Throws an error if the date is invalid.
  */
+import { SelectOption } from "@/types/form-types";
+import { supabase } from "@/utils/supabaseClient";
+
 export function formatDate(dateStr: string): string {
   const date = new Date(dateStr);
 
@@ -47,11 +50,25 @@ export function isValidValue(value: unknown): boolean {
   );
 }
 
-export function getAreasFromStorage(): { value: string; label: string }[] {
+export async function getAreas(): Promise<SelectOption[]> {
   try {
+    // Step 1: Check localStorage
     const stored = localStorage.getItem("areas");
-    return stored ? JSON.parse(stored) : [];
-  } catch {
+    if (stored) {
+      return JSON.parse(stored);
+    }
+
+    // Step 2: Fetch from Supabase (always all columns)
+    const { data: areas, error } = await supabase.from("krs_area").select("*");
+
+    if (error) throw new Error(error.message);
+
+    // Step 4: Store in localStorage
+    localStorage.setItem("areas", JSON.stringify(areas));
+
+    return areas;
+  } catch (err) {
+    console.error("Error fetching areas:", err);
     return [];
   }
 }

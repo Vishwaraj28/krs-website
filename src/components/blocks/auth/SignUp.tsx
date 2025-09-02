@@ -6,9 +6,8 @@ import { FlexBox } from "@/components/blocks/common/FlexBox";
 import { useNavigate } from "react-router";
 import { signupThunk } from "@/store/thunk/signupThunk";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AppDispatch } from "@/store/store";
-import useTableData from "@/hooks/useTableData";
 
 export function SignupForm({
   className,
@@ -17,17 +16,6 @@ export function SignupForm({
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [error, setError] = useState<string | null>(null);
-  const {
-    data: areas,
-    status: tableDataStatus,
-    error: tableDataError,
-  } = useTableData("krs_area");
-
-  useEffect(() => {
-    if (!tableDataError && areas && tableDataStatus === "success") {
-      localStorage.setItem("areas", JSON.stringify(areas));
-    }
-  }, [tableDataError, areas, tableDataStatus]);
 
   const formConfig: FormConfig = {
     id: "login-form",

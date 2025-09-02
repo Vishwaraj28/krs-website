@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z, ZodTypeAny } from "zod";
 import { getValidationMessage } from "@/lib/validation-registry";
 
 // Define supported languages
@@ -26,6 +26,7 @@ export type WithRequiredMarker<T extends string> = `${T}*` | T;
 export type RegisteredFieldKey =
   | "fullName"
   | "firstName"
+  | "middleName"
   | "lastName"
   | "fatherName"
   | "motherName"
@@ -48,7 +49,12 @@ export type RegisteredFieldKey =
   | "phone"
   | "textarea"
   | "password"
-  | "select";
+  | "select"
+  | "maritalStatus"
+  | "gender"
+  | "date"
+  | "dob"
+  | "bloodGroup";
 
 // Define simplified validation rules
 export type ValidationRule =
@@ -68,7 +74,7 @@ export type ValidationRule =
 
 // Define options for select fields
 export type SelectOption = {
-  id: string;
+  id?: string;
   label: string | MultilingualText;
   value: string;
 };
@@ -79,7 +85,7 @@ export type UnProcessedFieldConfig = {
   type: FieldType;
   placeholder: MultilingualText;
   validations?: ValidationRule[];
-  options?: any[]; // For select fields
+  options?: SelectOption[] | (() => Promise<SelectOption[]>); // For select fields
   defaultValue?: any;
   className?: string;
 };
@@ -91,7 +97,7 @@ export type FieldConfig = {
   type: FieldType;
   placeholder: string;
   validations?: ValidationRule[];
-  options?: any[]; // For select fields
+  options?: SelectOption[] | (() => Promise<SelectOption[]>); // For select fields
   defaultValue?: any;
   className?: string;
 };
@@ -158,71 +164,111 @@ export function buildZodSchema(
   const schemaMap: Record<string, any> = {};
 
   fields.forEach((field) => {
-    let fieldSchema = z.string();
+    let fieldSchema: ZodTypeAny = z.string().trim();
     // Process validation rules to ensure all have messages
     const validations = processValidationRules(field, language);
     if (validations) {
       validations.forEach((validation) => {
         switch (validation.type) {
           case "required":
-            fieldSchema = fieldSchema.min(1, {
+            fieldSchema = fieldSchema.refine((val) => val.length >= 1, {
               message: validation.message as string,
             });
             break;
+
           case "min":
-            fieldSchema = fieldSchema.min(validation.value, {
-              message: validation.message as string,
-            });
+            fieldSchema = fieldSchema
+              .optional()
+              .refine((val) => !val || val.length >= validation.value, {
+                message: validation.message as string,
+              });
             break;
+
           case "max":
-            fieldSchema = fieldSchema.max(validation.value, {
-              message: validation.message as string,
-            });
+            fieldSchema = fieldSchema.refine(
+              (val) => !val || val.length <= validation.value,
+              {
+                message: validation.message as string,
+              }
+            );
             break;
+
           case "regex":
-            fieldSchema = fieldSchema.regex(validation.value, {
-              message: validation.message as string,
-            });
+            fieldSchema = fieldSchema.refine(
+              (val) => !val || validation.value.test(val),
+              {
+                message: validation.message as string,
+              }
+            );
             break;
+
           case "email":
-            fieldSchema = fieldSchema.email({
-              message: validation.message as string,
-            });
+            fieldSchema = fieldSchema.refine(
+              (val) => !val || /\S+@\S+\.\S+/.test(val),
+              {
+                message: validation.message as string,
+              }
+            );
             break;
+
           case "url":
-            fieldSchema = fieldSchema.url({
-              message: validation.message as string,
-            });
+            fieldSchema = fieldSchema.refine(
+              (val) => !val || /^https?:\/\/.+\..+/.test(val),
+              {
+                message: validation.message as string,
+              }
+            );
             break;
+
           case "numeric":
-            fieldSchema = fieldSchema.regex(/^\d+$/, {
-              message: validation.message as string,
-            });
+            fieldSchema = fieldSchema.refine(
+              (val) => !val || /^\d+$/.test(val),
+              {
+                message: validation.message as string,
+              }
+            );
             break;
+
           case "alphanumeric":
-            fieldSchema = fieldSchema.regex(/^[a-zA-Z0-9]+$/, {
-              message: validation.message as string,
-            });
+            fieldSchema = fieldSchema.refine(
+              (val) => !val || /^[a-zA-Z0-9]+$/.test(val),
+              {
+                message: validation.message as string,
+              }
+            );
             break;
+
           case "password_uppercase":
-            fieldSchema = fieldSchema.regex(/[A-Z]/, {
-              message: validation.message as string,
-            });
+            fieldSchema = fieldSchema.refine(
+              (val) => !val || /[A-Z]/.test(val),
+              {
+                message: validation.message as string,
+              }
+            );
             break;
+
           case "password_lowercase":
-            fieldSchema = fieldSchema.regex(/[a-z]/, {
-              message: validation.message as string,
-            });
+            fieldSchema = fieldSchema.refine(
+              (val) => !val || /[a-z]/.test(val),
+              {
+                message: validation.message as string,
+              }
+            );
             break;
+
           case "password_digit":
-            fieldSchema = fieldSchema.regex(/\d/, {
+            fieldSchema = fieldSchema.refine((val) => !val || /\d/.test(val), {
               message: validation.message as string,
             });
             break;
+
           case "password_special":
-            fieldSchema = fieldSchema.regex(/[^A-Za-z0-9]/, {
-              message: validation.message as string,
-            });
+            fieldSchema = fieldSchema.refine(
+              (val) => !val || /[^A-Za-z0-9]/.test(val),
+              {
+                message: validation.message as string,
+              }
+            );
             break;
         }
       });

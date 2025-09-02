@@ -50,7 +50,7 @@ export default function ShellLayout() {
             </FlexBox>
           </FlexBox>
           <main>
-            <div className="right_container min-h-screen min-w-0 z-3 relative px-4">
+            <div className="min-h-screen min-w-0 z-3 relative">
               <Outlet />
             </div>
           </main>
