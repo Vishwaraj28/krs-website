@@ -7,7 +7,7 @@ import { DynamicForm } from "@/components/blocks/form/DynamicForm";
 export function JoinUsSection() {
   const formConfig: FormConfig = {
     id: "join-us-form",
-    fields: ["fullName", "phone", "address", "hometown"],
+    fields: ["fullName", "phone", "address", "nativeAddress"],
     language: "gu", // Explicitly set English language
     submitButtonText: "Submit",
     onSubmitSuccess: (data) => {

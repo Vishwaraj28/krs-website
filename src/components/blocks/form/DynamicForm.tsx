@@ -36,11 +36,11 @@ export type DynamicFormHandle<TFieldValues extends FieldValues = any> = {
 
 export const DynamicForm = forwardRef<
   DynamicFormHandle,
-  { config: FormConfig; col?: Number }
+  { config: FormConfig; col?: number }
 >(({ config, col: fieldColumn = 1 }, ref) => {
   const {
     id: formId,
-    fields: formField,
+    fields: fie,
     submitButtonText,
     submitButtonClassName,
     onSubmitSuccess,
@@ -48,22 +48,14 @@ export const DynamicForm = forwardRef<
     readOnly,
   } = config;
 
-  const processedFields: FieldConfig[] = formField.map((fieldRef) =>
+  const processedFields: FieldConfig[] = fie.map((fieldRef) =>
     getRegisteredField(fieldRef, formLanguage)
   );
+
   const formSchema = buildZodSchema(processedFields, formLanguage);
-
-  // default values
-  const defaultValues = processedFields.reduce((acc, field) => {
-    acc[field.name] = field.defaultValue || "";
-    return acc;
-  }, {} as Record<string, any>);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues,
   });
-
   // expose form methods via ref
   useImperativeHandle(ref, () => ({
     submit: () => form.handleSubmit(onSubmit)(),
@@ -78,57 +70,58 @@ export const DynamicForm = forwardRef<
     }
   }
 
-  const renderField = (field: FieldConfig) => {
+  const renderField = (fieldConfig: FieldConfig) => {
     const {
       name: fieldName,
       label: fieldLabel,
-      placeholder: fieldPlaceHolder,
-    } = field;
+      placeholder: fieldPlaceholder,
+    } = fieldConfig;
 
     return (
       <FormField
         key={fieldName}
         control={form.control}
         name={fieldName}
-        render={({ field: formField }) => (
+        render={({ field: rhfField }) => (
           <FormItem className={`${readOnly ? "gap-1" : ""}`}>
             <FormLabel className={`${readOnly ? "text-primary/65" : ""}`}>
               {fieldLabel}
             </FormLabel>
             <FormControl>
-              {field.type === "textarea" ? (
+              {fieldConfig.type === "textarea" ? (
                 <Textarea
-                  placeholder={fieldPlaceHolder}
-                  className={`${field.className || ""}`}
-                  {...formField}
+                  placeholder={fieldPlaceholder}
+                  className={`${fieldConfig.className || ""}`}
+                  {...rhfField} // connect to RHF
                   readOnly={readOnly}
                 />
-              ) : field.type === "select" ? (
+              ) : fieldConfig.type === "select" ? (
                 <FormSelect
-                  value={formField.value}
-                  onChange={formField.onChange}
-                  options={field.options || []}
-                  placeholder={fieldPlaceHolder}
-                  className={field.className}
+                  value={rhfField.value || ""}
+                  onChange={rhfField.onChange}
+                  options={fieldConfig.options || []}
+                  placeholder={fieldPlaceholder}
+                  className={fieldConfig.className}
                   language={formLanguage}
                   disabled={readOnly}
                   name={fieldName}
                 />
-              ) : field.type === "date" ? (
+              ) : fieldConfig.type === "date" ? (
                 <FormDatePicker
-                  value={formField.value}
-                  onChange={formField.onChange}
-                  placeholder={fieldPlaceHolder}
-                  className={field.className}
+                  value={rhfField.value || ""}
+                  onChange={rhfField.onChange}
+                  placeholder={fieldPlaceholder}
+                  className={fieldConfig.className}
                   disabled={readOnly}
                 />
               ) : (
                 <Input
-                  type={field.type}
-                  placeholder={fieldPlaceHolder}
-                  className={`${field.className || ""}`}
-                  {...formField}
+                  type={fieldConfig.type}
+                  placeholder={fieldPlaceholder}
+                  className={`${fieldConfig.className || ""}`}
+                  {...rhfField} // connect to RHF
                   readOnly={readOnly}
+                  value={rhfField.value || ""} // ensure controlled input
                 />
               )}
             </FormControl>
@@ -147,9 +140,10 @@ export const DynamicForm = forwardRef<
         id={formId}
       >
         <div
-          className={`grid w-full grid-cols-1 gap-4 ${
-            Number(fieldColumn) > 1 ? "gap-y-9" : "gap-y-6"
-          } sm:grid-cols-${fieldColumn}`}
+          className={`grid w-full gap-9 
+            grid-cols-${fieldColumn} ${
+            fieldColumn > 1 ? "gap-y-9" : "gap-y-6"
+          }`}
         >
           {processedFields.map(renderField)}
         </div>

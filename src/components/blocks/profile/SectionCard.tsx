@@ -10,13 +10,17 @@ import { FlexBox } from "../common/FlexBox";
 import { Card } from "@/components/ui/card";
 import { Edit } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/utils/supabaseClient";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 type SectionCardProps = {
   title: string;
   formFields: WithRequiredMarker<RegisteredFieldKey>[];
   className?: string;
-  fieldColumn?: Number;
+  fieldColumn?: number;
 };
 
 export function SectionCard({
@@ -25,31 +29,60 @@ export function SectionCard({
   className,
   fieldColumn = 1,
 }: SectionCardProps) {
+  const { user } = useSelector((state: RootState) => state.auth);
+  const { id: userID } = user || {};
+  const { data: profile, isLoading } = useQuery({
+    queryKey: ["profile", user?.id, title],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("krs_user_profiles")
+        .select(formFields.join(","))
+        .eq("id", userID)
+        .single();
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const formRef = React.useRef<DynamicFormHandle>(null);
   const [editing, setediting] = useState(false);
+  useEffect(() => {
+    if (profile && formRef.current) {
+      formRef.current.reset(profile); // populate on load
+    }
+  }, [profile]);
+
   const formConfig: FormConfig = {
     id: title,
     fields: formFields,
     readOnly: !editing,
     onSubmitSuccess: async (data) => {
       console.log("Form submitted with data:", data);
-      setediting(false);
-      // const result = await dispatch(signupThunk(data));
-      // if (signupThunk.rejected.match(result)) {
-      //   setError(result.payload as string);
-      // } else {
-      //   navigate("/dashboard");
-      // }
+
+      const { error } = await supabase
+        .from("krs_user_profiles")
+        .update(data)
+        .eq("id", userID);
+
+      if (error) {
+        console.error("Failed to update profile:", error);
+      } else {
+        setediting(false);
+      }
     },
-  };
-  const onEdit = () => {
-    setediting(true);
   };
 
   const onCancel = async () => {
+    if (profile && formRef.current) {
+      formRef.current.reset(profile); // rollback values
+    }
     setediting(false);
   };
 
+  const onEdit = () => {
+    setediting(true);
+  };
+  // console.log("Profile data:", profile);
   return (
     <Card className={cn("mb-6 px-10 py-6", className)}>
       <FlexBox className="mb-1 justify-between">

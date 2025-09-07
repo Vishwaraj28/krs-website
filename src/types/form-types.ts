@@ -79,17 +79,6 @@ export type SelectOption = {
   value: string;
 };
 
-export type UnProcessedFieldConfig = {
-  name: string;
-  label: MultilingualText;
-  type: FieldType;
-  placeholder: MultilingualText;
-  validations?: ValidationRule[];
-  options?: SelectOption[] | (() => Promise<SelectOption[]>); // For select fields
-  defaultValue?: any;
-  className?: string;
-};
-
 // Define a single field configuration
 export type FieldConfig = {
   name: string;
