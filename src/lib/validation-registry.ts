@@ -44,6 +44,10 @@ export const validationMessages: ValidationMessages = {
     en: ({ label }) => `${label} must contain only numbers`,
     gu: ({ label }) => `${label} માં ફક્ત નંબર હોવા જોઈએ`,
   },
+  plain_text: {
+    en: ({ label }) => `${label} must contain only letters and spaces`,
+    gu: ({ label }) => `${label} માં ફક્ત અક્ષરો અને જગ્યા હોવી જોઈએ`,
+  },
   alphanumeric: {
     en: ({ label }) => `${label} must contain only letters and numbers`,
     gu: ({ label }) => `${label} માં ફક્ત અક્ષરો અને નંબરો હોવા જોઈએ`,

@@ -31,7 +31,11 @@ type FieldRegistry = Record<string, RegistryEntry>;
 export const fieldRegistry: FieldRegistry = {
   textRegistry: {
     type: "text",
-    validations: [{ type: "min", value: 2 }],
+    validations: [
+      { type: "min", value: 2 },
+      { type: "max", value: 100 },
+      { type: "plain_text" },
+    ],
     fields: {
       fullName: {
         label: { en: "Full Name", gu: "પૂરું નામ" },

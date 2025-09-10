@@ -72,3 +72,11 @@ export async function getAreas(): Promise<SelectOption[]> {
     return [];
   }
 }
+
+export function sanitizeValues(
+  values: Record<string, any>
+): Record<string, any> {
+  return Object.fromEntries(
+    Object.entries(values).map(([key, value]) => [key, value ?? ""])
+  );
+}

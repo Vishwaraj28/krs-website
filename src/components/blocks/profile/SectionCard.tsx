@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { DynamicForm, DynamicFormHandle } from "../form/DynamicForm";
@@ -15,6 +17,8 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/utils/supabaseClient";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import { sanitizeValues } from "@/utils/utils";
+import { toast } from "sonner";
 
 type SectionCardProps = {
   title: string;
@@ -31,6 +35,10 @@ export function SectionCard({
 }: SectionCardProps) {
   const { user } = useSelector((state: RootState) => state.auth);
   const { id: userID } = user || {};
+  const formRef = React.useRef<DynamicFormHandle>(null);
+  const [editing, setEditing] = useState(false);
+
+  // Fetch profile
   const { data: profile, isLoading } = useQuery({
     queryKey: ["profile", user?.id, title],
     queryFn: async () => {
@@ -42,55 +50,58 @@ export function SectionCard({
       if (error) throw error;
       return data;
     },
+    enabled: !!userID,
   });
-
-  const formRef = React.useRef<DynamicFormHandle>(null);
-  const [editing, setediting] = useState(false);
-  useEffect(() => {
-    if (profile && formRef.current) {
-      formRef.current.reset(profile); // populate on load
-    }
-  }, [profile]);
 
   const formConfig: FormConfig = {
     id: title,
     fields: formFields,
     readOnly: !editing,
-    onSubmitSuccess: async (data) => {
-      console.log("Form submitted with data:", data);
-
-      const { error } = await supabase
-        .from("krs_user_profiles")
-        .update(data)
-        .eq("id", userID);
-
-      if (error) {
-        console.error("Failed to update profile:", error);
+    onSubmitSuccess: async (data, methods) => {
+      const dirtyKeys = Object.keys(methods.formState.dirtyFields);
+      const updates = Object.fromEntries(
+        dirtyKeys
+          .filter((key) => data[key] !== null && data[key] !== undefined)
+          .map((key) => [key, data[key]])
+      );
+      if (Object.keys(updates).length > 0) {
+        const { error } = await supabase
+          .from("krs_user_profiles")
+          .update(updates)
+          .eq("id", userID)
+          .select();
+        if (error) {
+          toast.error(`Failed to update profile. Please try again.`);
+        } else {
+          toast.success("Profile updated successfully!");
+          setEditing(false);
+          methods.reset({ ...methods.getValues(), ...updates }); // sync form state
+        }
       } else {
-        setediting(false);
+        setEditing(false);
       }
     },
   };
-
-  const onCancel = async () => {
+  useEffect(() => {
     if (profile && formRef.current) {
-      formRef.current.reset(profile); // rollback values
+      formRef.current.reset(sanitizeValues(profile)); // populate form with fetched profile
     }
-    setediting(false);
+  }, [profile]);
+  const onEdit = () => setEditing(true);
+  const onCancel = () => {
+    setEditing(false);
+    if (profile) {
+      formRef.current?.reset(sanitizeValues(profile)); // rollback to original profile
+    }
   };
 
-  const onEdit = () => {
-    setediting(true);
-  };
-  // console.log("Profile data:", profile);
   return (
-    <Card className={cn("mb-6 px-10 py-6", className)}>
+    <Card className={cn("mb-6 p-10", className)}>
       <FlexBox className="mb-1 justify-between">
         <h4 className="text-primary/75">{title}</h4>
         {!editing ? (
           <Button size="sm" onClick={onEdit}>
-            Edit
-            <Edit />
+            Edit <Edit />
           </Button>
         ) : (
           <div className="flex gap-2">

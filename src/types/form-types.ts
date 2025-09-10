@@ -1,5 +1,6 @@
 import { z, ZodTypeAny } from "zod";
 import { getValidationMessage } from "@/lib/validation-registry";
+import { UseFormReturn } from "react-hook-form";
 
 // Define supported languages
 export type SupportedLanguage = "en" | "gu";
@@ -70,7 +71,8 @@ export type ValidationRule =
   | { type: "password_lowercase"; message?: string | MultilingualText }
   | { type: "password_digit"; message?: string | MultilingualText }
   | { type: "password_special"; message?: string | MultilingualText }
-  | { type: "custom"; value: any; message: string | MultilingualText };
+  | { type: "custom"; value: any; message: string | MultilingualText }
+  | { type: "plain_text"; value?: string; message?: string | MultilingualText }; // ✅ new rule for plain text (letters + spaces only)
 
 // Define options for select fields
 export type SelectOption = {
@@ -97,7 +99,10 @@ export type FormConfig = {
   fields: WithRequiredMarker<RegisteredFieldKey>[];
   submitButtonText?: string | MultilingualText;
   submitButtonClassName?: string;
-  onSubmitSuccess?: (data: any) => void;
+  onSubmitSuccess?: (
+    data: Record<string, any>,
+    methods: UseFormReturn<Record<string, any>>
+  ) => void | Promise<void>;
   language?: SupportedLanguage; // Required language for the form
   readOnly?: boolean; // If true, all fields are read-only
 };
@@ -203,6 +208,15 @@ export function buildZodSchema(
           case "url":
             fieldSchema = fieldSchema.refine(
               (val) => !val || /^https?:\/\/.+\..+/.test(val),
+              {
+                message: validation.message as string,
+              }
+            );
+            break;
+
+          case "plain_text":
+            fieldSchema = fieldSchema.refine(
+              (val) => !val || /^[A-Za-z\s]+$/.test(val),
               {
                 message: validation.message as string,
               }
