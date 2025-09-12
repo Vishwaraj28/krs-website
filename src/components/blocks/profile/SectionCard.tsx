@@ -8,12 +8,11 @@ import {
   RegisteredFieldKey,
   WithRequiredMarker,
 } from "@/types/form-types";
-import { FlexBox } from "../common/FlexBox";
+import { FlexBox } from "../layout/FlexBox";
 import { Card } from "@/components/ui/card";
 import { Edit } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/utils/supabaseClient";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -24,7 +23,9 @@ type SectionCardProps = {
   title: string;
   formFields: WithRequiredMarker<RegisteredFieldKey>[];
   className?: string;
-  fieldColumn?: number;
+  fieldColumn: number;
+  profile: Record<string, any> | null;
+  loading?: boolean;
 };
 
 export function SectionCard({
@@ -32,61 +33,48 @@ export function SectionCard({
   formFields,
   className,
   fieldColumn = 1,
+  profile,
+  loading = false,
 }: SectionCardProps) {
   const { user } = useSelector((state: RootState) => state.auth);
   const { id: userID } = user || {};
   const formRef = React.useRef<DynamicFormHandle>(null);
   const [editing, setEditing] = useState(false);
 
-  // Fetch profile
-  const { data: profile, isLoading } = useQuery({
-    queryKey: ["profile", user?.id, title],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("krs_user_profiles")
-        .select(formFields.join(","))
-        .eq("id", userID)
-        .single();
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!userID,
-  });
-
-  const formConfig: FormConfig = {
-    id: title,
-    fields: formFields,
-    readOnly: !editing,
-    onSubmitSuccess: async (data, methods) => {
-      const dirtyKeys = Object.keys(methods.formState.dirtyFields);
-      const updates = Object.fromEntries(
-        dirtyKeys
-          .filter((key) => data[key] !== null && data[key] !== undefined)
-          .map((key) => [key, data[key]])
-      );
-      if (Object.keys(updates).length > 0) {
-        const { error } = await supabase
-          .from("krs_user_profiles")
-          .update(updates)
-          .eq("id", userID)
-          .select();
-        if (error) {
-          toast.error(`Failed to update profile. Please try again.`);
-        } else {
-          toast.success("Profile updated successfully!");
-          setEditing(false);
-          methods.reset({ ...methods.getValues(), ...updates }); // sync form state
-        }
-      } else {
-        setEditing(false);
-      }
-    },
-  };
   useEffect(() => {
     if (profile && formRef.current) {
-      formRef.current.reset(sanitizeValues(profile)); // populate form with fetched profile
+      const sectionValues = Object.fromEntries(
+        formFields.map((f) => [f, profile[f] ?? ""])
+      );
+      formRef.current.reset(sectionValues);
     }
   }, [profile]);
+
+  const onSubmitSuccess = async (data, methods) => {
+    const dirtyKeys = Object.keys(methods.formState.dirtyFields);
+    const updates = Object.fromEntries(
+      dirtyKeys
+        .filter((key) => data[key] !== null && data[key] !== undefined)
+        .map((key) => [key, data[key]])
+    );
+    console.log("Updating profile with:", updates);
+    if (Object.keys(updates).length > 0) {
+      const { error } = await supabase
+        .from("krs_user_profiles")
+        .update(updates)
+        .eq("id", userID)
+        .select();
+      if (error) {
+        toast.error(`Failed to update profile. Please try again.`);
+      } else {
+        toast.success("Profile updated successfully!");
+        setEditing(false);
+        methods.reset({ ...methods.getValues(), ...updates }); // sync form state
+      }
+    } else {
+      setEditing(false);
+    }
+  };
   const onEdit = () => setEditing(true);
   const onCancel = () => {
     setEditing(false);
@@ -115,7 +103,20 @@ export function SectionCard({
         )}
       </FlexBox>
       <Separator className="bg-primary-light p-0.25 mb-2" />
-      <DynamicForm ref={formRef} config={formConfig} col={fieldColumn} />
+      {loading ? (
+        <div className="text-muted-foreground">Loading...</div>
+      ) : (
+        <DynamicForm
+          ref={formRef}
+          config={{
+            id: title,
+            fields: formFields,
+            readOnly: !editing,
+            onSubmitSuccess,
+          }}
+          col={fieldColumn}
+        />
+      )}
     </Card>
   );
 }
