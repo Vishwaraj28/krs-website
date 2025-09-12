@@ -20,7 +20,7 @@ import { RootState } from "@/store/store";
 import { Button } from "@/components/ui/button";
 import { useLocation, useNavigate } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FlexBox } from "@/components/blocks/common/FlexBox";
+import { FlexBox } from "@/components/blocks/layout/FlexBox";
 
 function SidebarSkeleton() {
   return (

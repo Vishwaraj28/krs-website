@@ -5,7 +5,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ImageFromBucket } from "@/components/blocks/common/Image";
+import { ImageFromBucket } from "@/components/blocks/layout/Image";
 import thumbnail from "@/assets/thumbnail.jpg";
 
 export type ProfileCardVariant = "default" | "wide";

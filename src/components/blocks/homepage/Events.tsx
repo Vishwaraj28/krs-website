@@ -2,12 +2,12 @@ import useTableData from "@/hooks/useTableData";
 import useNavigateTo from "@/hooks/UseNavigateTo";
 import { EventCard } from "@/components/blocks/cards/EventCard";
 import { Button } from "@/components/ui/button";
-import { Container } from "@/components/blocks/common/Container";
+import { Container } from "@/components/blocks/layout/Container";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { sortByDate } from "@/utils/utils";
-import { FlexBox } from "@/components/blocks/common/FlexBox";
+import { FlexBox } from "@/components/blocks/layout/FlexBox";
 
 export function EventSections() {
   const {

@@ -9,7 +9,7 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FlexBox } from "../common/FlexBox";
+import { FlexBox } from "../layout/FlexBox";
 import { useLocation } from "react-router";
 
 function BreadcrumbSkeleton() {

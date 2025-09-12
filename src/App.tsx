@@ -1,17 +1,16 @@
 import "./App.css";
-import { NewsSection } from "@/pages/homepage/sections/News";
-import { EventSections } from "@/pages/homepage/sections/Events";
-import { AchieverSection } from "@/pages/homepage/sections/Achievers";
-import { MainHeader } from "@/pages/homepage/sections/Header";
-import { SponserSection } from "@/pages/homepage/sections/Sponsers";
-import { JoinUsSection } from "@/pages/homepage/sections/JoinUs";
+import { NewsSection } from "@/components/blocks/homepage/News";
+import { EventSections } from "@/components/blocks/homepage/Events";
+import { AchieverSection } from "@/components/blocks/homepage/Achievers";
+import { SponserSection } from "@/components/blocks/homepage/Sponsers";
+import { JoinUsSection } from "@/components/blocks/homepage/JoinUs";
+import { PageHeader } from "./components/blocks/common/PageHeader";
 
 function App() {
   return (
     <>
       <main className="min-h-screen">
-        <MainHeader />
-        <h1>This is Home</h1>
+        <PageHeader />
         <NewsSection />
         <AchieverSection />
         <JoinUsSection />

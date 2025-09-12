@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { LogOut, User } from "lucide-react";
-import { FlexBox } from "../common/FlexBox";
+import { FlexBox } from "../layout/FlexBox";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { logoutThunk } from "@/store/thunk/logoutThunk";

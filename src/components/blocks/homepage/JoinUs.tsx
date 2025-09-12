@@ -1,13 +1,13 @@
 import type { FormConfig } from "@/types/form-types";
-import { Container } from "@/components/blocks/common/Container";
-import { FlexBox } from "@/components/blocks/common/FlexBox";
+import { Container } from "@/components/blocks/layout/Container";
+import { FlexBox } from "@/components/blocks/layout/FlexBox";
 import { Card, CardContent } from "@/components/ui/card";
 import { DynamicForm } from "@/components/blocks/form/DynamicForm";
 
 export function JoinUsSection() {
   const formConfig: FormConfig = {
     id: "join-us-form",
-    fields: ["fullName", "phone", "address", "nativeAddress"],
+    fields: ["fullName*", "phone*", "address*", "nativeAddress*"],
     language: "gu", // Explicitly set English language
     submitButtonText: "Submit",
     onSubmitSuccess: (data) => {

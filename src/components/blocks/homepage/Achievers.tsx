@@ -2,13 +2,13 @@ import { useRef } from "react";
 import useTableData from "@/hooks/useTableData";
 import useNavigateTo from "@/hooks/UseNavigateTo";
 import { Button } from "@/components/ui/button";
-import { Container } from "@/components/blocks/common/Container";
+import { Container } from "@/components/blocks/layout/Container";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { SquareArrowOutUpRight, ChevronRight, ChevronLeft } from "lucide-react";
 import { ProfileCard } from "@/components/blocks/cards/ProfileCard";
 import achieversBackground from "@/assets/achievers_background.png";
-import { FlexBox } from "@/components/blocks/common/FlexBox";
+import { FlexBox } from "@/components/blocks/layout/FlexBox";
 
 export function AchieverSection() {
   const {

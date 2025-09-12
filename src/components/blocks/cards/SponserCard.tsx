@@ -4,9 +4,9 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
-import { ImageFromBucket } from "@/components/blocks/common/Image";
+import { ImageFromBucket } from "@/components/blocks/layout/Image";
 import { Globe, List, Mail, MapPin, Phone } from "lucide-react";
-import { FlexBox } from "@/components/blocks/common/FlexBox";
+import { FlexBox } from "@/components/blocks/layout/FlexBox";
 import thumbnail from "@/assets/thumbnail.jpg";
 
 export interface SponserCardProps extends React.HTMLAttributes<HTMLDivElement> {

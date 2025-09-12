@@ -10,7 +10,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle, Clock, Mail, MapPin } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FlexBox } from "@/components/blocks/common/FlexBox";
+import { FlexBox } from "@/components/blocks/layout/FlexBox";
 import { useManageUser } from "@/hooks/useManageUser";
 
 export interface UserApprovalCardProps

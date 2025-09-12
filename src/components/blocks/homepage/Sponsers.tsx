@@ -1,6 +1,6 @@
 import useTableData from "@/hooks/useTableData";
-import { Container } from "@/components/blocks/common/Container";
-import { MasonryGrid } from "@/components/blocks/common/MasonryGrid";
+import { Container } from "@/components/blocks/layout/Container";
+import { MasonryGrid } from "@/components/blocks/layout/MasonryGrid";
 import { SponserCard } from "@/components/blocks/cards/SponserCard";
 import { ProfileCard } from "@/components/blocks/cards/ProfileCard";
 import sponsersBackgroundImage from "@/assets/sponsers_background.png";

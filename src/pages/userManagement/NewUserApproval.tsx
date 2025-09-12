@@ -5,7 +5,7 @@ import {
   UserApprovalCard,
   UserApprovalCardSkeleton,
 } from "@/components/blocks/cards/UserApprovalCard";
-import { FlexBox } from "@/components/blocks/common/FlexBox";
+import { FlexBox } from "@/components/blocks/layout/FlexBox";
 import { Badge } from "@/components/ui/badge";
 
 type PendingUser = {

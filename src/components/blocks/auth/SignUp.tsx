@@ -2,7 +2,7 @@ import type React from "react";
 import { Button } from "@/components/ui/button";
 import { FormConfig } from "@/types/form-types";
 import { DynamicForm } from "@/components/blocks/form/DynamicForm";
-import { FlexBox } from "@/components/blocks/common/FlexBox";
+import { FlexBox } from "@/components/blocks/layout/FlexBox";
 import { useNavigate } from "react-router";
 import { signupThunk } from "@/store/thunk/signupThunk";
 import { useDispatch } from "react-redux";

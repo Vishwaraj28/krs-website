@@ -11,7 +11,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ImageFromBucket } from "@/components/blocks/common/Image";
+import { ImageFromBucket } from "@/components/blocks/layout/Image";
 import { formatDate } from "@/utils/utils";
 import thumbnail from "@/assets/thumbnail.jpg";
 

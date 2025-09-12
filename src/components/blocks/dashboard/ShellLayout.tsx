@@ -10,10 +10,11 @@ import { RootState, AppDispatch } from "@/store/store";
 import { useEffect } from "react";
 import { navThunk } from "@/store/thunk/navThunk";
 import { Outlet } from "react-router";
-import { FlexBox } from "../common/FlexBox";
+import { FlexBox } from "../layout/FlexBox";
 import HeaderBreadcrumb from "./HeaderBreadcrumb";
 import UnderReviewPage from "../auth/UnderReview";
 import { Toaster } from "@/components/ui/sonner";
+import { PageHeader } from "../common/PageHeader";
 
 export default function ShellLayout() {
   const dispatch = useDispatch<AppDispatch>();
@@ -42,6 +43,7 @@ export default function ShellLayout() {
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
+          <PageHeader />
           <FlexBox as="header" className="h-16 shrink-0 gap-2 border-b">
             <FlexBox className="gap-2 px-3">
               <SidebarTrigger />
@@ -50,7 +52,7 @@ export default function ShellLayout() {
             </FlexBox>
           </FlexBox>
           <main>
-            <div className="min-h-screen min-w-0 z-3 relative">
+            <div className="min-h-screen min-w-0 z-3 relative px-4">
               <Outlet />
             </div>
           </main>
