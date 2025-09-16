@@ -1,11 +1,9 @@
 import { LoginForm } from "@/components/blocks/auth/Login";
-import { PageHeader } from "@/components/blocks/common/PageHeader";
 import { FlexBox } from "@/components/blocks/layout/FlexBox";
 
 export default function LoginPage() {
   return (
     <>
-      <PageHeader />
       <div className="grid min-h-svh lg:grid-cols-2">
         <FlexBox orientation="column" className="gap-4 p-6 md:p-10">
           <FlexBox className="flex-1 justify-center">

@@ -22,7 +22,7 @@ export default function UnderReviewPage({ userData }: Props) {
 
   const handleLogout = async () => {
     await dispatch(logoutThunk());
-    navigate("/login", { replace: true });
+    navigate("/", { replace: true });
   };
 
   return (

@@ -21,6 +21,7 @@ import { Button } from "@/components/ui/button";
 import { useLocation, useNavigate } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FlexBox } from "@/components/blocks/layout/FlexBox";
+import mainLogo from "@/assets/main-logo.svg";
 
 function SidebarSkeleton() {
   return (
@@ -60,16 +61,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar {...props}>
       <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <a href="#" className="hover:bg-primary/10">
-                <FlexBox className="aspect-square size-8 justify-center rounded-lg bg-primary text-primary-foreground">
-                  <GalleryVerticalEnd className="size-4" />
-                </FlexBox>
-                <span className="font-semibold">KRS Dashboard</span>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+          <FlexBox className="gap-2 md:gap-3 bg-primary text-primary-foreground p-3">
+            <img
+              src={mainLogo}
+              alt="KRS Logo"
+              className="object-cover aspect-square size-16 justify-center rounded-sm"
+            />
+            <p className="font-extrabold text-white drop-shadow-sm text-left">
+              સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ - વડોદરા
+            </p>
+          </FlexBox>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>

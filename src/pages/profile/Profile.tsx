@@ -87,7 +87,7 @@ export default function Profile() {
   const percent = total > 0 ? Math.round((done / total) * 100) : 0;
 
   return (
-    <div className="bg-primary-light/55 p-8">
+    <>
       {/* Header */}
       <FlexBox
         className="justify-between mb-8 px-2"
@@ -141,6 +141,6 @@ export default function Profile() {
           fieldColumn={section.col}
         />
       ))}
-    </div>
+    </>
   );
 }

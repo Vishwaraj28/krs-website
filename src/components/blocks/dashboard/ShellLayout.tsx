@@ -9,16 +9,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "@/store/store";
 import { useEffect } from "react";
 import { navThunk } from "@/store/thunk/navThunk";
-import { Outlet } from "react-router";
+import { Outlet, useNavigate } from "react-router";
 import { FlexBox } from "../layout/FlexBox";
 import HeaderBreadcrumb from "./HeaderBreadcrumb";
 import UnderReviewPage from "../auth/UnderReview";
 import { Toaster } from "@/components/ui/sonner";
-import { PageHeader } from "../common/PageHeader";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
+import { logoutThunk } from "@/store/thunk/logoutThunk";
 
 export default function ShellLayout() {
   const dispatch = useDispatch<AppDispatch>();
   const { user } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
 
   const {
     role: userRole,
@@ -38,21 +41,37 @@ export default function ShellLayout() {
     return <UnderReviewPage userData={userMetaData?.firstName} />;
   }
 
+  const handleLogout = async () => {
+    await dispatch(logoutThunk());
+    navigate("/", { replace: true });
+  };
+
   return (
     <>
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
-          <PageHeader />
-          <FlexBox as="header" className="h-16 shrink-0 gap-2 border-b">
+          <FlexBox as="header" className="gap-2 border-b p-6">
             <FlexBox className="gap-2 px-3">
               <SidebarTrigger />
-              <Separator orientation="vertical" className="mr-2 h-4" />
+              <Separator
+                orientation="vertical"
+                className="text-black bg-black mr-2 h-4"
+              />
               <HeaderBreadcrumb />
+            </FlexBox>
+            <FlexBox className="gap-2 px-3 justify-end">
+              <p className="text-primary text-xl mr-4">
+                Welcome, {userMetaData?.firstName || "User"}
+              </p>
+              <Button onClick={() => handleLogout()} size="sm">
+                <LogOut className="mr-0.5 h-4 w-4" />
+                Logout
+              </Button>
             </FlexBox>
           </FlexBox>
           <main>
-            <div className="min-h-screen min-w-0 z-3 relative px-4">
+            <div className="min-h-screen min-w-0 z-3 relative bg-primary-light/55 p-8">
               <Outlet />
             </div>
           </main>
