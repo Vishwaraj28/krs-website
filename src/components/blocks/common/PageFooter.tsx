@@ -36,7 +36,7 @@ export function PageFooter() {
 
         {/* Top section with logo, title, and action buttons */}
         <FlexBox
-          className="z-10 justify-between px-20 py-6"
+          className="z-10 justify-between px-20 py-10"
           firstColWidth="40"
           secondColWidth="30"
         >
@@ -73,7 +73,7 @@ export function PageFooter() {
             </FlexBox>
           </Button>
           <div className="text-right text-white/90 text-sm">
-            <p className="mb-4">
+            <p className="mb-6">
               Copyright © 2024 Shri Saurastra Karadiya Rajut Samaj, Vadodara.
               All Rights Reserved
             </p>

@@ -3,6 +3,7 @@ import { Pagination, Autoplay, EffectFade } from "swiper/modules";
 import image1 from "@/assets/community-gathering-traditional-indian.jpg";
 import image2 from "@/assets/community-service-helping-hands-indian.jpg";
 import image3 from "@/assets/traditional-indian-community-gathering-celebration.jpg";
+import Container from "../layout/Container";
 
 const slides = [
   {
@@ -31,46 +32,35 @@ export function MainDisplay() {
     <div className="relative">
       <Swiper
         modules={[EffectFade, Pagination, Autoplay]}
-        pagination={{
-          clickable: true,
-          renderBullet: (index, className) => {
-            // custom numbered bullets
-            return `<span class="${className} w-6 h-6 flex items-center justify-center border text-white">${String(
-              index + 1
-            ).padStart(2, "0")}</span>`;
-          },
-        }}
+        pagination={true}
         autoplay={{ delay: 5000 }}
         loop={true}
-        className="h-[500px] w-full"
+        className="h-[calc(100vh-8rem)] w-full"
         effect={"fade"}
       >
         {slides.map((slide, idx) => (
           <SwiperSlide key={idx}>
-            <div className="relative h-[500px] w-full">
-              <img
-                src={slide.image}
-                alt={slide.title}
-                // fill
-                className="object-cover"
-              />
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="object-cover w-full"
+            />
 
-              {/* Dark Overlay */}
-              <div className="absolute inset-0 bg-black/40" />
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/50" />
 
-              {/* Content */}
-              <div className="absolute inset-0 flex items-center px-12">
-                <div className="max-w-xl text-white">
-                  <h2 className="text-5xl font-extrabold mb-4 text-orange-500">
-                    {slide.title}
-                  </h2>
-                  <ul className="list-disc ml-5 text-lg">
-                    <li>{slide.bullet}</li>
-                  </ul>
-                  <p className="mt-4 text-base">{slide.description}</p>
-                </div>
+            {/* Content */}
+            <Container wide className="absolute inset-0 flex items-center">
+              <div className="max-w-xl text-white">
+                <h2 className="text-6xl font-extrabold mb-4 text-primary">
+                  {slide.title}
+                </h2>
+                <ul className="list-disc ml-5 text-lg">
+                  <li>{slide.bullet}</li>
+                </ul>
+                <p className="mt-4 text-base">{slide.description}</p>
               </div>
-            </div>
+            </Container>
           </SwiperSlide>
         ))}
       </Swiper>

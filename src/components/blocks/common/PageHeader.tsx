@@ -24,14 +24,14 @@ export function PageHeader() {
         overflow-hidden"
     >
       {/* Gradient background using theme colors */}
-      <div className="relative z-0 w-full bg-gradient-to-r from-primary to-secondary/90">
+      <div className="relative z-0 w-full bg-gradient-to-r from-primary to-primary">
         {/* Diagonal darker wedge */}
         <div
           className="absolute inset-y-0 left-0 z-0"
           style={{
             width: "55%",
             background:
-              "linear-gradient(90deg, rgba(154,14,0,0.15) 0%, rgba(213,55,11,0.75) 60%, rgba(243,126,32,0) 100%)",
+              "linear-gradient(90deg, rgba(154,14,0,0.15) 0%, rgba(213,55,11,0.45) 60%, rgba(243,126,32,0) 100%)",
             clipPath: "polygon(0 0, 75% 0, 55% 100%, 0% 100%)",
           }}
           aria-hidden="true"
