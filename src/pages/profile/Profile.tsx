@@ -7,8 +7,14 @@ import { supabase } from "@/utils/supabaseClient";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { RegisteredFieldKey, WithRequiredMarker } from "@/types/form-types";
+import { useProfileImageUpload } from "@/hooks/useProfileImageUpload";
+import { PlusCircle } from "lucide-react";
+import { profileProgress } from "@/utils/utils";
+import profilePlaceholderImage from "@/assets/profile-placeholder.svg";
+import { useImageFromBucket } from "@/hooks/useImageFromBucket";
+import { useMemo } from "react";
 
-type ProfileSections = {
+export type ProfileSections = {
   title: string;
   fields: WithRequiredMarker<RegisteredFieldKey>[];
   col: number;
@@ -32,9 +38,23 @@ export default function Profile() {
     enabled: !!userID,
   });
 
+  const { uploadProfileImage, loading } = useProfileImageUpload(
+    userID,
+    profile?.profile_picture
+  );
+
+  const { data: imageUrl } = useImageFromBucket(
+    "krs-user-profiles",
+    profile?.profile_picture,
+    {
+      signed: true,
+      expiresIn: 600, // optional
+    }
+  );
+
   const profileSections: ProfileSections[] = [
     {
-      title: "Personal Information",
+      title: "Personal Information - Need Fix",
       fields: [
         "firstName",
         "middleName",
@@ -74,17 +94,16 @@ export default function Profile() {
     },
   ];
 
-  // Total count across all sections:
-  const total = profileSections.reduce((sum, s) => sum + s.fields.length, 0);
+  const { totalFields, completedFields, percenProfileCompleted } =
+    useMemo(() => {
+      return profileProgress(profile, profileSections);
+    }, [profile]);
 
-  // Done count:
-  const done = profile
-    ? profileSections
-        .flatMap((s) => s.fields)
-        .filter((f) => profile[f] !== null && profile[f] !== "").length
-    : 0;
-
-  const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+      await uploadProfileImage(e.target.files[0]);
+    }
+  };
 
   return (
     <>
@@ -101,9 +120,9 @@ export default function Profile() {
           </p>
         </div>
         <div>
-          <Progress value={percent} className="h-2" />
+          <Progress value={percenProfileCompleted} className="h-2" />
           <p className="text-sm text-muted-foreground">
-            {done} of {total} complete
+            {completedFields} of {totalFields} complete
           </p>
         </div>
       </FlexBox>
@@ -113,15 +132,31 @@ export default function Profile() {
         <FlexBox>
           <div className="relative h-30 w-30 shrink-0 overflow-hidden rounded-lg border-2 border-primary-light bg-muted/30">
             <img
-              src={
-                profile?.avatarUrl ||
-                "/placeholder.svg?height=112&width=112&query=person%20avatar"
-              }
-              alt="Profile avatar"
-              className="object-cover"
-              sizes="96px"
+              src={imageUrl || profilePlaceholderImage}
+              alt="Profile Image"
+              className="object-cover h-full w-full"
             />
+            <div className="opacity-0 hover:opacity-100 transition">
+              {/* Hidden file input */}
+              <input
+                id="profileImageUpload"
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                disabled={loading}
+                className="hidden" // hides input
+              />
+
+              {/* Label acts as the button */}
+              <label
+                htmlFor="profileImageUpload"
+                className="absolute inset-0 flex cursor-pointer items-center justify-center bg-black/40 text-white"
+              >
+                <PlusCircle className="mr-2" size={32} />
+              </label>
+            </div>
           </div>
+
           <div>
             <h4 className="text-primary">
               {profile?.firstName || ""} {profile?.lastName || ""}

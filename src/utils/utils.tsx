@@ -5,6 +5,7 @@
  * @returns {string} - The formatted date.
  * @throws {Error} - Throws an error if the date is invalid.
  */
+import { ProfileSections } from "@/pages/profile/Profile";
 import { SelectOption } from "@/types/form-types";
 import { supabase } from "@/utils/supabaseClient";
 
@@ -79,4 +80,27 @@ export function sanitizeValues(
   return Object.fromEntries(
     Object.entries(values).map(([key, value]) => [key, value ?? ""])
   );
+}
+
+export function profileProgress(
+  profile: any,
+  profileSections: ProfileSections[]
+) {
+  // Total count across all sections:
+  const totalFields = profileSections.reduce(
+    (sum, s) => sum + s.fields.length,
+    0
+  );
+
+  // Done count:
+  const completedFields = profile
+    ? profileSections
+        .flatMap((s) => s.fields)
+        .filter((f) => profile[f] !== null && profile[f] !== "").length
+    : 0;
+
+  const percenProfileCompleted =
+    totalFields > 0 ? Math.round((completedFields / totalFields) * 100) : 0;
+
+  return { totalFields, completedFields, percenProfileCompleted };
 }

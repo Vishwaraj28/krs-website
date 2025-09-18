@@ -49,6 +49,7 @@ export function ImageFromBucket({
     error,
   } = useImageFromBucket(bucket, imagePath, {
     enabled: isValid,
+    signed: false,
   });
 
   if (isLoading) return <p>Image is Loading...</p>;

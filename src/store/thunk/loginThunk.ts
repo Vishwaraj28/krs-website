@@ -16,6 +16,7 @@ export const loginThunk = createAsyncThunk<
     await supabase.auth.signInWithPassword({ email, password });
 
   if (authError || !authData.session || !authData.user) {
+    console.error("Login error:", authError);
     return thunkAPI.rejectWithValue(authError?.message ?? "Login failed");
   }
 

@@ -3,11 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { DynamicForm, DynamicFormHandle } from "../form/DynamicForm";
-import {
-  FormConfig,
-  RegisteredFieldKey,
-  WithRequiredMarker,
-} from "@/types/form-types";
+import { RegisteredFieldKey, WithRequiredMarker } from "@/types/form-types";
 import { FlexBox } from "../layout/FlexBox";
 import { Card } from "@/components/ui/card";
 import { Edit } from "lucide-react";
@@ -18,6 +14,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { sanitizeValues } from "@/utils/utils";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
 type SectionCardProps = {
   title: string;
@@ -40,6 +37,7 @@ export function SectionCard({
   const { id: userID } = user || {};
   const formRef = React.useRef<DynamicFormHandle>(null);
   const [editing, setEditing] = useState(false);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (profile && formRef.current) {
@@ -55,9 +53,13 @@ export function SectionCard({
     const updates = Object.fromEntries(
       dirtyKeys
         .filter((key) => data[key] !== null && data[key] !== undefined)
-        .map((key) => [key, data[key]])
+        .map((key) => {
+          let value = data[key];
+          if (value === "") value = null;
+          return [key, value];
+        })
     );
-    console.log("Updating profile with:", updates);
+    console.log(updates);
     if (Object.keys(updates).length > 0) {
       const { error } = await supabase
         .from("krs_user_profiles")
@@ -70,6 +72,7 @@ export function SectionCard({
         toast.success("Profile updated successfully!");
         setEditing(false);
         methods.reset({ ...methods.getValues(), ...updates }); // sync form state
+        queryClient.invalidateQueries({ queryKey: ["profile", userID] });
       }
     } else {
       setEditing(false);
