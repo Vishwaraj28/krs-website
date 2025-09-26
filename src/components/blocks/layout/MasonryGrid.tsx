@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
-
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface MasonryGridProps {
   children: React.ReactNode;
+  /** How many columns on desktop */
   columns?: number;
+  /** Gap between items in px */
   gap?: number;
   className?: string;
 }
@@ -24,55 +24,43 @@ export function MasonryGrid({
   useEffect(() => {
     const updateColumnCount = () => {
       if (!containerRef.current) return;
-
       const containerWidth = containerRef.current.offsetWidth;
 
-      // Responsive column count based on container width
+      // Set column counts by breakpoints
       if (containerWidth < 640) {
-        setColumnCount(1);
-      } else if (containerWidth < 768) {
-        setColumnCount(2);
+        setColumnCount(1); // mobile
       } else if (containerWidth < 1024) {
-        setColumnCount(3);
+        setColumnCount(2); // tablet
       } else {
-        setColumnCount(columns);
+        setColumnCount(columns); // desktop
       }
     };
 
     updateColumnCount();
     window.addEventListener("resize", updateColumnCount);
-
-    return () => {
-      window.removeEventListener("resize", updateColumnCount);
-    };
+    return () => window.removeEventListener("resize", updateColumnCount);
   }, [columns]);
 
-  // Create column arrays
+  // Create columns arrays
   const columnItems: React.ReactNode[][] = Array.from(
     { length: columnCount },
     () => []
   );
 
-  // Distribute children among columns
-  const childrenArray = React.Children.toArray(children);
-  childrenArray.forEach((child, index) => {
-    const columnIndex = index % columnCount;
-    columnItems[columnIndex].push(child);
+  React.Children.toArray(children).forEach((child, index) => {
+    columnItems[index % columnCount].push(child);
   });
 
   return (
     <div
       ref={containerRef}
-      className={cn(
-        "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
-        className
-      )}
+      className={cn("flex w-full", className)}
       style={{ gap: `${gap}px` }}
     >
       {columnItems.map((columnChildren, columnIndex) => (
         <div
           key={columnIndex}
-          className="flex flex-col"
+          className="flex flex-col flex-1"
           style={{ gap: `${gap}px` }}
         >
           {columnChildren}

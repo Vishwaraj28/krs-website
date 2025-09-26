@@ -8,7 +8,7 @@ import { FlexBox } from "../layout/FlexBox";
 import { Card } from "@/components/ui/card";
 import { Edit } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/utils/supabaseClient";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
@@ -35,7 +35,7 @@ export function SectionCard({
 }: SectionCardProps) {
   const { user } = useSelector((state: RootState) => state.auth);
   const { id: userID } = user || {};
-  const formRef = React.useRef<DynamicFormHandle>(null);
+  const formRef = useRef<DynamicFormHandle>(null);
   const [editing, setEditing] = useState(false);
   const queryClient = useQueryClient();
 
@@ -59,7 +59,7 @@ export function SectionCard({
           return [key, value];
         })
     );
-    console.log(updates);
+
     if (Object.keys(updates).length > 0) {
       const { error } = await supabase
         .from("krs_user_profiles")

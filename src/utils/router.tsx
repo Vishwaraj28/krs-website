@@ -15,7 +15,7 @@ import ProfileSettings from "@/pages/profile/ProfileSettings";
 
 // Family
 import MyFamily from "@/pages/family/MyFamily";
-import ManageMembers from "@/pages/family/ManageMembers";
+import AddFamilyMember from "@/pages/family/AddFamilyMember";
 
 // User Management
 import NewUserApprovals from "@/pages/userManagement/NewUserApproval";
@@ -37,6 +37,7 @@ import DesignElements from "@/pages/DesignElements";
 
 // Auth guards
 import { ProtectedRoute } from "@/components/blocks/auth/ProtectedRoute";
+import EditFamilyMember from "@/pages/family/EditFamilyMember";
 
 export const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -65,7 +66,8 @@ export const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       { index: true, element: <MyFamily /> },
-      { path: "manage-members", element: <ManageMembers /> },
+      { path: "add", element: <AddFamilyMember /> },
+      { path: ":memberId/edit", element: <EditFamilyMember /> },
     ],
   },
 

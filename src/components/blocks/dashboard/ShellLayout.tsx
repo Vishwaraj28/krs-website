@@ -51,7 +51,10 @@ export default function ShellLayout() {
       <SidebarProvider>
         <AppSidebar />
         <SidebarInset>
-          <FlexBox as="header" className="gap-2 border-b p-6">
+          <FlexBox
+            as="header"
+            className="gap-2 border-b p-6 sticky top-0 bg-white z-10 shadow w-full"
+          >
             <FlexBox className="gap-2 px-3">
               <SidebarTrigger />
               <Separator

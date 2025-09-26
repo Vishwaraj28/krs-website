@@ -207,7 +207,6 @@ export const fieldRegistry: FieldRegistry = {
         options: [
           { label: { en: "Male", gu: "પુરુષ" }, value: "male" },
           { label: { en: "Female", gu: "સ્ત્રી" }, value: "female" },
-          { label: { en: "Other", gu: "અન્ય" }, value: "other" },
         ],
       },
       bloodGroup: {
@@ -228,6 +227,31 @@ export const fieldRegistry: FieldRegistry = {
           { label: { en: "AB-", gu: "AB-" }, value: "AB-" },
           { label: { en: "O+", gu: "O+" }, value: "O+" },
           { label: { en: "O-", gu: "O-" }, value: "O-" },
+        ],
+      },
+      relation: {
+        label: {
+          en: "Relation",
+          gu: "સંબંધ",
+        },
+        placeholder: {
+          en: "Select relation",
+          gu: "સંબંધ પસંદ કરો",
+        },
+        options: [
+          { label: { en: "Wife", gu: "પત્ની" }, value: "wife" },
+          { label: { en: "Husband", gu: "પતિ" }, value: "husband" },
+          { label: { en: "Father", gu: "પિતા" }, value: "father" },
+          { label: { en: "Mother", gu: "માતા" }, value: "mother" },
+          { label: { en: "Brother", gu: "ભાઈ" }, value: "brother" },
+          {
+            label: { en: "Sister-in-law", gu: "ભાભી" },
+            value: "sister_in_law",
+          },
+          { label: { en: "Son", gu: "દીકરો" }, value: "son" },
+          { label: { en: "Daughter", gu: "દીકરી" }, value: "daughter" },
+          { label: { en: "Grandfather", gu: "દાદા" }, value: "grandfather" },
+          { label: { en: "Grandmother", gu: "દાદી" }, value: "grandmother" },
         ],
       },
     },

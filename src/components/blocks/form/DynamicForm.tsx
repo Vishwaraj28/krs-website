@@ -30,6 +30,8 @@ import { FormDatePicker } from "./FormDatePicker";
 export interface DynamicFormHandle {
   submit: () => void;
   reset: (values?: Record<string, any>) => void;
+  trigger: () => Record<string, any>;
+  getValues: () => Record<string, any>;
 }
 
 export const DynamicForm = forwardRef<
@@ -58,6 +60,8 @@ export const DynamicForm = forwardRef<
   useImperativeHandle(ref, () => ({
     submit: () => form.handleSubmit(onSubmit)(),
     reset: (values) => form.reset(values ?? defaultValues),
+    trigger: () => form.trigger(),
+    getValues: () => form.getValues(),
   }));
 
   // Handle submit

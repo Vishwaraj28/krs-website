@@ -55,7 +55,8 @@ export type RegisteredFieldKey =
   | "gender"
   | "date"
   | "dob"
-  | "bloodGroup";
+  | "bloodGroup"
+  | "relation";
 
 // Define simplified validation rules
 export type ValidationRule =
@@ -105,6 +106,33 @@ export type FormConfig = {
   ) => void | Promise<void>;
   language?: SupportedLanguage; // Required language for the form
   readOnly?: boolean; // If true, all fields are read-only
+};
+
+export type FamilyMember = {
+  id: string;
+  user_id: string;
+  firstName: string;
+  middleName?: string;
+  lastName: string;
+  gender: string;
+  dob: string;
+  bloodGroup: string;
+  maritalStatus: string;
+  phone?: string;
+  relation: string;
+  mosalName?: string;
+  svasurName?: string;
+  mosalAddress?: string;
+  svasurAddress?: string;
+  qualification?: string;
+  institution?: string;
+  profession?: string;
+  jobTitle?: string;
+  employerName?: string;
+  industry?: string;
+  profile_picture?: string; // optional field if you add photo later
+  created_at?: string;
+  updated_at?: string;
 };
 
 // Helper function to get text in the current language

@@ -74,7 +74,7 @@ export function PageFooter() {
           </Button>
           <div className="text-right text-white/90 text-sm">
             <p className="mb-6">
-              Copyright © 2024 Shri Saurastra Karadiya Rajut Samaj, Vadodara.
+              Copyright © 2025 Shri Saurastra Karadiya Rajut Samaj, Vadodara.
               All Rights Reserved
             </p>
             <p>
