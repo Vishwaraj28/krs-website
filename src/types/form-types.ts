@@ -131,8 +131,8 @@ export type FamilyMember = {
   employerName?: string;
   industry?: string;
   profile_picture?: string; // optional field if you add photo later
-  created_at?: string;
-  updated_at?: string;
+  created_at: string;
+  updated_at: string;
 };
 
 // Helper function to get text in the current language

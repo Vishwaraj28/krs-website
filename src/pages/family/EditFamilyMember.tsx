@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { useQuery } from "@tanstack/react-query";
@@ -8,6 +8,7 @@ import FamilyMemberForm from "@/components/blocks/family/FamilyMemberForm";
 export default function EditFamilyMember() {
   const { user } = useSelector((state: RootState) => state.auth);
   const { memberId } = useParams<{ memberId: string }>();
+  const navigate = useNavigate();
 
   const { data, isLoading } = useQuery({
     queryKey: ["familyMember", memberId],
@@ -17,7 +18,10 @@ export default function EditFamilyMember() {
         .select("*")
         .eq("id", memberId)
         .single();
-      if (error) throw error;
+      if (error) {
+        navigate("/family", { replace: true });
+        throw error;
+      }
       return data;
     },
     enabled: !!memberId,

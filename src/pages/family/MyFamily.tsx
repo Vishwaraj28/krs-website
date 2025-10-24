@@ -101,8 +101,19 @@ export default function MyFamily() {
       )}
 
       {!isLoading && !isError && (
-        <MasonryGrid columns={3} gap={20}>
-          {familyMembers.length === 0 ? (
+        <>
+          {familyMembers.length > 0 ? (
+            <MasonryGrid columns={3} gap={20}>
+              {familyMembers.map((member) => (
+                <FamilyMemberCard
+                  key={member.id}
+                  member={member}
+                  onEdit={() => handleEdit(member)}
+                  onDelete={() => handleDelete(member)}
+                />
+              ))}
+            </MasonryGrid>
+          ) : (
             <FlexBox
               orientation="column"
               className="col-span-full py-12 text-center"
@@ -113,17 +124,8 @@ export default function MyFamily() {
                 No Family Member Added at the moment.
               </p>
             </FlexBox>
-          ) : (
-            familyMembers.map((member) => (
-              <FamilyMemberCard
-                key={member.id}
-                member={member}
-                onEdit={() => handleEdit(member)}
-                onDelete={() => handleDelete(member)}
-              />
-            ))
           )}
-        </MasonryGrid>
+        </>
       )}
     </>
   );
