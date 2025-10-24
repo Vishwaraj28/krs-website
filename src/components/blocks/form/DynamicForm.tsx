@@ -59,7 +59,7 @@ export const DynamicForm = forwardRef<
   // Expose submit/reset methods
   useImperativeHandle(ref, () => ({
     submit: () => form.handleSubmit(onSubmit)(),
-    reset: (values) => form.reset(values ?? defaultValues),
+    reset: (values) => form.reset(values),
     trigger: () => form.trigger(),
     getValues: () => form.getValues(),
   }));
@@ -67,7 +67,7 @@ export const DynamicForm = forwardRef<
   // Handle submit
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (config.onSubmitSuccess) {
-      config.onSubmitSuccess(values, form); // 🚀 pass form methods
+      config.onSubmitSuccess(values, form);
     }
   }
 

@@ -130,7 +130,7 @@ export type FamilyMember = {
   jobTitle?: string;
   employerName?: string;
   industry?: string;
-  profile_picture?: string; // optional field if you add photo later
+  profile_picture?: string;
   created_at: string;
   updated_at: string;
 };

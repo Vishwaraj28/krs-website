@@ -41,14 +41,19 @@ export function SectionCard({
 
   useEffect(() => {
     if (profile && formRef.current) {
-      const sectionValues = Object.fromEntries(
-        formFields.map((f) => [f, profile[f] ?? ""])
+      const cleanedFields = formFields.map((f) =>
+        f.endsWith("*") ? f.slice(0, -1) : f
       );
-      formRef.current.reset(sectionValues);
+      const sectionValues = Object.fromEntries(
+        cleanedFields.map((f) => [f, profile[f] ?? ""])
+      );
+      setTimeout(() => {
+        formRef.current?.reset(sectionValues);
+      }, 500);
     }
   }, [profile]);
 
-  const onSubmitSuccess = async (data, methods) => {
+  const onSubmitSuccess = async (data: Record<string, any>, methods: any) => {
     const dirtyKeys = Object.keys(methods.formState.dirtyFields);
     const updates = Object.fromEntries(
       dirtyKeys

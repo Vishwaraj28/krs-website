@@ -63,7 +63,6 @@ export function FormSelect({
   return (
     <Select
       onValueChange={onChange}
-      defaultValue={value}
       value={value}
       disabled={disabled}
       name={name}

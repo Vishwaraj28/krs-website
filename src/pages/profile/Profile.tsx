@@ -56,17 +56,17 @@ export default function Profile() {
     {
       title: "Personal Information - Need Fix",
       fields: [
-        "firstName",
+        "firstName*",
         "middleName",
-        "lastName",
+        "lastName*",
         "gender",
         "dob",
         "bloodGroup",
         "maritalStatus",
         "motherName",
         "fatherName",
-        "phone",
-        "area",
+        "phone*",
+        "area*",
       ],
       col: 3,
     },
@@ -166,16 +166,19 @@ export default function Profile() {
         </FlexBox>
       </Card>
 
-      {profileSections.map((section) => (
-        <SectionCard
-          key={section.title}
-          title={section.title}
-          formFields={section.fields}
-          profile={profile}
-          loading={isLoading}
-          fieldColumn={section.col}
-        />
-      ))}
+      {profileSections.map((section) => {
+        const { title, fields, col } = section;
+        return (
+          <SectionCard
+            key={title}
+            title={title}
+            formFields={fields}
+            profile={profile}
+            loading={isLoading}
+            fieldColumn={col}
+          />
+        );
+      })}
     </>
   );
 }

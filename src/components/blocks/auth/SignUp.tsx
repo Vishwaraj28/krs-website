@@ -18,7 +18,7 @@ export function SignupForm({
   const [error, setError] = useState<string | null>(null);
 
   const formConfig: FormConfig = {
-    id: "login-form",
+    id: "Signup-form",
     fields: [
       "firstName*",
       "lastName*",
