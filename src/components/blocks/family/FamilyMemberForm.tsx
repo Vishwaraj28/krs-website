@@ -12,7 +12,7 @@ import { PlusSquare, Undo2, Save } from "lucide-react";
 import { useNavigate } from "react-router";
 import { supabase } from "@/utils/supabaseClient";
 import { toast } from "sonner";
-import { sanitizeValues } from "@/utils/utils";
+import { cleanedFields, sanitizeValues } from "@/utils/utils";
 
 export type ProfileSections = {
   title: string;
@@ -73,9 +73,13 @@ export default function FamilyMemberForm({
   const formRefs = profileSections.map(() => useRef<DynamicFormHandle>(null));
 
   useEffect(() => {
-    for (const ref of formRefs) {
-      if (ref.current) {
-        ref.current.reset(initialData);
+    if (mode === "edit" && initialData && Object.keys(initialData).length > 0) {
+      for (const ref of formRefs) {
+        if (ref.current) {
+          setTimeout(() => {
+            ref.current?.reset(initialData);
+          }, 100);
+        }
       }
     }
   }, [initialData]);
@@ -92,17 +96,21 @@ export default function FamilyMemberForm({
     }
 
     if (!allValid) {
-      toast.error(
-        "Please fix validation errors in all sections before submitting."
-      );
+      toast.error("Please fix errors before submitting.");
       return;
     }
 
-    for (const ref of formRefs) {
-      const values = ref.current?.getValues() || {};
-      Object.assign(collectedData, values);
-    }
+    for (const [index, formRef] of formRefs.entries()) {
+      const { fields } = profileSections[index];
+      const fieldKeys = cleanedFields(fields);
+      const values = formRef.current?.getValues() || {};
+      const sectionData = fieldKeys.reduce((acc, key) => {
+        if (values[key] !== undefined) acc[key] = values[key];
+        return acc;
+      }, {});
 
+      Object.assign(collectedData, sectionData);
+    }
     collectedData.user_id = userID;
 
     try {
@@ -149,7 +157,7 @@ export default function FamilyMemberForm({
           </p>
         </div>
         <FlexBox className="justify-end gap-2">
-          <Button type="button" size="lg" onClick={handleSubmitAll}>
+          <Button type="button" size="lg" onClick={() => handleSubmitAll()}>
             {mode === "add" ? (
               <>
                 <PlusSquare className="h-12 w-12" />

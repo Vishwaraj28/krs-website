@@ -82,6 +82,10 @@ export function sanitizeValues(
   );
 }
 
+export function cleanedFields(fields: any[]): any[] {
+  return fields.map((f) => (f.endsWith("*") ? f.slice(0, -1) : f));
+}
+
 export function profileProgress(
   profile: any,
   profileSections: ProfileSections[]

@@ -30,7 +30,7 @@ import { FormDatePicker } from "./FormDatePicker";
 export interface DynamicFormHandle {
   submit: () => void;
   reset: (values?: Record<string, any>) => void;
-  trigger: () => Record<string, any>;
+  trigger: () => Promise<boolean>;
   getValues: () => Record<string, any>;
 }
 
