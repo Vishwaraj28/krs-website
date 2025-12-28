@@ -246,7 +246,7 @@ export const fieldRegistry: FieldRegistry = {
           { label: { en: "Brother", gu: "ભાઈ" }, value: "brother" },
           {
             label: { en: "Sister-in-law", gu: "ભાભી" },
-            value: "sister_in_law",
+            value: "sister-in-law",
           },
           { label: { en: "Son", gu: "દીકરો" }, value: "son" },
           { label: { en: "Daughter", gu: "દીકરી" }, value: "daughter" },

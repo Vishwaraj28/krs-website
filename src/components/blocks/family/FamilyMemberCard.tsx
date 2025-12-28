@@ -70,16 +70,33 @@ export function FamilyMemberCard({
   onDelete,
 }: FamilyMemberCardProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-
-  // Derived fields
-  const fullName = `${member.firstName} ${member.middleName ?? ""} ${
-    member.lastName
-  }`.trim();
-
+  const {
+    firstName,
+    lastName,
+    photo,
+    relation,
+    dob,
+    bloodGroup,
+    phone,
+    maritalStatus,
+    mosalName,
+    mosalAddress,
+    svasurName,
+    svasurAddress,
+    qualification,
+    institution,
+    profession,
+    jobTitle,
+    employerName,
+    industry,
+    created_at,
+    updated_at,
+  } = member;
+  const fullName = `${firstName} ${lastName}`.trim();
   return (
     <Card className="p-0 pt-3 border-0 gap-5">
       <FlexBox className="px-3 justify-between">
-        <Badge shape="square">{member.relation}</Badge>
+        <Badge shape="square">{relation}</Badge>
         <FlexBox className="gap-3 justify-end">
           <Button
             variant="ghost"
@@ -104,7 +121,7 @@ export function FamilyMemberCard({
         <FlexBox className="gap-4" firstColWidth="30" secondColWidth="65">
           <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-lg border-2 border-primary-light bg-muted/30">
             <img
-              src={member.photo || profilePlaceholderImage}
+              src={photo || profilePlaceholderImage}
               alt={`${fullName} photo`}
               className="object-cover h-full w-full"
             />
@@ -112,14 +129,14 @@ export function FamilyMemberCard({
           <FlexBox orientation="column" className="items-start gap-0">
             <h4 className="text-primary text-2xl">{fullName}</h4>
             <Badge variant="ghost" className="text-sm p-0.2">
-              <Calendar className="text-primary" /> {member.dob}
+              <Calendar className="text-primary" /> {dob}
             </Badge>
             <Badge variant="ghost" className="text-sm p-0.2">
-              <HeartPulse className="text-primary" /> {member.bloodGroup}
+              <HeartPulse className="text-primary" /> {bloodGroup}
             </Badge>
-            {member.phone && (
+            {phone && (
               <Badge variant="ghost" className="text-sm p-0.2">
-                <Phone className="text-primary" /> {member.phone}
+                <Phone className="text-primary" /> {phone}
               </Badge>
             )}
           </FlexBox>
@@ -132,23 +149,23 @@ export function FamilyMemberCard({
             <InfoList
               heading="વ્યક્તિગત માહિતી"
               data={{
-                "Marital Status": member.maritalStatus,
-                "Mosal Name": member.mosalName,
-                "Mosal Address": member.mosalAddress,
-                "Svasur Name": member.svasurName,
-                "Svasur Address": member.svasurAddress,
+                "Marital Status": maritalStatus,
+                "Mosal Name": mosalName,
+                "Mosal Address": mosalAddress,
+                "Svasur Name": svasurName,
+                "Svasur Address": svasurAddress,
               }}
             />
             <Separator className="my-5 bg-primary" />
             <InfoList
               heading="શિક્ષણ અને વ્યાવસાયિક માહિતી"
               data={{
-                Qualification: member.qualification,
-                Institution: member.institution,
-                Profession: member.profession,
-                "Job Title": member.jobTitle,
-                Employer: member.employerName,
-                Industry: member.industry,
+                Qualification: qualification,
+                Institution: institution,
+                Profession: profession,
+                "Job Title": jobTitle,
+                Employer: employerName,
+                Industry: industry,
               }}
             />
           </div>
@@ -161,10 +178,10 @@ export function FamilyMemberCard({
               {isOpen && (
                 <>
                   <p className="text-gray-500 text-[12px]">
-                    Member Added: {formatDate(member.created_at ?? "")}
+                    Member Added: {formatDate(created_at ?? "")}
                   </p>
                   <p className="text-gray-500 text-[12px]">
-                    Last Updated: {formatDate(member.updated_at ?? "")}
+                    Last Updated: {formatDate(updated_at ?? "")}
                   </p>
                 </>
               )}

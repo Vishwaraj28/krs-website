@@ -54,7 +54,7 @@ export default function Profile() {
 
   const profileSections: ProfileSections[] = [
     {
-      title: "Personal Information - Need Fix",
+      title: "Personal Information",
       fields: [
         "firstName*",
         "middleName",
