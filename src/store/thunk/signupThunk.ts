@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { supabase } from "@/utils/supabaseClient";
 import { User, Session } from "@supabase/supabase-js";
 
-type SignupInput = {
+export type SignupInput = {
   email: string;
   password: string;
   phone: string;

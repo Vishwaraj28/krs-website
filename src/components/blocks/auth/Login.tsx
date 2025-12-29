@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store/store";
-import { loginThunk } from "@/store/thunk/loginThunk";
+import { loginThunk, LoginInput } from "@/store/thunk/loginThunk";
 
 export function LoginForm({
   className,
@@ -23,7 +23,7 @@ export function LoginForm({
     submitButtonText: "Login",
     submitButtonClassName: "w-full mt-2",
     onSubmitSuccess: async (data) => {
-      const result = await dispatch(loginThunk(data));
+      const result = await dispatch(loginThunk(data as LoginInput));
 
       if (loginThunk.rejected.match(result)) {
         setError(result.payload as string);

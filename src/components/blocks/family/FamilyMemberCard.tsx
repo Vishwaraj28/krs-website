@@ -73,7 +73,7 @@ export function FamilyMemberCard({
   const {
     firstName,
     lastName,
-    photo,
+    // photo,
     relation,
     dob,
     bloodGroup,
@@ -121,7 +121,8 @@ export function FamilyMemberCard({
         <FlexBox className="gap-4" firstColWidth="30" secondColWidth="65">
           <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-lg border-2 border-primary-light bg-muted/30">
             <img
-              src={photo || profilePlaceholderImage}
+              // src={photo || profilePlaceholderImage}
+              src={profilePlaceholderImage}
               alt={`${fullName} photo`}
               className="object-cover h-full w-full"
             />

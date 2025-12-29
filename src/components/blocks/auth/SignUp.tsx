@@ -4,7 +4,7 @@ import { FormConfig } from "@/types/form-types";
 import { DynamicForm } from "@/components/blocks/form/DynamicForm";
 import { FlexBox } from "@/components/blocks/layout/FlexBox";
 import { useNavigate } from "react-router";
-import { signupThunk } from "@/store/thunk/signupThunk";
+import { SignupInput, signupThunk } from "@/store/thunk/signupThunk";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { AppDispatch } from "@/store/store";
@@ -12,7 +12,7 @@ import { AppDispatch } from "@/store/store";
 export function SignupForm({
   className,
   ...props
-}: React.ComponentPropsWithoutRef<"form">) {
+}: React.ComponentProps<"div">) {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +31,7 @@ export function SignupForm({
     submitButtonText: "Create Account",
     submitButtonClassName: "w-full mt-2",
     onSubmitSuccess: async (data) => {
-      const result = await dispatch(signupThunk(data));
+      const result = await dispatch(signupThunk(data as SignupInput));
       if (signupThunk.rejected.match(result)) {
         setError(result.payload as string);
       } else {
