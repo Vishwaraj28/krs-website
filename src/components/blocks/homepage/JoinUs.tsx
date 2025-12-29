@@ -20,6 +20,7 @@ export function JoinUsSection() {
       // wide
       as="section"
       className="relative bg-[#FFE1BA] py-12 pb-16 achievers_container rounded-4xl mt-24 mb-16 shadow-md"
+      id="joinus"
     >
       <div className="absolute inset-0 opacity-25 z-0 bg-primary-gradient rounded-4xl" />
       <h1 className="mb-12 px-3 relative text-center z-1">Join us</h1>

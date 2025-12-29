@@ -12,7 +12,7 @@ export function SponserSection() {
     error: tableDataError,
   } = useTableData("krs_sponser_data");
   return (
-    <Container as="section" className="sponsers_container">
+    <Container as="section" className="sponsers_container" id="sponsors">
       <Container
         wide
         className="header_container relative bg-[#FFE1BA] pt-15 pb-20 -mb-15 z-2 ml-[calc(-50vw+50%)] mr-[calc(-50vw+50%)] w-screen"

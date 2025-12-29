@@ -29,7 +29,7 @@ const slides = [
 
 export function MainDisplay() {
   return (
-    <div className="relative">
+    <div className="relative" id="about">
       <Swiper
         modules={[EffectFade, Pagination, Autoplay]}
         pagination={true}

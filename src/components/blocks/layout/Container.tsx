@@ -2,7 +2,7 @@ import React, { JSX } from "react";
 import { cn } from "@/lib/utils";
 
 // Container wrapper for consistent spacing
-interface ContainerProps {
+interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   children: React.ReactNode;
   as?: keyof JSX.IntrinsicElements; // Allows using 'section', 'article', etc.
@@ -19,12 +19,15 @@ export const Container = ({
   const maxWidthClass = "max-w-7xl w-full mx-auto";
   const sectionClass = Component == "section" && "my-5 py-15";
   return wide ? (
-    <Component {...props} className={cn("w-full", sectionClass, className)}>
+    <Component
+      {...(props as any)}
+      className={cn("w-full", sectionClass, className)}
+    >
       <div className={cn(maxWidthClass, "main_wrapper")}>{children}</div>
     </Component>
   ) : (
     <Component
-      {...props}
+      {...(props as any)}
       className={cn(maxWidthClass, sectionClass, className)}
     >
       {children}

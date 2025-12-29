@@ -2,7 +2,7 @@ import React, { ReactNode, ReactElement, JSX } from "react";
 import { cn } from "@/lib/utils";
 
 // Define the types for props
-interface FlexProps {
+interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   firstColWidth?: string;
   secondColWidth?: string;
@@ -22,6 +22,7 @@ export const FlexBox = ({
   className,
   orientation = "row", // Default to row
   as: Component = "div",
+  ...props
 }: FlexProps) => {
   const childrenArray = React.Children.toArray(children);
 
@@ -60,6 +61,7 @@ export const FlexBox = ({
         orientation === "column" ? "flex-col" : "flex-row",
         className
       )}
+      {...(props as any)}
     >
       {childrenArray.map((child, index) => {
         if (React.isValidElement(child)) {

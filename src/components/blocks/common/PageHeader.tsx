@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Home, Plus, User } from "lucide-react";
+import { Home, Plus, Undo2, User } from "lucide-react";
 import mainLogo from "@/assets/main-logo.svg";
 import { FlexBox } from "../layout/FlexBox";
 import { useNavigate } from "react-router";
@@ -13,7 +13,11 @@ const navigationItems = [
   { label: "Contact Us", href: "#contact" },
 ];
 
-export function PageHeader() {
+interface PageHeaderProps {
+  hideNav?: boolean;
+}
+
+export function PageHeader({ hideNav = false }: PageHeaderProps) {
   const navigate = useNavigate();
 
   return (
@@ -62,6 +66,16 @@ export function PageHeader() {
             className="flex items-end justify-end gap-5"
           >
             <div className="flex gap-3">
+              {hideNav && (
+                <Button
+                  onClick={() => navigate("/")}
+                  variant="secondary"
+                  className="mb-8"
+                >
+                  <Undo2 className="mr-0.5 h-4 w-4" />
+                  Back to Home Page
+                </Button>
+              )}
               <Button onClick={() => navigate("/signup")} variant="subtle">
                 <Plus className="mr-0.5 h-4 w-4" />
                 Member Registration
@@ -79,18 +93,20 @@ export function PageHeader() {
                 Student Registration
               </Button>
             </div>
-            <nav className="flex items-end justify-end flex-wrap gap-6 md:gap-8">
-              <Home className="h-5 w-5 text-white/90" />
-              {navigationItems.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  className="text-white/90 hover:text-white hover:underline transition-colors duration-200 text-sm md:text-base font-medium whitespace-nowrap"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </nav>
+            {!hideNav && (
+              <nav className="flex items-end justify-end flex-wrap gap-6 md:gap-8">
+                <Home className="h-5 w-5 text-white/90" />
+                {navigationItems.map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.href}
+                    className="text-white/90 hover:text-white hover:underline transition-colors duration-200 text-sm md:text-base font-medium whitespace-nowrap"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
+            )}
           </FlexBox>
         </FlexBox>
       </div>

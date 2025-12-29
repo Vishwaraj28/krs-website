@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 .swiper-pagination-bullet {
   transition: all 0.3s ease;
   transform: scale(1.75);

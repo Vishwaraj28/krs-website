@@ -25,6 +25,9 @@ import GroupMembers from "@/pages/userManagement/GroupMembers";
 // Logs
 import ActionLogs from "@/pages/activity_logs/ActionLogs";
 
+//Internal Page
+import InternalPage from "@/pages/homepage/InternalPage";
+
 // Support
 // import HelpDocs from "@/pages/support/HelpDocs";
 // import ContactAdmin from "@/pages/support/ContactAdmin";
@@ -44,6 +47,7 @@ export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
   { path: "/signup", element: <SignupPage /> },
   { path: "/design-elements", element: <DesignElements /> },
+  { path: "/:slug", element: <InternalPage /> },
 
   {
     path: "/dashboard",
