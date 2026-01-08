@@ -2,22 +2,62 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Mobile First - Swiper Pagination */
 .swiper-pagination-bullet {
   transition: all 0.3s ease;
-  transform: scale(1.75);
-  margin: 0 8px !important;
+  transform: scale(1.25);
+  margin: 0 4px !important;
   border: 1px solid var(--swiper-theme-color) !important;
 }
 
+@media (min-width: 640px) {
+  .swiper-pagination-bullet {
+    transform: scale(1.5);
+    margin: 0 6px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .swiper-pagination-bullet {
+    transform: scale(1.75);
+    margin: 0 8px !important;
+  }
+}
+
+/* Mobile First - Masonry Grid */
 .masonry-grid-layout {
   display: flex;
-  margin-left: -16px; /* gutter size offset */
+  margin-left: -8px; /* gutter size offset for mobile */
   width: auto;
 }
 
+@media (min-width: 640px) {
+  .masonry-grid-layout {
+    margin-left: -12px;
+  }
+}
+
+@media (min-width: 768px) {
+  .masonry-grid-layout {
+    margin-left: -16px;
+  }
+}
+
 .masonry-grid-layout_column {
-  padding-left: 16px; /* gutter size */
+  padding-left: 8px; /* gutter size for mobile */
   background-clip: padding-box;
+}
+
+@media (min-width: 640px) {
+  .masonry-grid-layout_column {
+    padding-left: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  .masonry-grid-layout_column {
+    padding-left: 16px;
+  }
 }
 
 form {

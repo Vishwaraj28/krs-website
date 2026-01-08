@@ -12,10 +12,14 @@ export function SponserSection() {
     error: tableDataError,
   } = useTableData("krs_sponser_data");
   return (
-    <Container as="section" className="sponsers_container" id="sponsors">
+    <Container
+      as="section"
+      className="sponsers_container px-4 sm:px-6"
+      id="sponsors"
+    >
       <Container
         wide
-        className="header_container relative bg-[#FFE1BA] pt-15 pb-20 -mb-15 z-2 ml-[calc(-50vw+50%)] mr-[calc(-50vw+50%)] w-screen"
+        className="header_container relative bg-[#FFE1BA] pt-8 sm:pt-10 md:pt-12 lg:pt-15 pb-12 sm:pb-14 md:pb-16 lg:pb-20 -mb-8 sm:-mb-10 md:-mb-12 lg:-mb-15 z-2 ml-[calc(-50vw+50%)] mr-[calc(-50vw+50%)] w-screen"
       >
         <div
           className="absolute inset-0 bg-cover bg-center opacity-60 z-1"
@@ -23,13 +27,15 @@ export function SponserSection() {
             backgroundImage: `url(${sponsersBackgroundImage})`,
           }}
         />
-        <h1 className="text-black text-center mb-4">Our Sponsors</h1>
-        <h4 className="mb-4 text-center">
+        <h1 className="text-black text-center mb-3 sm:mb-4 px-4">
+          Our Sponsors
+        </h1>
+        <h4 className="mb-3 sm:mb-4 text-center px-4">
           અમે અમારા પ્રાયોજકોના તમામ સમર્થન માટે આભારી છીએ!
         </h4>
       </Container>
       {/* Swiper Section */}
-      <div className="right_container min-w-0 z-3 relative px-4">
+      <div className="right_container min-w-0 z-3 relative px-2 sm:px-3 md:px-4">
         {tableDataLoading && <p>Loading...</p>}
         {tableDataError && (
           <p>Ooops..!! We are Facing Some issue. Please Try Again later.</p>

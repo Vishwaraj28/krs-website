@@ -41,7 +41,7 @@ export function AchieverSection({ fullView = false }: AchieverSectionProps) {
     <Container
       wide
       as="section"
-      className="relative bg-[#FFE1BA] py-16 achievers_container"
+      className="relative bg-[#FFE1BA] py-8 sm:py-12 md:py-16 achievers_container"
       id="achievers"
     >
       <div
@@ -52,10 +52,10 @@ export function AchieverSection({ fullView = false }: AchieverSectionProps) {
       />
       {fullView ? (
         <>
-          <h1 className="mb-3.5 relative">{PageTitle}</h1>
-          <h5 className="mb-4 relative">{PageSubTitle}</h5>
-          <Separator className="mb-15 relative" />
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-y-10 gap-x-5 relative">
+          <h1 className="mb-3 sm:mb-3.5 relative">{PageTitle}</h1>
+          <h5 className="mb-3 sm:mb-4 relative">{PageSubTitle}</h5>
+          <Separator className="mb-8 sm:mb-10 md:mb-15 relative" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-6 sm:gap-y-8 md:gap-y-10 gap-x-4 sm:gap-x-5 relative">
             {achievers?.map((achiever: any) => (
               <ProfileCard
                 {...achiever}
@@ -68,15 +68,17 @@ export function AchieverSection({ fullView = false }: AchieverSectionProps) {
         </>
       ) : (
         <>
-          <h1 className="mb-4 px-3 relative">{PageTitle}</h1>
-          <FlexBox className="justify-between mb-10 flex-wrap gap-2 px-3 relative">
-            <h4>{PageSubTitle}</h4>
-            <div className="flex items-center gap-2">
+          <h1 className="mb-3 sm:mb-4 px-3 sm:px-4 md:px-6 relative">
+            {PageTitle}
+          </h1>
+          <FlexBox className="justify-between mb-6 sm:mb-8 md:mb-10 flex-wrap gap-3 sm:gap-4 px-3 sm:px-4 md:px-6 relative">
+            <h4 className="w-full sm:w-auto">{PageSubTitle}</h4>
+            <div className="flex items-center gap-2 flex-wrap">
               <Button
                 ref={prevRef}
                 variant="outline"
                 size="icon"
-                className="w-9 h-9"
+                className="w-8 h-8 sm:w-9 sm:h-9"
               >
                 <ChevronLeft />
               </Button>
@@ -84,7 +86,7 @@ export function AchieverSection({ fullView = false }: AchieverSectionProps) {
                 ref={nextRef}
                 variant="outline"
                 size="icon"
-                className="w-9 h-9"
+                className="w-8 h-8 sm:w-9 sm:h-9"
               >
                 <ChevronRight />
               </Button>
@@ -124,11 +126,28 @@ export function AchieverSection({ fullView = false }: AchieverSectionProps) {
                   swiper.navigation.init();
                   swiper.navigation.update();
                 }}
-                slidesPerView={4}
+                slidesPerView={2}
                 slidesPerGroup={2}
+                breakpoints={{
+                  640: {
+                    slidesPerView: 2,
+                    slidesPerGroup: 1,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    slidesPerGroup: 2,
+                  },
+                  1024: {
+                    slidesPerView: 4,
+                    slidesPerGroup: 2,
+                  },
+                }}
               >
                 {achievers?.map((achiever: any) => (
-                  <SwiperSlide key={achiever.id} className="p-3 !h-auto mb-12">
+                  <SwiperSlide
+                    key={achiever.id}
+                    className="p-2 sm:p-3 !h-auto mb-8 sm:mb-10 md:mb-12"
+                  >
                     <ProfileCard
                       {...achiever}
                       bucket="krs-homepage-assets"

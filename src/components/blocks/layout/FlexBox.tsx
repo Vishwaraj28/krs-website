@@ -9,6 +9,7 @@ interface FlexProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   orientation?: "row" | "column"; // Add orientation prop
   as?: keyof JSX.IntrinsicElements; // Allows using 'section', 'article', etc.
+  rotational?: boolean; // Add rotational prop
 }
 
 type ChildrenProps = {
@@ -22,6 +23,7 @@ export const FlexBox = ({
   className,
   orientation = "row", // Default to row
   as: Component = "div",
+  rotational = false, // Default to false
   ...props
 }: FlexProps) => {
   const childrenArray = React.Children.toArray(children);
@@ -57,8 +59,11 @@ export const FlexBox = ({
   return (
     <Component
       className={cn(
-        "flex gap-4 w-full items-center ",
+        "flex gap-3 sm:gap-4 w-full items-center",
         orientation === "column" ? "flex-col" : "flex-row",
+        rotational
+          ? `md:${orientation === "column" ? "flex-row" : "flex-col"}`
+          : "",
         className
       )}
       {...(props as any)}

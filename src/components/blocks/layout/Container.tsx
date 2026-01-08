@@ -17,7 +17,7 @@ export const Container = ({
   ...props
 }: ContainerProps) => {
   const maxWidthClass = "max-w-7xl w-full mx-auto";
-  const sectionClass = Component == "section" && "my-5 py-15";
+  const sectionClass = Component == "section" && "my-5 py-8 md:py-15";
   return wide ? (
     <Component
       {...(props as any)}

@@ -35,7 +35,7 @@ export function MainDisplay() {
         pagination={true}
         autoplay={{ delay: 5000 }}
         loop={true}
-        className="h-[calc(100vh-8rem)] w-full"
+        className="h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[calc(100vh-8rem)] w-full"
         effect={"fade"}
       >
         {slides.map((slide, idx) => (
@@ -43,22 +43,27 @@ export function MainDisplay() {
             <img
               src={slide.image}
               alt={slide.title}
-              className="object-cover w-full"
+              className="object-cover w-full h-full"
             />
 
             {/* Dark Overlay */}
             <div className="absolute inset-0 bg-black/50" />
 
             {/* Content */}
-            <Container wide className="absolute inset-0 flex items-center">
-              <div className="max-w-xl text-white">
-                <h2 className="text-6xl font-extrabold mb-4 text-primary">
+            <Container
+              wide
+              className="absolute inset-0 flex items-center px-4 sm:px-6 md:px-8"
+            >
+              <div className="max-w-full sm:max-w-lg md:max-w-xl text-white">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-extrabold mb-2 sm:mb-3 md:mb-4 text-primary">
                   {slide.title}
                 </h2>
-                <ul className="list-disc ml-5 text-lg">
+                <ul className="list-disc ml-4 sm:ml-5 text-sm sm:text-base md:text-lg">
                   <li>{slide.bullet}</li>
                 </ul>
-                <p className="mt-4 text-base">{slide.description}</p>
+                <p className="mt-2 sm:mt-3 md:mt-4 text-xs sm:text-sm md:text-base">
+                  {slide.description}
+                </p>
               </div>
             </Container>
           </SwiperSlide>

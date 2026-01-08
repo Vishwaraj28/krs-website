@@ -33,23 +33,27 @@ export function NewsSection({ fullView = false }: NewsSectionProps) {
   const sortedNews = news ? sortByDate(news, "latestFirst") : [];
 
   return (
-    <Container as="section" className="news_container" id="news">
+    <Container as="section" className="news_container px-4 sm:px-6" id="news">
       {fullView ? (
         <>
-          <h1 className="mb-3.5">{PageTitle}</h1>
-          <h5 className="mb-4">{PageSubTitle}</h5>
-          <Separator className="mb-15" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-5">
+          <h1 className="mb-3 sm:mb-3.5">{PageTitle}</h1>
+          <h5 className="mb-3 sm:mb-4">{PageSubTitle}</h5>
+          <Separator className="mb-8 sm:mb-10 md:mb-15" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-6 sm:gap-y-8 md:gap-y-10 gap-x-4 sm:gap-x-5">
             {sortedNews.map((news: any) => (
               <EventCard {...news} variant="simple" className="h-full" />
             ))}
           </div>
         </>
       ) : (
-        <FlexBox firstColWidth="27" secondColWidth="72">
-          <div className="left_container">
-            <h1 className="mb-3.5">{PageTitle}</h1>
-            <h4 className="mb-4">{PageSubTitle}</h4>
+        <FlexBox
+          firstColWidth="27"
+          secondColWidth="72"
+          className="flex-col md:flex-row gap-6 md:gap-4"
+        >
+          <div className="left_container w-full md:w-auto">
+            <h1 className="mb-2 sm:mb-3 md:mb-3.5">{PageTitle}</h1>
+            <h4 className="mb-3 sm:mb-4">{PageSubTitle}</h4>
             <Button onClick={handleCLick}>
               <span>See all news</span>
               <SquareArrowOutUpRight />
@@ -75,7 +79,7 @@ export function NewsSection({ fullView = false }: NewsSectionProps) {
                 slidesPerGroup={1}
               >
                 {sortedNews.map((news: any) => (
-                  <SwiperSlide key={news.id} className="p-4 !h-auto">
+                  <SwiperSlide key={news.id} className="p-3 md:p-4 !h-auto">
                     <EventCard {...news} variant="simple" className="h-full" />
                   </SwiperSlide>
                 ))}

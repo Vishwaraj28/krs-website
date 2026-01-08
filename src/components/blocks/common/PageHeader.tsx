@@ -31,7 +31,7 @@ export function PageHeader({ hideNav = false }: PageHeaderProps) {
       <div className="relative z-0 w-full bg-gradient-to-r from-primary to-primary">
         {/* Diagonal darker wedge */}
         <div
-          className="absolute inset-y-0 left-0 z-0"
+          className="absolute inset-y-0 left-0 z-0 hidden md:block"
           style={{
             width: "55%",
             background:
@@ -43,14 +43,16 @@ export function PageHeader({ hideNav = false }: PageHeaderProps) {
 
         {/* Top section with logo, title, and action buttons */}
         <FlexBox
-          className="z-10 justify-between px-10 py-6 md:px-8"
+          className="z-10 px-4 py-4 sm:px-6 md:px-8 lg:px-10 items-start md:items-center"
           firstColWidth="40"
           secondColWidth="60"
+          orientation="column"
+          rotational
         >
           {/* Left: logo + title */}
           <Button variant="ghost" onClick={() => navigate("/")} className="p-0">
-            <FlexBox className="gap-5 md:gap-6">
-              <div className="relative shrink-0 overflow-hidden rounded-sm bg-white/10 h-16 w-16 md:h-20 md:w-20">
+            <FlexBox className="gap-3 sm:gap-4 md:gap-5 lg:gap-6">
+              <div className="relative shrink-0 overflow-hidden rounded-sm bg-white/10 h-14 w-14 md:h-16 md:w-16 lg:h-20 lg:w-20">
                 <img src={mainLogo} alt="KRS Logo" className="object-cover" />
               </div>
               <h3 className="font-extrabold text-white drop-shadow-sm text-left">
@@ -63,44 +65,54 @@ export function PageHeader({ hideNav = false }: PageHeaderProps) {
           {/* Right: registration and login buttons */}
           <FlexBox
             orientation="column"
-            className="flex items-end justify-end gap-5"
+            className="flex items-end justify-end gap-3 md:gap-5"
           >
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-2 sm:gap-3 justify-end">
               {hideNav && (
                 <Button
                   onClick={() => navigate("/")}
                   variant="secondary"
-                  className="mb-8"
+                  className="mb-4 sm:mb-6 md:mb-8 text-xs sm:text-sm"
                 >
-                  <Undo2 className="mr-0.5 h-4 w-4" />
-                  Back to Home Page
+                  <Undo2 className="mr-0.5 h-3 w-3 sm:h-4 sm:w-4" />
+                  <span className="hidden sm:inline">Back to Home Page</span>
+                  <span className="sm:hidden">Back</span>
                 </Button>
               )}
-              <Button onClick={() => navigate("/signup")} variant="subtle">
-                <Plus className="mr-0.5 h-4 w-4" />
+              <Button
+                onClick={() => navigate("/signup")}
+                variant="subtle"
+                className="text-xs sm:text-sm"
+              >
+                <Plus className="mr-0.5 h-3 w-3 sm:h-4 sm:w-4" />
                 Member Registration
               </Button>
-              <Button onClick={() => navigate("/login")} variant="subtle">
-                <User className="mr-0.5 h-4 w-4" />
+              <Button
+                onClick={() => navigate("/login")}
+                variant="subtle"
+                className="text-xs sm:text-sm"
+              >
+                <User className="mr-0.5 h-3 w-3 sm:h-4 sm:w-4" />
                 Member Login
               </Button>
               <Button
                 disabled
                 onClick={() => navigate("/student-signup")}
                 variant="subtle"
+                className="hidden lg:flex text-xs sm:text-sm"
               >
-                <Plus className="mr-0.5 h-4 w-4" />
+                <Plus className="mr-0.5 h-3 w-3 sm:h-4 sm:w-4" />
                 Student Registration
               </Button>
             </div>
             {!hideNav && (
-              <nav className="flex items-end justify-end flex-wrap gap-6 md:gap-8">
-                <Home className="h-5 w-5 text-white/90" />
+              <nav className="items-end justify-end flex-wrap gap-3 sm:gap-4 md:gap-6 lg:gap-8 hidden md:flex">
+                <Home className="h-4 w-4 sm:h-5 sm:w-5 text-white/90" />
                 {navigationItems.map((item, index) => (
                   <a
                     key={index}
                     href={item.href}
-                    className="text-white/90 hover:text-white hover:underline transition-colors duration-200 text-sm md:text-base font-medium whitespace-nowrap"
+                    className="text-white/90 hover:text-white hover:underline transition-colors duration-200 text-xs sm:text-sm md:text-base font-medium whitespace-nowrap"
                   >
                     {item.label}
                   </a>

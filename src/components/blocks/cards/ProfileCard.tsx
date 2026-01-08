@@ -30,7 +30,7 @@ export function ProfileCard({
   ...props
 }: ProfileCardProps) {
   return (
-    <Card className="gap-4 pt-4 pb-6" {...props}>
+    <Card className="gap-4 pt-3 sm:pt-4 pb-5 md:pb-6" {...props}>
       {cardVariant == "default" && (
         <Badge className="margin" shape="square">
           {category}
@@ -40,11 +40,11 @@ export function ProfileCard({
         imagePath={imagePath}
         bucket={bucket}
         className={`object-cover rounded-lg self-center ${
-          cardVariant == "default" && "w-48 h-48"
+          cardVariant == "default" && "w-36 h-36 md:w-48 md:h-48"
         }`}
         altImage={thumbnail}
       />
-      <CardContent className="items-center gap-4">
+      <CardContent className="items-center gap-3 md:gap-4">
         {title && (
           <CardDescription className="text-center">{title}</CardDescription>
         )}

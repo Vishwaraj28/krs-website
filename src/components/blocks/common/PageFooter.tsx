@@ -23,7 +23,7 @@ export function PageFooter() {
         {/* Diagonal darker wedge */}
         {useLoggedOut && (
           <div
-            className="absolute inset-y-0 left-0 z-0"
+            className="absolute inset-y-0 left-0 z-0 hidden md:block"
             style={{
               width: "55%",
               background:
@@ -36,29 +36,42 @@ export function PageFooter() {
 
         {/* Top section with logo, title, and action buttons */}
         <FlexBox
-          className="z-10 justify-between px-20 py-10"
+          className="z-10 items-center md:justify-between p-4 lg:px-20 md:py-10"
           firstColWidth="40"
           secondColWidth="30"
+          orientation="column"
+          rotational
         >
           {/* Left: logo + title */}
-          <Button variant="ghost" onClick={() => navigate("/")} className="p-0">
-            <FlexBox className="gap-5 md:gap-6 items-start">
-              <div className="relative shrink-0 overflow-hidden rounded-sm bg-white/10 h-16 w-16 md:h-20 md:w-20">
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/")}
+            className="p-0 h-auto"
+          >
+            <FlexBox
+              orientation="column"
+              rotational
+              className="gap-3 sm:gap-4 md:gap-5 lg:gap-6 md:items-start"
+            >
+              <div className="relative shrink-0 overflow-hidden rounded-sm bg-white/10 h-14 w-14 md:h-16 md:w-16 lg:h-20 lg:w-20">
                 <img src={mainLogo} alt="KRS Logo" className="object-cover" />
               </div>
               <div>
-                <h3 className="font-extrabold text-white drop-shadow-sm text-left">
+                <h3 className="font-extrabold text-white drop-shadow-sm text-center md:text-left">
                   સૌરાષ્ટ્ર કારડીયા રાજપૂત સમાજ <br />
                   વડોદરા
                 </h3>
-                <div className="social_links mt-2 flex gap-4">
+                <FlexBox
+                  orientation="row"
+                  className="social_links mt-2 justify-center md:justify-start"
+                >
                   <a
                     href="https://www.facebook.com/krs.vadodara"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white/90 hover:text-white hover:underline transition-colors duration-200 text-sm md:text-base font-medium"
                   >
-                    <FacebookIcon className="" />
+                    <FacebookIcon />
                   </a>
                   <a
                     href="https://www.instagram.com/krs_vadodara/"
@@ -68,18 +81,18 @@ export function PageFooter() {
                   >
                     <InstagramIcon />
                   </a>
-                </div>
+                </FlexBox>
               </div>
             </FlexBox>
           </Button>
-          <div className="text-right text-white/90 text-sm">
-            <p className="mb-6">
+          <div className="text-center md:text-right text-white/90 text-sm w-full md:w-auto">
+            <p className="mb-3 sm:mb-4 md:mb-6">
               Copyright © 2025 Shri Saurastra Karadiya Rajut Samaj, Vadodara.
               All Rights Reserved
             </p>
             <p>
               Made with{" "}
-              <HeartIcon className="h-10 w-10 inline p-2 mx-1 bg-secondary/90 rounded-4xl" />{" "}
+              <HeartIcon className="h-10 w-10 inline p-1.5 sm:p-2 mx-1 bg-secondary/90 rounded-3xl sm:rounded-4xl" />{" "}
               in India
             </p>
           </div>
