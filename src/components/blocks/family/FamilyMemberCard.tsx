@@ -132,14 +132,6 @@ export function FamilyMemberCard({
             <Badge variant="ghost" className="text-sm p-0.2">
               <Calendar className="text-primary" /> {dob}
             </Badge>
-            <Badge variant="ghost" className="text-sm p-0.2">
-              <HeartPulse className="text-primary" /> {bloodGroup}
-            </Badge>
-            {phone && (
-              <Badge variant="ghost" className="text-sm p-0.2">
-                <Phone className="text-primary" /> {phone}
-              </Badge>
-            )}
           </FlexBox>
         </FlexBox>
       </div>
@@ -150,11 +142,13 @@ export function FamilyMemberCard({
             <InfoList
               heading="વ્યક્તિગત માહિતી"
               data={{
+                "Blood Group": bloodGroup,
+                "Phone Number": phone,
                 "Marital Status": maritalStatus,
-                "Mosal Name": mosalName,
-                "Mosal Address": mosalAddress,
-                "Svasur Name": svasurName,
-                "Svasur Address": svasurAddress,
+                // "Mosal Name": mosalName,
+                // "Mosal Address": mosalAddress,
+                // "Svasur Name": svasurName,
+                // "Svasur Address": svasurAddress,
               }}
             />
             <Separator className="my-5 bg-primary" />

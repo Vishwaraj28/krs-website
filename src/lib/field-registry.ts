@@ -123,6 +123,20 @@ export const fieldRegistry: FieldRegistry = {
           gu: "ઉદ્યોગ અથવા ક્ષેત્ર દાખલ કરો",
         },
       },
+      emergencyName: {
+        label: { en: "Emergency Contact Name", gu: "કટોકટી/સંકટ સંપર્ક નામ" },
+        placeholder: {
+          en: "Enter emergency contact name",
+          gu: "કટોકટી/સંકટ સંપર્ક નામ દાખલ કરો",
+        },
+      },
+      emergencyPhone: {
+        label: { en: "Emergency Contact Phone", gu: "કટોકટી/સંકટ સંપર્ક ફોન" },
+        placeholder: {
+          en: "Enter emergency contact phone",
+          gu: "કટોકટી/સંકટ સંપર્ક ફોન દાખલ કરો",
+        },
+      },
     },
   },
   textAreaRegistry: {

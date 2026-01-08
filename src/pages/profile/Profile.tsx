@@ -76,6 +76,11 @@ export default function Profile() {
       col: 2,
     },
     {
+      title: "Emergency Contact Details",
+      fields: ["emergencyName*", "emergencyPhone*"],
+      col: 2,
+    },
+    {
       title: "Mosal & Svasur Details",
       fields: ["mosalName", "svasurName", "mosalAddress", "svasurAddress"],
       col: 2,

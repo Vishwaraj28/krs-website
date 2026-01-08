@@ -51,11 +51,11 @@ export default function FamilyMemberForm({
       ],
       col: 3,
     },
-    {
-      title: "Mosal & Svasur Details",
-      fields: ["mosalName*", "svasurName", "mosalAddress*", "svasurAddress"],
-      col: 2,
-    },
+    // {
+    //   title: "Mosal & Svasur Details",
+    //   fields: ["mosalName*", "svasurName", "mosalAddress*", "svasurAddress"],
+    //   col: 2,
+    // },
     {
       title: "Education & Profession",
       fields: [

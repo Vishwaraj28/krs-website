@@ -88,12 +88,10 @@ export function AchieverSection({ fullView = false }: AchieverSectionProps) {
               >
                 <ChevronRight />
               </Button>
-              {!fullView && (
-                <Button onClick={handleCLick}>
-                  <span>See all achievers</span>
-                  <SquareArrowOutUpRight />
-                </Button>
-              )}
+              <Button onClick={handleCLick}>
+                <span>See all achievers</span>
+                <SquareArrowOutUpRight />
+              </Button>
             </div>
           </FlexBox>
           <div className="right_container min-w-0">
@@ -126,7 +124,7 @@ export function AchieverSection({ fullView = false }: AchieverSectionProps) {
                   swiper.navigation.init();
                   swiper.navigation.update();
                 }}
-                slidesPerView={fullView ? 6 : 4}
+                slidesPerView={4}
                 slidesPerGroup={2}
               >
                 {achievers?.map((achiever: any) => (

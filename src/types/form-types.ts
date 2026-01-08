@@ -56,7 +56,9 @@ export type RegisteredFieldKey =
   | "date"
   | "dob"
   | "bloodGroup"
-  | "relation";
+  | "relation"
+  | "emergencyName"
+  | "emergencyPhone";
 
 // Define simplified validation rules
 export type ValidationRule =

@@ -50,15 +50,13 @@ export function NewsSection({ fullView = false }: NewsSectionProps) {
           <div className="left_container">
             <h1 className="mb-3.5">{PageTitle}</h1>
             <h4 className="mb-4">{PageSubTitle}</h4>
-            {!fullView && (
-              <Button onClick={handleCLick}>
-                <span>See all news</span>
-                <SquareArrowOutUpRight />
-              </Button>
-            )}
+            <Button onClick={handleCLick}>
+              <span>See all news</span>
+              <SquareArrowOutUpRight />
+            </Button>
           </div>
           {/* Swiper Section */}
-          <div className="right_container min-w-0">
+          <div className="right_container min-w-0 w-full">
             {tableDataLoading && <p>Loading...</p>}
             {tableDataError && <p>Error: {tableDataError.message}</p>}
 
@@ -73,7 +71,7 @@ export function NewsSection({ fullView = false }: NewsSectionProps) {
                 }}
                 pagination={false}
                 navigation={false}
-                slidesPerView={fullView ? 3 : 2}
+                slidesPerView={1}
                 slidesPerGroup={1}
               >
                 {sortedNews.map((news: any) => (
