@@ -8,15 +8,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import {
-  Edit,
-  Trash2,
-  Phone,
-  ChevronDown,
-  ChevronUp,
-  Calendar,
-  HeartPulse,
-} from "lucide-react";
+import { Edit, Trash2, ChevronDown, ChevronUp, Calendar } from "lucide-react";
 import { FlexBox } from "../layout/FlexBox";
 import { FamilyMember } from "@/types/form-types";
 import profilePlaceholderImage from "@/assets/profile-placeholder.svg";
@@ -79,10 +71,10 @@ export function FamilyMemberCard({
     bloodGroup,
     phone,
     maritalStatus,
-    mosalName,
-    mosalAddress,
-    svasurName,
-    svasurAddress,
+    // mosalName,
+    // mosalAddress,
+    // svasurName,
+    // svasurAddress,
     qualification,
     institution,
     profession,
