@@ -142,12 +142,14 @@ export default function FamilyMemberForm({
   return (
     <>
       <FlexBox
-        className="justify-between mb-8 px-2"
+        className="justify-between mb-6 md:mb-8 px-3 md:px-4 gap-4 lg:gap-0"
         firstColWidth="80"
         secondColWidth="20"
+        orientation="column"
+        rotational
       >
-        <div>
-          <h4 className="mb-2">
+        <div className="w-full lg:w-auto">
+          <h4 className="mb-2 ">
             {mode === "add" ? "Add Family Member" : "Edit Family Member"}
           </h4>
           <p className="text-muted-foreground">
@@ -160,12 +162,12 @@ export default function FamilyMemberForm({
           <Button type="button" size="lg" onClick={() => handleSubmitAll()}>
             {mode === "add" ? (
               <>
-                <PlusSquare className="h-12 w-12" />
+                <PlusSquare className="h-6 w-6 md:h-12 md:w-12" />
                 Add Member
               </>
             ) : (
               <>
-                <Save className="h-12 w-12" />
+                <Save className="h-6 w-6 md:h-12 md:w-12" />
                 Save Changes
               </>
             )}
@@ -176,16 +178,16 @@ export default function FamilyMemberForm({
             size="lg"
             onClick={() => navigate("/family")}
           >
-            <Undo2 className="h-12 w-12" />
+            <Undo2 className="h-6 w-6 md:h-12 md:w-12" />
             Back to Manage Family
           </Button>
         </FlexBox>
       </FlexBox>
 
       {profileSections.map(({ title, fields, col }, idx) => (
-        <Card key={title} className="mb-6 p-10">
+        <Card key={title} className="mb-5 md:mb-6 p-6 md:p-8 lg:p-10">
           <h4 className="text-primary/75">{title}</h4>
-          <Separator className="bg-primary-light p-0.25 mb-2" />
+          <Separator className="bg-primary-light p-0.25 mb-2 sm:mb-3" />
           <DynamicForm
             ref={formRefs[idx]}
             config={{

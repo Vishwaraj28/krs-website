@@ -145,23 +145,27 @@ export const DynamicForm = forwardRef<
 
   const gridCols: Record<string, string> = {
     1: "grid-cols-1",
-    2: "grid-cols-2",
-    3: "grid-cols-3",
-    4: "grid-cols-4",
+    2: "grid-cols-1 sm:grid-cols-2",
+    3: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3",
+    4: "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4",
   };
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className={`grid w-full gap-9 ${
+        className={`grid w-full gap-6 md:gap-8 lg:gap-9 ${
           gridCols[String(col)] || "grid-cols-1"
-        } ${col > 1 ? "gap-y-9" : "gap-y-6"}`}
+        } ${
+          col > 1
+            ? "gap-y-6 md:gap-y-8 lg:gap-y-9"
+            : "gap-y-4 md:gap-y-5 lg:gap-y-6"
+        }`}
       >
         {processedFields.map(renderField)}
 
         {config.submitButtonText && (
-          <div className="flex justify-end col-span-full">
+          <div className="flex justify-end col-span-full mt-3 md:mt-4">
             <Button
               type="submit"
               className={`${config.submitButtonClassName || ""}`}

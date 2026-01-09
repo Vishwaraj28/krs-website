@@ -60,17 +60,17 @@ export default function MyFamily() {
     <>
       {/* Header */}
       <FlexBox
-        className="justify-between mb-8 px-2"
+        className="justify-between mb-6 md:mb-8 px-3 md:px-4 gap-4 lg:gap-0"
         firstColWidth="80"
         secondColWidth="20"
       >
-        <div>
-          <h4 className="mb-2">My Family</h4>
+        <div className="w-full lg:w-auto">
+          <h4 className="mb-1 sm:mb-2">My Family</h4>
           <p className="text-muted-foreground">
             Add and manage your family members.
           </p>
         </div>
-        <FlexBox className="justify-end">
+        <FlexBox orientation="column" rotational className="justify-end">
           <div className="flex items-center space-x-2">
             <Badge variant="outline">
               {isLoading
@@ -82,15 +82,16 @@ export default function MyFamily() {
             type="button"
             size="lg"
             onClick={() => navigate("/family/add")}
+            className="w-full sm:w-auto"
           >
-            <PlusSquare className="h-12 w-12" />
+            <PlusSquare className="h-6 w-6 md:h-12 md:w-12" />
             Add Member
           </Button>
         </FlexBox>
       </FlexBox>
 
       {isLoading && (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {/* {Array.from({ length: 3 }).map((_, idx) => (
             <UserApprovalCardSkeleton key={idx} />
           ))} */}
@@ -116,7 +117,7 @@ export default function MyFamily() {
           ) : (
             <FlexBox
               orientation="column"
-              className="col-span-full py-12 text-center"
+              className="col-span-full py-10 md:py-12 text-center"
             >
               <PlusSquare className="h-12 w-12 text-primary mb-4" />
               <h3>Add Family Member</h3>

@@ -92,15 +92,17 @@ export function SectionCard({
   };
 
   return (
-    <Card className={cn("mb-6 p-10", className)}>
-      <FlexBox className="mb-1 justify-between">
-        <h4 className="text-primary/75">{title}</h4>
+    <Card className={cn("mb-5 md:mb-6 p-4 md:p-8 lg:p-10", className)}>
+      <FlexBox orientation="row" className="mb-1 justify-between">
+        <h4 className="text-primary/75 text-base sm:text-lg md:text-xl">
+          {title}
+        </h4>
         {!editing ? (
           <Button size="sm" onClick={onEdit}>
             Edit <Edit />
           </Button>
         ) : (
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-col sm:flex-row">
             <Button size="sm" onClick={() => formRef.current?.submit()}>
               Save changes
             </Button>
@@ -110,7 +112,7 @@ export function SectionCard({
           </div>
         )}
       </FlexBox>
-      <Separator className="bg-primary-light p-0.25 mb-2" />
+      <Separator className="bg-primary-light p-0.25 mb-2 sm:mb-3" />
       {loading ? (
         <div className="text-muted-foreground">Loading...</div>
       ) : (

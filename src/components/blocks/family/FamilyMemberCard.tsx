@@ -42,12 +42,7 @@ export const InfoList: React.FC<InfoListProps> = ({
       {Object.entries(data)
         // .filter(([_, value]) => value)
         .map(([label, value]) => (
-          <FlexBox
-            key={label}
-            firstColWidth="25"
-            secondColWidth="73"
-            className="mb-1.25 items-start gap-2 pl-2"
-          >
+          <FlexBox key={label} className="mb-1.25 items-start gap-1 pl-2">
             <p className="text-sm text-primary">{label}:</p>
             <p className="text-sm">{value}</p>
           </FlexBox>
@@ -86,7 +81,7 @@ export function FamilyMemberCard({
   } = member;
   const fullName = `${firstName} ${lastName}`.trim();
   return (
-    <Card className="p-0 pt-3 border-0 gap-5">
+    <Card className="p-0 pt-3 border-0 gap-4 md:gap-5">
       <FlexBox className="px-3 justify-between">
         <Badge shape="square">{relation}</Badge>
         <FlexBox className="gap-3 justify-end">
@@ -109,8 +104,13 @@ export function FamilyMemberCard({
         </FlexBox>
       </FlexBox>
 
-      <div className="px-3">
-        <FlexBox className="gap-4" firstColWidth="30" secondColWidth="65">
+      <div className="px-2 sm:px-3">
+        <FlexBox
+          orientation="row"
+          className="gap-4"
+          firstColWidth="30"
+          secondColWidth="65"
+        >
           <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-lg border-2 border-primary-light bg-muted/30">
             <img
               // src={photo || profilePlaceholderImage}
@@ -120,7 +120,7 @@ export function FamilyMemberCard({
             />
           </div>
           <FlexBox orientation="column" className="items-start gap-0">
-            <h4 className="text-primary text-2xl">{fullName}</h4>
+            <h4 className="text-primary text-xl md:text-2xl">{fullName}</h4>
             <Badge variant="ghost" className="text-sm p-0.2">
               <Calendar className="text-primary" /> {dob}
             </Badge>
@@ -143,7 +143,7 @@ export function FamilyMemberCard({
                 // "Svasur Address": svasurAddress,
               }}
             />
-            <Separator className="my-5 bg-primary" />
+            <Separator className="my-4 md:my-5 bg-primary" />
             <InfoList
               heading="શિક્ષણ અને વ્યાવસાયિક માહિતી"
               data={{
@@ -160,7 +160,7 @@ export function FamilyMemberCard({
 
         {/* Expandable Section Trigger */}
         <CollapsibleTrigger asChild>
-          <div className="flex justify-between p-3">
+          <FlexBox orientation="row" className="justify-between p-3">
             <div>
               {isOpen && (
                 <>
@@ -184,7 +184,7 @@ export function FamilyMemberCard({
                 <ChevronDown className="h-5 w-5" />
               )}
             </Button>
-          </div>
+          </FlexBox>
         </CollapsibleTrigger>
       </Collapsible>
     </Card>

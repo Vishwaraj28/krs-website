@@ -53,9 +53,12 @@ export default function ShellLayout() {
         <SidebarInset>
           <FlexBox
             as="header"
-            className="gap-2 border-b p-6 sticky top-0 bg-white z-10 shadow w-full"
+            orientation="row"
+            firstColWidth="60"
+            secondColWidth="40"
+            className="gap-2 border-b p-4 md:p-5 lg:p-6 sticky top-0 bg-white z-10 shadow w-full"
           >
-            <FlexBox className="gap-2 px-3">
+            <FlexBox className="gap-0 md:gap-2 px-0 md:px-3">
               <SidebarTrigger />
               <Separator
                 orientation="vertical"
@@ -63,8 +66,12 @@ export default function ShellLayout() {
               />
               <HeaderBreadcrumb />
             </FlexBox>
-            <FlexBox className="gap-2 px-3 justify-end">
-              <p className="text-primary text-xl mr-4">
+            <FlexBox
+              orientation="column"
+              rotational
+              className="gap-2 px-3 justify-end items-end md:items-center"
+            >
+              <p className="text-primary text-base md:text-lg lg:text-xl mr-0 md:mr-4">
                 Welcome, {userMetaData?.firstName || "User"}
               </p>
               <Button onClick={() => handleLogout()} size="sm">
@@ -74,7 +81,7 @@ export default function ShellLayout() {
             </FlexBox>
           </FlexBox>
           <main>
-            <div className="min-h-screen min-w-0 z-3 relative bg-primary-light/55 p-8">
+            <div className="min-h-screen min-w-0 z-3 relative bg-primary-light/55 p-4 md:p-6 lg:p-8">
               <Outlet />
             </div>
           </main>

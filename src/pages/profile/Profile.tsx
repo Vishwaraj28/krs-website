@@ -114,18 +114,20 @@ export default function Profile() {
     <>
       {/* Header */}
       <FlexBox
-        className="justify-between mb-8 px-2"
+        className="justify-between mb-6 md:mb-8 px-3 md:px-4"
         firstColWidth="80"
         secondColWidth="20"
+        orientation="column"
+        rotational
       >
-        <div>
+        <div className="w-full md:w-auto">
           <h4 className="mb-2">Your Profile</h4>
           <p className="text-muted-foreground">
             Review and update your profile information
           </p>
         </div>
-        <div>
-          <Progress value={percenProfileCompleted} className="h-2" />
+        <div className="w-full md:w-auto">
+          <Progress value={percenProfileCompleted} className="h-2 mb-2" />
           <p className="text-sm text-muted-foreground">
             {completedFields} of {totalFields} complete
           </p>
@@ -133,9 +135,9 @@ export default function Profile() {
       </FlexBox>
 
       {/* Profile Card */}
-      <Card className="mb-6 px-10 py-6">
-        <FlexBox>
-          <div className="relative h-30 w-30 shrink-0 overflow-hidden rounded-lg border-2 border-primary-light bg-muted/30">
+      <Card className="mb-5 md:mb-6 px-4 md:px-8 lg:px-10 py-4 md:py-6">
+        <FlexBox orientation="row">
+          <div className="relative h-28 w-28 md:h-30 md:w-30 shrink-0 overflow-hidden rounded-lg border-2 border-primary-light bg-muted/30">
             <img
               src={imageUrl || profilePlaceholderImage}
               alt="Profile Image"
